@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <string name="Error_PasswordDoesNotMatch">
+       كلمة السر غير متواقفه
+    </string>
+     <string name="Error_InvalidEmailAddress">
+         خطأ في البريد الالكتروني
+    </string>
+    <string name="Error_PleaseSelectCity">
+       فضلا اختر المدينه
+    </string>
+
+       <string name="Error_PleaseSelectRegisterType">
+        فضلا اختر نوع  التسجيل اولا
+    </string>
+</resources>

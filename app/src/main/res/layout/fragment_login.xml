@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:padding="10dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/Relative_LoginSave"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/btnLoginLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:height="111px"
+            android:background="@drawable/button"
+            android:text="دخول"
+
+             />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border"
+        android:id="@+id/Linear_LoginSave"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/Relative_LoginSave"
+        android:layout_marginBottom="10dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:padding="8sp">
+
+            <TextView
+                android:id="@+id/lblLoginUserName"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="إسم المستخدم"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:id="@+id/lbLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="كلمة السر"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/txtLoginUserName"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingTop="0dp"
+
+                style="@style/myedittext"
+                />
+
+            <EditText
+                android:id="@+id/txtLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+
+                android:paddingTop="0dp"
+
+                style="@style/myedittext"
+                />
+
+
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

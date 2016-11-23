@@ -1,0 +1,284 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:padding="10dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/Relative_RegisterSave"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/btnRegisterSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:height="111px"
+            android:background="@drawable/button"
+            android:text="حفظ"
+
+          />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border"
+        android:id="@+id/Linear_RegisterSave"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/Relative_RegisterSave"
+        android:layout_marginBottom="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:padding="8sp">
+
+            <TextView
+                android:id="@+id/lblRegisterName"
+                android:layout_width="wrap_content"
+                android:layout_height="88px"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="اللقب"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:id="@+id/lblRegisterEmail"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="18dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="البريد الألكتروني"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:id="@+id/lblRegisterUserName"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="إسم المستخدم"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:id="@+id/lbRegisterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="كلمة السر"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:id="@+id/lblRegisterConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="تاكيد كلمة السر"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+
+            <TextView
+                android:id="@+id/lblRegisterCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="المدينه"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+
+            <TextView
+                android:id="@+id/lblRegisterRegisterType"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="55dp"
+                android:layout_weight="1"
+                android:paddingTop="9dp"
+                android:text="نوع التسجيل"
+                android:textSize="14sp"
+                android:textColor="#000"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/txtRegisterName"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_weight="1"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingTop="0dp"
+
+                style="@style/myedittext"
+                />
+
+            <EditText
+                android:id="@+id/txtRegisterEmail"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+                android:paddingTop="0dp"
+
+                style="@style/myedittext"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/txtRegisterUserName"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingTop="0dp"
+
+                style="@style/myedittext"
+                />
+
+            <EditText
+                android:id="@+id/txtRegisterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+
+                android:paddingTop="0dp"
+
+                style="@style/myedittext"
+                />
+
+            <EditText
+                android:id="@+id/txtRegisterConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+
+                android:background="@drawable/textbox_enabled"
+
+                android:paddingTop="0dp"
+
+                style="@style/myedittext"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:background="@drawable/spinner" />
+
+                <ImageView
+                    android:layout_width="102px"
+                    android:layout_height="88px"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/dropdown" />
+
+                <Spinner
+                    android:id="@+id/ddlRegisterCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:paddingTop="0dp"
+                    android:spinnerMode="dialog"
+                    android:theme="@android:style/Theme.Holo.Light" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Relative_btnGPS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/btnRegisterGPS"
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:background="@drawable/button_gps"
+                    android:text="تحديد موقعي"
+
+
+                    />
+
+                <ImageView
+                    android:layout_width="92px"
+                    android:layout_height="88px"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/gps_icon" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:background="@drawable/spinner" />
+
+                <ImageView
+                    android:layout_width="102px"
+                    android:layout_height="88px"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/dropdown" />
+
+                <Spinner
+                    android:id="@+id/ddlRegisterType"
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:spinnerMode="dialog"
+                    android:theme="@android:style/Theme.Holo.Light"
+                    android:background="@null"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

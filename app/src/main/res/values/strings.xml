@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Tasty Homemade</string>
+    <string-array name="MainMenuStrings">
+        <item>1,بياناتي شخصيه</item>
+        <item>2,الاعدادات</item>
+        <item>3,مأكولاتي ومشروباتي المضافه</item>
+        <item>4,طلبات العملاء</item>
+        <item>5,تتبع مأكولاتي أو مشروباتي</item>
+        <item>6,أضف مأكولات أو مشروبات</item>
+        <item>7,إختياراتي</item>
+        <item>8,الأكثرا طلبا</item>
+
+    </string-array>
+
+    <string-array name="RegisterTypes">
+        <item>صانع الأكل</item>
+        <item>عميل</item>
+
+    </string-array>
+    <string name="Error_PasswordDoesNotMatch">
+        Password Does Not Match
+    </string>
+    <string name="Error_InvalidEmailAddress">
+        Invalid email address
+    </string>
+
+    <string name="Error_PleaseSelectCity">
+        Please Select City
+    </string>
+
+        <string name="Error_PleaseSelectRegisterType">
+        Please Select Register Type
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

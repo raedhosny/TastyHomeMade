@@ -1,0 +1,52 @@
+package com.tastyhomemade.tastyhomemade.Business;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by raed on 11/23/2016.
+ */
+
+public class RegisterTypesDB {
+
+    public List<RegisterTypes> SelectAll (int p_iLanguageId)
+    {
+        try {
+            java.sql.Connection MyConnection = new DB().CreateConnection();
+            PreparedStatement stmt = MyConnection.prepareStatement("EXECUTE SP_RegisterTypes_SelectAll @LanguageId=?");
+            stmt.setInt(1,p_iLanguageId);
+            ResultSet ObjResultSet = stmt.executeQuery();
+            List<RegisterTypes> ObjRegisterTypesList = new ArrayList<RegisterTypes>();
+
+            String sAll = "";
+            if (p_iLanguageId==1)
+                sAll = "--الكل--";
+            else if (p_iLanguageId==2)
+                sAll = "--All--";
+
+            ObjRegisterTypesList.add(0,new RegisterTypes(-1,p_iLanguageId,sAll));
+
+            while (ObjResultSet.next())
+            {
+                RegisterTypes ObjRegisterTypes = new RegisterTypes();
+                ObjRegisterTypes.setId(ObjResultSet.getInt(1));
+                ObjRegisterTypes.setLanguageId(ObjResultSet.getInt(3));
+                ObjRegisterTypes.setName (ObjResultSet.getString(4));
+                ObjRegisterTypesList.add(ObjRegisterTypes);
+            }
+
+
+
+            return ObjRegisterTypesList;
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return new ArrayList<RegisterTypes>();
+    }
+}

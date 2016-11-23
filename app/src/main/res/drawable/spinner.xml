@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:right="0px" android:left="102px"  >
+        <shape>
+            <solid android:color="#ffffff"></solid>
+            <stroke android:width="2px" android:color="#414242"></stroke>
+            <corners android:topRightRadius="8dp" android:bottomRightRadius="8dp"></corners>
+        </shape>
+    </item>
+    <!--<item  android:end="102px" android:width="50px" android:height="50px" >-->
+        <!--<bitmap android:src="@drawable/dropdown2" android:gravity="left"-->
+
+            <!--&gt;</bitmap>-->
+    <!--</item>-->
+
+</layer-list>

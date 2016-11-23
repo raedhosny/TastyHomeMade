@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:padding="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75px"
+        android:background="@drawable/top_bar_1">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="الأكلات والمشروبات"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64px"
+
+        android:background="@drawable/top_bar_2"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+       >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:padding="0dp"
+
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:text="أهلا"
+                android:textColor="#000000"
+                android:textSize="5pt"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                />
+
+            <TextView
+                android:id="@+id/lblMainUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:text="زائر"
+                android:textColor="#000000"
+                android:textDirection="anyRtl"
+                android:textSize="5pt"
+
+                />
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="5dp"
+                android:padding="0dp"
+                android:text="تسجيل"
+                android:background="@drawable/button"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/btnMainRegister"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            >
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:text="اليوم"
+            android:textColor="#000000"
+            android:textSize="5pt"
+            android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:text="19 أكتوبر 2016"
+                android:textColor="#000000"
+                android:textDirection="anyRtl"
+                android:textSize="5pt"
+                android:layout_marginRight="10dp"
+
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="92px"
+        android:background="@drawable/top_bar_3"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/btnMainForm"
+            android:layout_width="67px"
+            android:layout_height="62px"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/mainform_btn" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="75px"
+            android:layout_height="60px"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/search_btn" />
+
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="60px"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/btnMainForm"
+            android:layout_toRightOf="@id/btnSearch"
+            android:background="@drawable/search_text"
+
+            />
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/Drawer_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lvMainMenu"
+            android:layout_width="562px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:background="#e5e5e5"
+
+            >
+
+        </ListView>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>
+
