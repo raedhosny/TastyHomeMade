@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
+import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.R;
 
@@ -56,7 +57,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 User ObjUser = new UserDB().Login(txtLoginUserName.getText().toString().trim(), txtLoginPassword.getText().toString());
 
-                Settings ObjSettings = new Settings(getContext());
+                final Settings ObjSettings = new Settings(getContext());
                 if (ObjUser.getId() != -1) {
                     ObjSettings.setUserId(ObjUser.getId());
                     ObjSettings.setUserName(ObjUser.getUsername());
@@ -64,10 +65,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void run() {
 
-
-                            getActivity().findViewById(R.id.btnMainLogin).setVisibility(View.GONE);
-                            getActivity().findViewById(R.id.btnMainRegister).setVisibility(View.GONE);
-                            ((TextView) getActivity().findViewById(R.id.lblMainUserName)).setText(ObjSettings.getUserName());
+                            ((MainActivity)getActivity()).LoadMainInfo();
                         }
                     });
                 } else {

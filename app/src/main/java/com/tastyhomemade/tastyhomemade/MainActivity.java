@@ -1,5 +1,7 @@
 package com.tastyhomemade.tastyhomemade;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +24,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     DrawerLayout Drawer_Layout;
@@ -79,26 +82,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (view  == btnMainLogin)
         {
-            Settings ObjSettings = new Settings(this);
+
             new Utils().ShowActivity(MainActivity.this,null,"Login");
-            btnMainLogin.setVisibility(View.GONE);
-            btnMainRegister.setVisibility(View.GONE);
-            btnMainLogout.setVisibility(View.VISIBLE);
-            lblMainUserName.setText(ObjSettings.getUserName());
+            LoadMainInfo ();
+            // Go to main activity
+
         }
         else if (view == btnMainLogout)
         {
             Settings ObjSettings = new Settings(this);
             ObjSettings.Clear();
 
-            if (ObjSettings .getUserId() != -1)
-            {
-                btnMainLogin.setVisibility(View.GONE);
-                btnMainRegister.setVisibility(View.GONE);
+            LoadMainInfo ();
 
-                lblMainUserName.setText(ObjSettings.getUserName());
 
-            }
 
         }
 
@@ -123,15 +120,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void LoadMainInfo ()
+    public void LoadMainInfo ()
     {
         Settings ObjSettings = new Settings(this);
         if (ObjSettings .getUserId() != -1)
         {
+            btnMainLogin.setVisibility(View.GONE);
+            btnMainRegister.setVisibility(View.GONE);
+            btnMainLogout.setVisibility(View.VISIBLE);
+            lblMainUserName.setText(ObjSettings.getUserName());
+        }
+        else
+        {
             btnMainLogin.setVisibility(View.VISIBLE);
             btnMainRegister.setVisibility(View.VISIBLE);
-            lblMainUserName.setText(ObjSettings.getUserName());
             btnMainLogout.setVisibility(View.GONE);
+            Configuration ObjConfiguration = getResources().getConfiguration();
+            if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
+                ObjConfiguration.setLocale(new Locale("ar"));
+            else
+                ObjConfiguration.setLocale(new Locale("en"));
+            Resources ObjResources = new Resources(this.getAssets(),getResources().getDisplayMetrics(),ObjConfiguration);
+            lblMainUserName.setText(ObjResources.getString(R.string.Visitor));
+
         }
     }
 

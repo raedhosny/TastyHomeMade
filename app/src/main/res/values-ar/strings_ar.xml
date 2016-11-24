@@ -18,4 +18,8 @@
       خطأ في إسم المستخدم او كلمة السر
     </string>
 
+       <string name="Visitor">
+      زائر
+    </string>
+
 </resources>
