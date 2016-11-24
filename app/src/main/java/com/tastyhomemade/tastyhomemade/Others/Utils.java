@@ -32,6 +32,12 @@ public class Utils {
             Transaction.commit();
         }
         else
+        if (sSelectedItem== "Login")
+        {
+            Transaction.replace(R.id.main_content,new LoginFragment());
+            Transaction.commit();
+        }
+        else
         if (sSelectedItem== p_ItemsList.get(0).getName())
         {
             Transaction.replace(R.id.main_content ,new ProfileFragment());

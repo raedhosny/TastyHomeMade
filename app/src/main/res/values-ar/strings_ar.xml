@@ -13,4 +13,9 @@
        <string name="Error_PleaseSelectRegisterType">
         فضلا اختر نوع  التسجيل اولا
     </string>
+
+     <string name="Error_WrongUserNameOrPassword">
+      خطأ في إسم المستخدم او كلمة السر
+    </string>
+
 </resources>

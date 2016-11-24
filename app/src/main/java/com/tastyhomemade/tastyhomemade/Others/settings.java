@@ -58,4 +58,14 @@ public class Settings {
         editor.putInt("LanguageId",p_iLanguageId);
         editor.commit();
     }
+
+
+    public  void Clear ()
+    {
+        SharedPreferences Preferences = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = Preferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 }

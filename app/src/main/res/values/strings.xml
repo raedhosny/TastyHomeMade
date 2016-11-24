@@ -31,6 +31,9 @@
         <string name="Error_PleaseSelectRegisterType">
         Please Select Register Type
     </string>
+    <string name="Error_WrongUserNameOrPassword">
+        Wrong Username or Password
+    </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -22,12 +22,14 @@ import com.tastyhomemade.tastyhomemade.Business.RegisterTypes;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
+import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by raed on 11/22/2016.
@@ -43,6 +45,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     Spinner ddlRegisterCity;
     Spinner ddlRegisterType;
     Button btnRegisterSave;
+    List<Cities> ObjCitesList ;
+    List<RegisterTypes> ObjRegisterTypesList;
 
     @Nullable
     @Override
@@ -68,9 +72,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void run() {
 
-                FillCities();
+                ObjCitesList = FillCities();
 
-                FillRegisterTypes();
+                ObjRegisterTypesList = FillRegisterTypes();
             }
         });
         t.start();
@@ -115,6 +119,31 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 return;
             }
 
+            // get City id
+
+            Cities ObjCityTemp = new Cities() ;
+            for  (Cities ObjCity : ObjCitesList)
+            {
+                if (ObjCity.getName().equals(ddlRegisterCity.getSelectedItem())) {
+                    ObjCityTemp = ObjCity;
+                    break;
+                }
+            }
+            final int iCityId = ObjCityTemp.getId();
+
+
+            // get Register Type id
+            RegisterTypes ObjRegisterTypesTemp = new RegisterTypes();
+            for  (RegisterTypes ObjRegisterTypes : ObjRegisterTypesList)
+            {
+                if (ObjRegisterTypes.getName().equals(ddlRegisterType.getSelectedItem())) {
+                    ObjRegisterTypesTemp = ObjRegisterTypes;
+                    break;
+                }
+            }
+
+            final int iRegisterTypeId = ObjRegisterTypesTemp.getId();
+
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -124,10 +153,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     ObjUser.setUsername(txtRegisterUserName.getText().toString());
                     ObjUser.setPassword(txtRegisterPassword.getText().toString());
                     ObjUser.setEmail(txtRegisterEmail.getText().toString());
-                    ObjUser.setRegisterTypeId(1);
+                    ObjUser.setRegisterTypeId(iRegisterTypeId);
                     ObjUser.setCurrentLocation_Latitude(-1);
                     ObjUser.setCurrentLocation_Longitude(-1);
-                    ObjUser.setCityId(1);
+                    ObjUser.setCityId(iCityId);
                     ObjUser.setDistrict("Nothing");
                     ObjUser.setStreet("Nothing");
                     ObjUser.setBuilding("Nothing");
@@ -145,11 +174,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void FillCities() {
+    private List<Cities> FillCities() {
 
+        Settings ObjSettings = new Settings(getActivity());
         List<String> ObjStringsList = new ArrayList<String>();
 
-        List<Cities> ObjCitiesList = new CitiesDB().SelectAll(1);
+
+        List<Cities> ObjCitiesList = new CitiesDB().SelectAll(ObjSettings .getCurrentLanguageId());
         for (Cities ObjTemp : ObjCitiesList) {
             ObjStringsList.add(ObjTemp.getName());
         }
@@ -163,11 +194,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 ddlRegisterCity.setAdapter(CitiesAdapter);
             }
         });
+        return ObjCitiesList;
     }
 
-    private void FillRegisterTypes() {
+    private List<RegisterTypes> FillRegisterTypes() {
+
+        Settings ObjSettings = new Settings(getActivity());
         List<String> ObjStringsList = new ArrayList<String>();
-        List<RegisterTypes> ObjRegisterTypesList = new RegisterTypesDB().SelectAll(1);
+        List<RegisterTypes> ObjRegisterTypesList = new RegisterTypesDB().SelectAll(ObjSettings .getCurrentLanguageId());
         for (RegisterTypes ObjTemp : ObjRegisterTypesList) {
             ObjStringsList.add(ObjTemp.getName());
         }
@@ -181,6 +215,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 ddlRegisterType.setAdapter(RegisterTypesAdapter);
             }
         });
+        return ObjRegisterTypesList;
 
     }
 

@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<MainMenuItem> SideMenuItemsList;
     Button btnMainRegister;
     TextView lblMainUserName;
+    Button btnMainLogin;
+    Button btnMainLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMainRegister.setOnClickListener(this);
         lvMainMenu = (ListView)this. findViewById(R.id.lvMainMenu);
         lblMainUserName = (TextView) this.findViewById(R.id.lblMainUserName);
-
+        btnMainLogin = (Button)this.findViewById(R.id.btnMainLogin);
+        btnMainLogin.setOnClickListener(this);
+        btnMainLogout = (Button)this.findViewById(R.id.btnMainLogout);
+        btnMainLogout.setOnClickListener(this);
 
         //  Slide Menu Initiation
         FillSideMenu();
@@ -71,6 +76,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if (view  == btnMainRegister)
         {
             new Utils().ShowActivity(MainActivity.this,null,"Register");
+        }
+        else if (view  == btnMainLogin)
+        {
+            Settings ObjSettings = new Settings(this);
+            new Utils().ShowActivity(MainActivity.this,null,"Login");
+            btnMainLogin.setVisibility(View.GONE);
+            btnMainRegister.setVisibility(View.GONE);
+            btnMainLogout.setVisibility(View.VISIBLE);
+            lblMainUserName.setText(ObjSettings.getUserName());
+        }
+        else if (view == btnMainLogout)
+        {
+            Settings ObjSettings = new Settings(this);
+            ObjSettings.Clear();
+
+            if (ObjSettings .getUserId() != -1)
+            {
+                btnMainLogin.setVisibility(View.GONE);
+                btnMainRegister.setVisibility(View.GONE);
+
+                lblMainUserName.setText(ObjSettings.getUserName());
+
+            }
+
         }
 
     }
@@ -99,7 +128,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Settings ObjSettings = new Settings(this);
         if (ObjSettings .getUserId() != -1)
         {
+            btnMainLogin.setVisibility(View.VISIBLE);
+            btnMainRegister.setVisibility(View.VISIBLE);
             lblMainUserName.setText(ObjSettings.getUserName());
+            btnMainLogout.setVisibility(View.GONE);
         }
     }
 
