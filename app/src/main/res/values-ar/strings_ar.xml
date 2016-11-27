@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="MainMenuStrings">
+        <item>1,بياناتي شخصيه,Customer;FoodMaker</item>
+        <item>2,الاعدادات,All</item>
+        <item>3,مأكولاتي ومشروباتي المضافه,FoodMaker</item>
+        <item>4,طلبات العملاء,FoodMaker</item>
+        <item>5,تتبع مأكولاتي أو مشروباتي,Customer</item>
+        <item>6,أضف مأكولات أو مشروبات,FoodMaker</item>
+        <item>7,إختياراتي,Customer</item>
+        <item>8,الأكثرا طلبا,All</item>
+    </string-array>
+
       <string name="Error_PasswordDoesNotMatch">
        كلمة السر غير متواقفه
     </string>

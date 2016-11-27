@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMainLogout = (Button)this.findViewById(R.id.btnMainLogout);
         btnMainLogout.setOnClickListener(this);
 
-        //  Slide Menu Initiation
-        FillSideMenu();
-
         LoadMainInfo();
 
         Drawer_Layout.closeDrawer(lvMainMenu);
@@ -104,9 +101,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void FillSideMenu ()
     {
         // Fill Main Menu List
-        List<String> ItemsListTemp= new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.MainMenuStrings)));
+        Configuration ObjConfiguration = getResources().getConfiguration();
+        if (new Settings(this).getCurrentLanguageId() == 1) // Arabic
+            ObjConfiguration.setLocale(new Locale("ar"));
+        else if (new Settings(this).getCurrentLanguageId() == 2) // English
+            ObjConfiguration.setLocale(new Locale("en"));
+        Resources ObjResources = new Resources(getAssets(),getResources().getDisplayMetrics(),ObjConfiguration);
+
+        List<String> ItemsListTemp= new ArrayList<String>(Arrays.asList(ObjResources.getStringArray(R.array.MainMenuStrings)));
+        List<String> ItemsListFiltered = new ArrayList<String>();
+
+        for (String ItemTemp : ItemsListTemp)
+        {
+            int iId = Integer.valueOf(ItemTemp.split(",")[0]);
+            String sName = ItemTemp.split(",")[1];
+            String[] UserTypesList = ItemTemp.split(",")[2].split(";");
+            for (String sUserType : UserTypesList)
+            {
+                if (sUserType.equals( new Settings(this).getUserType()))
+                {
+                    ItemsListFiltered.add(iId + "," + sName);
+                }
+            }
+        }
+
         SideMenuItemsList =  new ArrayList<MainMenuItem>();
-        for (String ItemTemp : ItemsListTemp) {
+        for (String ItemTemp : ItemsListFiltered) {
             int iId = Integer.valueOf(ItemTemp.split(",")[0]);
             String sName = ItemTemp.split(",")[1];
             MainMenuItem ItemList = new MainMenuItem(iId,sName);
@@ -114,14 +134,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         View Header = getLayoutInflater().inflate(R.layout.main_menu_header,null);
-        lvMainMenu.addHeaderView(Header);
+        if (lvMainMenu.getHeaderViewsCount() == 0 )
+            lvMainMenu.addHeaderView(Header);
         lvMainMenu.setAdapter(new MainMenuAdapter(this,SideMenuItemsList));
-
+        Drawer_Layout.closeDrawer(lvMainMenu);
 
     }
 
     public void LoadMainInfo ()
     {
+        FillSideMenu();
         Settings ObjSettings = new Settings(this);
         if (ObjSettings .getUserId() != -1)
         {

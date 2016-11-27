@@ -61,6 +61,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if (ObjUser.getId() != -1) {
                     ObjSettings.setUserId(ObjUser.getId());
                     ObjSettings.setUserName(ObjUser.getUsername());
+                    if (ObjUser.getRegisterTypeId() == 1) // FoodMaker
+                        ObjSettings.setUserType(Settings.enumUserType.FoodMaker.name());
+                    else if (ObjUser.getRegisterTypeId() == 2) //Customer
+                        ObjSettings.setUserType(Settings.enumUserType.Customer.name());
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

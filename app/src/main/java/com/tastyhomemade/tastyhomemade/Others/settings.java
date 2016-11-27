@@ -17,6 +17,8 @@ public class Settings {
         context = p_context;
     }
 
+    public static enum enumUserType {All,FoodMaker,Customer}
+
     public  int getUserId ()
     {
         SharedPreferences Preferences = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
@@ -33,6 +35,12 @@ public class Settings {
     {
         SharedPreferences Preferences = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
         return Preferences.getInt("LanguageId",1);
+    }
+
+    public  String getUserType ()
+    {
+        SharedPreferences Preferences = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
+        return Preferences.getString("UserType",enumUserType.All.name());
     }
 
     public  void setUserId (int p_iUserId)
@@ -56,6 +64,14 @@ public class Settings {
         SharedPreferences Preferences = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = Preferences.edit();
         editor.putInt("LanguageId",p_iLanguageId);
+        editor.commit();
+    }
+
+    public  void setUserType (String p_sUserType)
+    {
+        SharedPreferences Preferences = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = Preferences.edit();
+        editor.putString("UserType",p_sUserType);
         editor.commit();
     }
 
