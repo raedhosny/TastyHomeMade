@@ -1,313 +1,353 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="5dp">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+
+
+    <Button
+        android:id="@+id/btnAddSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layoutDirection="rtl"
-        android:background="@drawable/border"
-        android:padding="5dp">
 
-        <TextView
-            android:text="بيانات الوجبه"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:textColor="#000"
-            android:layout_marginTop="10dp"
-            />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:height="111px"
+        android:background="@drawable/button"
+        android:text="حفظ"
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-          >
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lblAddName"
-                    android:textSize="14sp"
-                    android:textColor="#000"
-                    android:text="الإسم"
-                    android:layout_marginTop="10dp" />
-
-                <TextView
-                    android:text="الفئه"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lblAddFoodCategory"
-                    android:textColor="#000"
-                    android:layout_marginTop="27dp" />
-
-                <TextView
-                    android:text="الوصف"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lblAddDescription"
-                    android:textColor="#000"
-                    android:layout_marginTop="65dp" />
-
-                <TextView
-                    android:text="السعر"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lblAddPrice"
-                    android:textColor="#000"
-                    android:layout_marginTop="60dp" />
-
-                <TextView
-                    android:text="إلتقاط صوره"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lblImage"
-                    android:textColor="#000"
-                    android:layout_marginTop="33dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:id="@+id/txtAddName"
-                    android:background="@drawable/textbox_enabled" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:layout_marginTop="10dp"
-                    >
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="88px"
-                        android:background="@drawable/spinner"
-                        />
-                    <ImageView
-                        android:layout_width="102px"
-                        android:layout_height="88px" android:background="@drawable/dropdown"
-                        android:layout_alignParentLeft="true"
-                        />
-                    <Spinner
-                        android:layout_width="match_parent"
-
-                        android:id="@+id/spinner"
-                        android:layout_height="88px"
-                        android:spinnerMode="dialog"
-                        android:theme="@android:style/Theme.Holo.Light"
-                        android:background="@null"
-                        />
+        />
 
 
-                </RelativeLayout>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtAddDescription"
-                    android:background="@drawable/textbox_enabled"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="250px" />
-
-                <EditText
-                    android:layout_width="100dp"
-                    android:layout_height="88px"
-                    android:id="@+id/txtAddOrderPrice"
-                    android:background="@drawable/textbox_enabled"
-                    android:layout_marginTop="10dp" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <Button
-                        android:text="بالكاميره"
-                        android:layout_width="wrap_content"
-                        android:layout_height="81px"
-                        android:id="@+id/btnAddFoodCamera"
-                        android:layout_weight="1"
-                        android:background="@drawable/button"
-                        android:layout_margin="5dp" />
-
-                    <Button
-                        android:text="من ذاكرة الهاتف"
-                        android:layout_width="wrap_content"
-                        android:layout_height="81px"
-                        android:id="@+id/btnAddFoodFromStorage"
-                        android:layout_weight="1"
-                        android:background="@drawable/button"
-                        android:layout_margin="5dp" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="290px"
-                    app:srcCompat="@android:color/background_light"
-                    android:id="@+id/imgAddFoodPhoto"
-                    android:layout_margin="5dp" />
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/border"
-        android:layoutDirection="rtl">
+
+        android:fillViewport="true"
+        android:layout_above="@id/btnAddSave"
+        android:layout_marginBottom="10dp"
+       >
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-            <TextView
-                android:text="الإضافات"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView13"
-                android:textColor="#000"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:layoutDirection="rtl"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="بيانات الوجبه"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:text="الإسم"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView9"
-                        android:textColor="#000"
-                        android:layout_marginTop="10dp" />
-
-                    <TextView
-                        android:text="السعر"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView10"
-                        android:textColor="#000"
-                        android:layout_marginTop="30dp" />
-
-                    <TextView
-                        android:text="إلتقاط صوره"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView11"
-                        android:textColor="#000"
-                        android:layout_marginTop="30dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="5dp">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="88px"
-                        android:text="Name"
-                        android:ems="10"
-                        android:id="@+id/txtAddGradient"
-                        android:background="@drawable/textbox_enabled" />
-
-                    <EditText
-                        android:layout_width="250px"
-                        android:layout_height="88px"
-                        android:text="Name"
-                        android:ems="10"
-                        android:id="@+id/txtAddPrice"
-                        android:background="@drawable/textbox_enabled"
-                        android:layout_marginTop="10dp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
-
-                        <Button
-                            android:text="بالكاميره"
-                            android:layout_width="wrap_content"
-                            android:layout_height="81px"
-                            android:id="@+id/btnAddGradientCamera"
-                            android:layout_weight="1"
-                            android:background="@drawable/button"
-                            android:layout_margin="5dp" />
-
-                        <Button
-                            android:text="من ذاكرة الهاتف"
-                            android:layout_width="wrap_content"
-                            android:layout_height="81px"
-                            android:id="@+id/btnAddGradientFromStorage"
-                            android:layout_weight="1"
-                            android:background="@drawable/button"
-                            android:layout_margin="5dp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        app:srcCompat="@android:color/background_light"
-                        android:id="@+id/imgGradientPhoto"
-                        android:layout_weight="1"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="290px" />
-
-                    <Button
-                        android:text="أضف"
-                        android:layout_width="match_parent"
-                        android:layout_height="81px"
-                        android:id="@+id/btnAddGradientAdd"
-                        android:background="@drawable/button"
-                        android:layout_marginTop="10dp" />
-
-                    <ListView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:background="#fff" />
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/lblAddName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="الإسم"
+                            android:textColor="#000"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/lblAddFoodCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="27dp"
+                            android:text="الفئه"
+                            android:textColor="#000" />
+
+                        <TextView
+                            android:id="@+id/lblAddDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="65dp"
+                            android:text="الوصف"
+                            android:textColor="#000" />
+
+                        <TextView
+                            android:id="@+id/lblAddPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="60dp"
+                            android:text="السعر"
+                            android:textColor="#000" />
+
+                        <TextView
+                            android:id="@+id/lblImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="33dp"
+                            android:text="إلتقاط صوره"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <EditText
+                            android:id="@+id/txtAddName"
+                            android:layout_width="match_parent"
+                            android:layout_height="88px"
+                            android:background="@drawable/textbox_enabled" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="88px"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="88px"
+                                android:background="@drawable/spinner" />
+
+                            <ImageView
+                                android:layout_width="102px"
+                                android:layout_height="88px"
+                                android:layout_alignParentLeft="true"
+                                android:background="@drawable/dropdown" />
+
+                            <Spinner
+                                android:id="@+id/ddlAddCategory"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="88px"
+                                android:background="@null"
+                                android:spinnerMode="dialog"
+                                android:theme="@android:style/Theme.Holo.Light"
+                                />
+
+
+                        </RelativeLayout>
+
+                        <EditText
+                            android:id="@+id/txtAddDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="250px"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/textbox_enabled" />
+
+                        <EditText
+                            android:id="@+id/txtAddOrderPrice"
+                            android:layout_width="100dp"
+                            android:layout_height="88px"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/textbox_enabled" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnAddFoodCamera"
+                                android:layout_width="wrap_content"
+                                android:layout_height="81px"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/button"
+                                android:text="بالكاميره" />
+
+                            <Button
+                                android:id="@+id/btnAddFoodFromStorage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="81px"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/button"
+                                android:text="من ذاكرة الهاتف" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgAddFoodPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="290px"
+                            android:layout_margin="5dp"
+                           />
+
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
-</LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+
+                android:layoutDirection="rtl"
+                android:orientation="vertical"
+                android:background="@drawable/border">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="الإضافات"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="الإسم"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="30dp"
+                                android:text="السعر"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="30dp"
+                                android:text="إلتقاط صوره"
+                                android:textColor="#000" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <EditText
+                                android:id="@+id/txtAddGradient"
+                                android:layout_width="match_parent"
+                                android:layout_height="88px"
+                                android:background="@drawable/textbox_enabled"
+                                android:ems="10"
+                                android:text="Name" />
+
+                            <EditText
+                                android:id="@+id/txtAddGradientPrice"
+                                android:layout_width="250px"
+                                android:layout_height="88px"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/textbox_enabled"
+                                android:ems="10"
+                                android:text="Name" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/btnAddGradientCamera"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="81px"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/button"
+                                    android:text="بالكاميره" />
+
+                                <Button
+                                    android:id="@+id/btnAddGradientFromStorage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="81px"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/button"
+                                    android:text="من ذاكرة الهاتف" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/imgGradientPhoto"
+                                android:layout_width="match_parent"
+                                android:layout_height="290px"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@android:color/background_light" />
+
+                            <Button
+                                android:id="@+id/btnAddGradientAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="81px"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/button"
+                                android:text="أضف" />
+
+                            <ListView
+                                android:id="@+id/lvAddFoodGradient"
+                                android:layout_width="match_parent"
+                                android:layout_height="290px"
+                                android:layout_marginTop="10dp"
+                                android:background="#fff"
+                                 />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

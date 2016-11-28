@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText txtSearch;
     Button btnSearch;
     ListView lvMainMenu;
-    List<MainMenuItem> SideMenuItemsList;
+    List<MainMenuItem> FilteredSideMenuItemsList;
+    List<MainMenuItem> AllSideMenuItemsList;
     Button btnMainRegister;
     TextView lblMainUserName;
     Button btnMainLogin;
@@ -111,11 +112,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<String> ItemsListTemp= new ArrayList<String>(Arrays.asList(ObjResources.getStringArray(R.array.MainMenuStrings)));
         List<String> ItemsListFiltered = new ArrayList<String>();
 
+        FilteredSideMenuItemsList =  new ArrayList<MainMenuItem>();
+        AllSideMenuItemsList =  new ArrayList<MainMenuItem>();
+
         for (String ItemTemp : ItemsListTemp)
         {
             int iId = Integer.valueOf(ItemTemp.split(",")[0]);
             String sName = ItemTemp.split(",")[1];
             String[] UserTypesList = ItemTemp.split(",")[2].split(";");
+
+            AllSideMenuItemsList.add(new MainMenuItem(iId,sName));
+
             for (String sUserType : UserTypesList)
             {
                 if (sUserType.equals( new Settings(this).getUserType()))
@@ -125,18 +132,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        SideMenuItemsList =  new ArrayList<MainMenuItem>();
+
         for (String ItemTemp : ItemsListFiltered) {
             int iId = Integer.valueOf(ItemTemp.split(",")[0]);
             String sName = ItemTemp.split(",")[1];
             MainMenuItem ItemList = new MainMenuItem(iId,sName);
-            SideMenuItemsList.add(ItemList );
+            FilteredSideMenuItemsList.add(ItemList );
         }
 
         View Header = getLayoutInflater().inflate(R.layout.main_menu_header,null);
         if (lvMainMenu.getHeaderViewsCount() == 0 )
             lvMainMenu.addHeaderView(Header);
-        lvMainMenu.setAdapter(new MainMenuAdapter(this,SideMenuItemsList));
+        lvMainMenu.setAdapter(new MainMenuAdapter(this,FilteredSideMenuItemsList,AllSideMenuItemsList));
         Drawer_Layout.closeDrawer(lvMainMenu);
 
     }

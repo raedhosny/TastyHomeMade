@@ -26,21 +26,23 @@ public class MainMenuAdapter extends BaseAdapter{
 
 
 
-    private List<MainMenuItem> ItemsList;
+    private List<MainMenuItem> FilteredItemsList;
+    private List<MainMenuItem> AllItems;
 
-    public MainMenuAdapter(Context context, List<MainMenuItem> items) {
+    public MainMenuAdapter(Context context, List<MainMenuItem> p_Filtereditems, List<MainMenuItem> p_AllItems ) {
         this.context = context;
-        ItemsList = items;
+        FilteredItemsList = p_Filtereditems;
+        AllItems = p_AllItems;
     }
 
     @Override
     public int getCount() {
-        return ItemsList.size();
+        return FilteredItemsList.size();
     }
 
     @Override
     public MainMenuItem getItem(int i) {
-        return ItemsList.get(i);
+        return FilteredItemsList.get(i);
     }
 
     @Override
@@ -53,13 +55,13 @@ public class MainMenuAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate (context,R.layout.main_menu_item,null);
         TextView lblItem = (TextView) v.findViewById(R.id.lblItem);
-        lblItem.setText(ItemsList.get(i).getName());
+        lblItem.setText(FilteredItemsList.get(i).getName());
 
         lblItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String sSelectedItem  =((TextView)view).getText().toString();
-                new Utils().ShowActivity ((MainActivity)context,ItemsList,sSelectedItem);
+                new Utils().ShowActivity ((MainActivity)context,AllItems,sSelectedItem);
                 ((DrawerLayout)((MainActivity)context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity)context).findViewById(R.id.lvMainMenu));;
 
             }

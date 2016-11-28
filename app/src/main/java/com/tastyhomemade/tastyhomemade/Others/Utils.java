@@ -38,16 +38,22 @@ public class Utils {
             Transaction.commit();
         }
         else
-        if (sSelectedItem== p_ItemsList.get(0).getName())
+        if (sSelectedItem.equals( p_ItemsList.get(0).getName()))
         {
             Transaction.replace(R.id.main_content ,new ProfileFragment());
 
             Transaction.commit();
         }
-        else if (sSelectedItem== p_ItemsList.get(1).getName())
+        else if (sSelectedItem.equals( p_ItemsList.get(1).getName()))
         {
             Transaction.replace(R.id.main_content ,new SettingsFragment());
             Transaction.commit();
+        }
+        else if (sSelectedItem.equals(p_ItemsList.get(5).getName()) )  // Add Foods and Drinks
+        {
+            Transaction.replace(R.id.main_content,new AddFoodsAndDrinksFragment());
+            Transaction.commit();
+
         }
     }
 
