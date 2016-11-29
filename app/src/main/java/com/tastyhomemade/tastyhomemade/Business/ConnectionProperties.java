@@ -5,7 +5,7 @@ package com.tastyhomemade.tastyhomemade.Business;
  */
 
 public class ConnectionProperties {
-    public static String IP = "192.168.1.7";
+    public static String IP = "192.168.15.128";
     public static String UserName = "sa";
     public static String Password = "help";
     public static String Port = "1433";

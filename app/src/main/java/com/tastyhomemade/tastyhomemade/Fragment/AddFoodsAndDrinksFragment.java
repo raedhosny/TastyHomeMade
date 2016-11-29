@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -24,6 +25,8 @@ import com.tastyhomemade.tastyhomemade.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -87,6 +90,11 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
         btnAddSave.setOnClickListener(this);
 
         ObjCategoriesList = FillCategories();
+
+        Bitmap imageBitmap2 = BitmapFactory.decodeFile(getActivity().getCacheDir() + "/temp.png");
+
+        imgAddFoodPhoto.setImageBitmap(imageBitmap2);
+
     }
 
     @Override
@@ -117,17 +125,18 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_RESULT && resultCode == RESULT_OK) {
           try {
+
               Bundle extras = data.getExtras();
               Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-              imgAddFoodPhoto.setImageBitmap(Bitmap.createScaledBitmap(imageBitmap, 120, 120, false));
-              imgAddFoodPhoto.post(new Runnable() {
-                  @Override
-                  public void run() {
-                      imgAddFoodPhoto.setVisibility(View.GONE);
-                      imgAddFoodPhoto.setVisibility(View.VISIBLE);
-                  }
-              });
+              ByteArrayOutputStream OutTemp = new ByteArrayOutputStream();
+
+              imageBitmap.compress(Bitmap.CompressFormat.PNG,72,OutTemp);
+
+              Bitmap imageBitmap2 = BitmapFactory.decodeByteArray(OutTemp.toByteArray(),0,OutTemp.toByteArray().length);
+
+              imgAddFoodPhoto.setImageBitmap(imageBitmap2);
+
           }
           catch (Exception ex)
           {
