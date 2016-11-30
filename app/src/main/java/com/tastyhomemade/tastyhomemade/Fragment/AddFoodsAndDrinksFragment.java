@@ -2,6 +2,9 @@ package com.tastyhomemade.tastyhomemade.Fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.os.EnvironmentCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +31,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.zip.Inflater;
 
 import static android.app.Activity.RESULT_OK;
@@ -42,6 +49,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
 
     List<Categories> ObjCategoriesList = new ArrayList<Categories>();
     private int CAMERA_RESULT = 1;
+    private int PICKPHOTO_RESULT = 2;
 
     EditText txtAddName;
     Spinner ddlAddCategory;
@@ -91,9 +99,8 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
 
         ObjCategoriesList = FillCategories();
 
-        Bitmap imageBitmap2 = BitmapFactory.decodeFile(getActivity().getCacheDir() + "/temp.png");
 
-        imgAddFoodPhoto.setImageBitmap(imageBitmap2);
+
 
     }
 
@@ -104,6 +111,19 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             startActivityForResult(IntentFoodCamera, CAMERA_RESULT);
         }
         if (view == btnAddFoodFromStorage) {
+
+            Settings ObjSettings = new Settings(getActivity());
+            Configuration ObjConfiguration = getResources().getConfiguration();
+            if (ObjSettings .getCurrentLanguageId() == 1)
+                ObjConfiguration.setLocale(new Locale("ar"));
+            else if (ObjSettings .getCurrentLanguageId() == 2)
+                ObjConfiguration.setLocale(new Locale("en"));
+
+            Resources ObjResources = new Resources(getActivity().getAssets(),getResources().getDisplayMetrics(),ObjConfiguration);
+
+            Intent IntentFoodPhotoChooser = new Intent(Intent.ACTION_PICK);
+            IntentFoodPhotoChooser.setType("image/*");
+            startActivityForResult(IntentFoodPhotoChooser ,PICKPHOTO_RESULT);
 
         }
         if (view == btnAddGradientCamera) {
@@ -126,22 +146,55 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
         if (requestCode == CAMERA_RESULT && resultCode == RESULT_OK) {
           try {
 
-              Bundle extras = data.getExtras();
-              Bitmap imageBitmap = (Bitmap) extras.get("data");
-
+              //Bundle extras = data.getExtras();
+              //Bitmap imageBitmap = (Bitmap) extras.get("data");
+              Bitmap ObjBitmap = (Bitmap )data.getExtras().get("data");
               ByteArrayOutputStream OutTemp = new ByteArrayOutputStream();
+              ObjBitmap.compress(Bitmap.CompressFormat.JPEG,90,OutTemp);
+              String sTempFileName = getContext().getCacheDir()+"/temp.jpg";
+              File destination = new File(sTempFileName);
+              destination.createNewFile();
 
-              imageBitmap.compress(Bitmap.CompressFormat.PNG,72,OutTemp);
+              FileOutputStream fo = new FileOutputStream(destination);
+              fo.write(OutTemp.toByteArray());
+              fo.flush();
+              fo.close();
 
-              Bitmap imageBitmap2 = BitmapFactory.decodeByteArray(OutTemp.toByteArray(),0,OutTemp.toByteArray().length);
 
-              imgAddFoodPhoto.setImageBitmap(imageBitmap2);
+              Bitmap imageBitmap = BitmapFactory.decodeFile(sTempFileName);
+
+              int iWidth = imageBitmap.getWidth();
+              int iHeight =  imageBitmap.getHeight();
+              int inewHeight = 290;
+              int inewWidth =  (int)(((float)(iWidth * inewHeight)) /((float)iHeight));
+              imgAddFoodPhoto.setImageBitmap(imageBitmap.createScaledBitmap(imageBitmap,inewWidth,inewHeight,false) );
 
           }
           catch (Exception ex)
           {
               ex.printStackTrace();
           }
+        }
+        else if (requestCode == PICKPHOTO_RESULT && resultCode==RESULT_OK)
+        {
+            if ( data == null)
+                return;
+            try
+            {
+               InputStream ObjInputStream= getContext().getContentResolver().openInputStream(data.getData());
+               Bitmap imageBitmap = BitmapFactory.decodeStream(ObjInputStream);
+               int iWidth = imageBitmap.getWidth();
+               int iHeight =  imageBitmap.getHeight();
+                int inewHeight = 290;
+                int inewWidth =  (int)(((float)(iWidth * inewHeight)) /((float)iHeight));
+
+                imgAddFoodPhoto.setImageBitmap(Bitmap.createScaledBitmap(imageBitmap,inewWidth,inewHeight,false));
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+
         }
 
     }
