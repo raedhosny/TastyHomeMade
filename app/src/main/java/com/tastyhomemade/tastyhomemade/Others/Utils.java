@@ -1,12 +1,16 @@
 package com.tastyhomemade.tastyhomemade.Others;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import com.tastyhomemade.tastyhomemade.Business.MainMenuItem;
 import com.tastyhomemade.tastyhomemade.Fragment.*;
 import java.util.List;
+import java.util.Locale;
+
 import com.tastyhomemade.tastyhomemade.R;
 
 /**
@@ -55,6 +59,30 @@ public class Utils {
             Transaction.commit();
 
         }
+    }
+
+    public static String GetResourceName(Context p_Context, int p_iResourceName,int p_iLanguage)
+    {
+        Configuration ObjConfiguration = p_Context.getResources().getConfiguration();
+        if (p_iLanguage == 1) // Arabic
+            ObjConfiguration.setLocale(new Locale("ar"));
+        else if (p_iLanguage == 2) // English
+            ObjConfiguration.setLocale(new Locale("en"));
+        Resources ObjResources = new Resources(p_Context.getAssets(), p_Context.getResources().getDisplayMetrics(),ObjConfiguration);
+
+        return ObjResources.getString(p_iResourceName);
+    }
+
+    public static String[] GetResourceArrayName(Context p_Context, int p_iResourceName,int p_iLanguage)
+    {
+        Configuration ObjConfiguration = p_Context.getResources().getConfiguration();
+        if (p_iLanguage == 1) // Arabic
+            ObjConfiguration.setLocale(new Locale("ar"));
+        else if (p_iLanguage == 2) // English
+            ObjConfiguration.setLocale(new Locale("en"));
+        Resources ObjResources = new Resources(p_Context.getAssets(), p_Context.getResources().getDisplayMetrics(),ObjConfiguration);
+
+        return ObjResources.getStringArray(p_iResourceName);
     }
 
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="57px"
+        android:layout_height="63px"
+        android:background="@drawable/timeselector_timecomponent_leftside"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="63px"
+        android:background="@drawable/timeselector_timecomponent_rightside"
+        android:theme="@android:style/Theme.Holo.Light"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/Spinner_Item"
+        ></Spinner>
+
+
+
+
+</RelativeLayout>

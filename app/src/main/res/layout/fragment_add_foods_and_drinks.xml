@@ -11,7 +11,7 @@
 
 
     <Button
-        android:id="@+id/btnAddSave"
+        android:id="@+id/btnAddFoodSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
 
         android:fillViewport="true"
-        android:layout_above="@id/btnAddSave"
+        android:layout_above="@id/btnAddFoodSave"
         android:layout_marginBottom="10dp"
        >
 
@@ -82,7 +82,7 @@
                             android:id="@+id/lblAddFoodCategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="27dp"
+                            android:layout_marginTop="20dp"
                             android:text="الفئه"
                             android:textColor="#000" />
 
@@ -90,7 +90,7 @@
                             android:id="@+id/lblAddDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="65dp"
+                            android:layout_marginTop="50dp"
                             android:text="الوصف"
                             android:textColor="#000" />
 
@@ -98,7 +98,7 @@
                             android:id="@+id/lblAddPrice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="60dp"
+                            android:layout_marginTop="50dp"
                             android:text="السعر"
                             android:textColor="#000" />
 
@@ -106,9 +106,33 @@
                             android:id="@+id/lblImage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="33dp"
+                            android:layout_marginTop="25dp"
                             android:text="إلتقاط صوره"
                             android:textColor="#000" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="وقت الطلب من"
+                            android:textColor="#000"
+                            android:layout_marginTop="145dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="وقت الطلب الي"
+                            android:textColor="#000"
+                            android:layout_marginTop="60dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="إظهار للعميل"
+                            android:textColor="#000"
+                            android:layout_marginTop="35dp"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -119,53 +143,34 @@
                         android:padding="5dp">
 
                         <EditText
-                            android:id="@+id/txtAddName"
+                            android:id="@+id/txtAddFoodName"
                             android:layout_width="match_parent"
                             android:layout_height="88px"
-                            android:background="@drawable/textbox_enabled" />
+                            android:background="@drawable/textbox_enabled"
+                            style="@style/myedittext"
+                            />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="88px"
-                            android:layout_marginTop="10dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="88px"
-                                android:background="@drawable/spinner" />
-
-                            <ImageView
-                                android:layout_width="102px"
-                                android:layout_height="88px"
-                                android:layout_alignParentLeft="true"
-                                android:background="@drawable/dropdown" />
-
-                            <Spinner
-                                android:id="@+id/ddlAddCategory"
-
-                                android:layout_width="match_parent"
-                                android:layout_height="88px"
-                                android:background="@null"
-                                android:spinnerMode="dialog"
-                                android:theme="@android:style/Theme.Holo.Light"
-                                />
-
-
-                        </RelativeLayout>
+                      <include layout="@layout/control_dropdown" android:id="@+id/Include_ddlAddCategory"/>
 
                         <EditText
-                            android:id="@+id/txtAddDescription"
+                            android:id="@+id/txtAddFoodDescription"
                             android:layout_width="match_parent"
                             android:layout_height="250px"
                             android:layout_marginTop="10dp"
-                            android:background="@drawable/textbox_enabled" />
+                            android:background="@drawable/textbox_enabled"
+                            android:gravity="top|right"
+                            style="@style/myedittext"
+                            />
 
                         <EditText
-                            android:id="@+id/txtAddOrderPrice"
+                            android:id="@+id/txtAddFoodOrderPrice"
                             android:layout_width="100dp"
                             android:layout_height="88px"
                             android:layout_marginTop="10dp"
-                            android:background="@drawable/textbox_enabled" />
+                            android:background="@drawable/textbox_enabled"
+                            style="@style/myedittext"
+                            android:gravity="center"
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -174,7 +179,7 @@
                             android:orientation="horizontal">
 
                             <Button
-                                android:id="@+id/btnAddFoodCamera"
+                                android:id="@+id/btnAddFoodCameraPhoto"
                                 android:layout_width="wrap_content"
                                 android:layout_height="81px"
                                 android:layout_margin="5dp"
@@ -183,7 +188,7 @@
                                 android:text="بالكاميره" />
 
                             <Button
-                                android:id="@+id/btnAddFoodFromStorage"
+                                android:id="@+id/btnAddFoodFromStoragePhoto"
                                 android:layout_width="wrap_content"
                                 android:layout_height="81px"
                                 android:layout_margin="5dp"
@@ -197,7 +202,36 @@
                             android:layout_width="match_parent"
                             android:layout_height="290px"
                             android:layout_margin="5dp"
+                            android:src="@drawable/border"
                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_marginTop="3dp">
+                        <include layout="@layout/control_time"
+                            android:id="@+id/Include_RequestFromTime"
+                            ></include>
+                            </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                        <include layout="@layout/control_time"
+                            android:id="@+id/Include_RequestTimeTo"
+                            ></include>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+                            android:id="@+id/Include_ShowToClient"
+                            >
+                        <include layout="@layout/control_dropdown" android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:id="@+id/Include_ddlShowToCustomer"
+                            >
+
+                        </include>
+                            </LinearLayout>
 
 
                     </LinearLayout>
@@ -281,7 +315,10 @@
                                 android:layout_height="88px"
                                 android:background="@drawable/textbox_enabled"
                                 android:ems="10"
-                                android:text="Name" />
+
+                                style="@style/myedittext"
+
+                                />
 
                             <EditText
                                 android:id="@+id/txtAddGradientPrice"
@@ -290,7 +327,8 @@
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/textbox_enabled"
                                 android:ems="10"
-                                android:text="Name" />
+                                style="@style/myedittext"
+                                />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -323,7 +361,8 @@
                                 android:layout_height="290px"
                                 android:layout_marginTop="10dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@android:color/background_light" />
+                                android:src="@drawable/border"
+                                />
 
                             <Button
                                 android:id="@+id/btnAddGradientAdd"
