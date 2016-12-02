@@ -19,8 +19,9 @@ public class Foods {
     private java.sql.Time RequestTimeTo;
     private byte[] Photo;
     private float Price;
+    private boolean IsVisible;
 
-    public Foods(int id, int languageId, String name, String description, int categoryId, int userId, java.sql.Time requestTimeFrom, java.sql.Time requestTimeTo, byte[] photo, float price) {
+    public Foods(int id, int languageId, String name, String description, int categoryId, int userId, java.sql.Time requestTimeFrom, java.sql.Time requestTimeTo, byte[] photo, float price,boolean IsVisible) {
         Id = id;
         LanguageId = languageId;
         Name = name;
@@ -31,6 +32,8 @@ public class Foods {
         RequestTimeTo = requestTimeTo;
         Photo = photo;
         Price = price;
+        this.IsVisible = IsVisible;
+
     }
 
     public Foods() {
@@ -102,6 +105,14 @@ public class Foods {
 
     public byte[] getPhoto() {
         return Photo;
+    }
+
+    public boolean isVisible() {
+        return IsVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        IsVisible = visible;
     }
 
     public void setPhoto(byte[] photo) {

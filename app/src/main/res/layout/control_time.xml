@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/timeselector_border"
-    android:layoutDirection="rtl"
+
     android:orientation="vertical"
 
     >
@@ -20,6 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+
     >
 
 
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/timeselector_header"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1.2">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/timeselector_header"
 
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:orientation="vertical"
 
             >
@@ -74,7 +75,7 @@
                 layout="@layout/control_timespinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:id="@+id/Include_Spinner_Hours"
                 ></include>
         </LinearLayout>
@@ -85,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/timeselector_header"
 
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:layout_marginTop="21dp"
 
             >
@@ -94,8 +95,8 @@
                 layout="@layout/control_timespinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/Include_DayNight"
+
+                android:id="@+id/Include_Spinner_DayNight"
                 ></include>
         </LinearLayout>
 

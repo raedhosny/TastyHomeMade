@@ -82,7 +82,8 @@ public class Utils {
             ObjConfiguration.setLocale(new Locale("en"));
         Resources ObjResources = new Resources(p_Context.getAssets(), p_Context.getResources().getDisplayMetrics(),ObjConfiguration);
 
-        return ObjResources.getStringArray(p_iResourceName);
+        String[] sArrayTemp = ObjResources.getStringArray(p_iResourceName);
+        return sArrayTemp;
     }
 
 }
