@@ -3,13 +3,16 @@
     android:id="@+id/Relative_ddlProfileCity"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
    >
 
     <ImageView
         android:layout_width="102px"
         android:layout_height="88px"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/button_remove" />
+        android:background="@drawable/button_remove"
+        android:id="@+id/imgDropDownRemove"
+        />
 
     <ImageView
         android:layout_width="match_parent"
@@ -18,11 +21,13 @@
 
         />
 
-    <Spinner
-        android:id="@+id/ddlSpinner"
+    <TextView
+        android:id="@+id/txtDropDownItem"
         android:layout_width="match_parent"
         android:layout_height="88px"
         android:background="@null"
-        android:spinnerMode="dialog"
-        android:theme="@android:style/Theme.Holo.Light"></Spinner>
+        android:textColor="#000"
+        android:gravity="center"
+
+        ></TextView>
 </RelativeLayout>

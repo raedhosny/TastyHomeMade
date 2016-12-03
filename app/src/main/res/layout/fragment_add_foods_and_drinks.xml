@@ -26,10 +26,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:layout_above="@id/btnAddFoodSave"
-        android:layout_alignParentTop="true"
         android:layout_marginBottom="5dp"
-        android:fillViewport="true">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -157,17 +157,26 @@
                         android:text="السعر"
                         android:textColor="#000" />
 
-                    <EditText
-                        android:id="@+id/txtAddFoodOrderPrice"
-                        style="@style/myedittext"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="88px"
-                        android:layout_alignBaseline="@id/lblAddPrice"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:layout_weight="0.25"
-                        android:background="@drawable/textbox_enabled"
-                        android:gravity="center"
+                        >
+                        <EditText
+                            android:id="@+id/txtAddFoodOrderPrice"
+                            style="@style/myedittext"
+                            android:layout_width="250px"
+                            android:layout_height="88px"
 
-                        />
+
+                            android:background="@drawable/textbox_enabled"
+                            android:gravity="center"
+
+                            />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -420,7 +429,9 @@
                                     style="@style/myedittext"
                                     android:layout_width="250px"
                                     android:layout_height="88px"
-                                    android:background="@drawable/textbox_enabled" />
+                                    android:background="@drawable/textbox_enabled"
+                                    android:gravity="center"
+                                    />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -529,7 +540,7 @@
                                 android:layout_height="290px"
                                 android:layout_marginTop="10dp"
                                 android:layout_weight="0.25"
-                                android:background="#fff" />
+                                />
                         </LinearLayout>
 
 

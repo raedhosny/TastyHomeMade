@@ -27,7 +27,7 @@ public class Foods_AdditionsDB {
             ResultSet ObjResultSet = stmt.executeQuery();
 
             if (ObjResultSet.next())
-                return ObjResultSet.getInt(0);
+                return ObjResultSet.getInt(1);
             return -1;
 
 

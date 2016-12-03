@@ -29,8 +29,13 @@ public class Utils {
         Manager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction Transaction = Manager.beginTransaction();
 
+        if (sSelectedItem== "Main")
+        {
+            Transaction.replace(R.id.main_content ,new MainFragment());
+            Transaction.commit();
+        }
 
-        if (sSelectedItem== "Register")
+        else if (sSelectedItem== "Register")
         {
             Transaction.replace(R.id.main_content ,new RegisterFragment());
             Transaction.commit();

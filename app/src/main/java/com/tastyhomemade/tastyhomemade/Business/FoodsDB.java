@@ -37,7 +37,8 @@ public class FoodsDB {
                     "  ,@RequestTimeFrom=?\n" +
                     "  ,@RequestTimeTo=?\n" +
                     "  ,@Photo=?\n" +
-                    "  ,@Price=?"
+                    "  ,@Price=?\n" +
+                    "   ,@IsVisible=?\n"
 
                     );
             stmt.setInt(1,p_ObjFoods.getId());
@@ -50,11 +51,12 @@ public class FoodsDB {
             stmt.setTime(8,p_ObjFoods.getRequestTimeTo());
             stmt.setString(9, Base64.encodeToString( p_ObjFoods.getPhoto(),Base64.DEFAULT));
             stmt.setFloat(10,p_ObjFoods.getPrice());
+            stmt.setBoolean(11,p_ObjFoods.isVisible());
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
             if (ObjResultSet.next())
-                return ObjResultSet.getInt(0);
+                return ObjResultSet.getInt(1);
             return -1;
 
 

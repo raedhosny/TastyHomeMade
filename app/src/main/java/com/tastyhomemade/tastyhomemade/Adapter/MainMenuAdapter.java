@@ -71,26 +71,5 @@ public class MainMenuAdapter extends BaseAdapter{
     }
 
 
-//    private void ShowActivity(String sSelectedItem) {
-//        FragmentManager Manager = ((MainActivity)context).getSupportFragmentManager();
-//
-//        Manager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        FragmentTransaction Transaction = Manager.beginTransaction();
-//
-//
-//
-//        if (sSelectedItem== ItemsList.get(0).getName())
-//        {
-//            Transaction.replace(R.id.main_content ,new ProfileFragment());
-//
-//            Transaction.commit();
-//        }
-//        else if (sSelectedItem== ItemsList.get(1).getName())
-//        {
-//            Transaction.replace(R.id.main_content ,new SettingsFragment());
-//            Transaction.commit();
-//        }
-//
-//
-//    }
+
 }

@@ -101,15 +101,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void FillSideMenu ()
     {
-        // Fill Main Menu List
-        Configuration ObjConfiguration = getResources().getConfiguration();
-        if (new Settings(this).getCurrentLanguageId() == 1) // Arabic
-            ObjConfiguration.setLocale(new Locale("ar"));
-        else if (new Settings(this).getCurrentLanguageId() == 2) // English
-            ObjConfiguration.setLocale(new Locale("en"));
-        Resources ObjResources = new Resources(getAssets(),getResources().getDisplayMetrics(),ObjConfiguration);
-
-        List<String> ItemsListTemp= new ArrayList<String>(Arrays.asList(ObjResources.getStringArray(R.array.MainMenuStrings)));
+//        // Fill Main Menu List
+        List<String> ItemsListTemp= new ArrayList<String>(Arrays.asList(Utils.GetResourceArrayName(this, R.array.MainMenuStrings,new Settings(this).getCurrentLanguageId())));
         List<String> ItemsListFiltered = new ArrayList<String>();
 
         FilteredSideMenuItemsList =  new ArrayList<MainMenuItem>();
