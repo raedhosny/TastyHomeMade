@@ -98,5 +98,8 @@
         Data Successfuly Saved
     </string>
 
+     <string name="Error_PleaseSelectRepresentative">
+        Please Select Representative
+    </string>
 
 </resources>

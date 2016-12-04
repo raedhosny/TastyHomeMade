@@ -33,7 +33,8 @@ public class UserDB {
                     "  ,@Building=?\n" +
                     "  ,@Apartment=?\n" +
                     "  ,@IsActive=?\n" +
-                    "  ,@ActivationCode=?\n");
+                    "  ,@ActivationCode=?\n"+
+                    ",@IsHaveDelivery=?");
 
 
             stmt.setInt(1,p_User.getId()); //id
@@ -51,9 +52,10 @@ public class UserDB {
             stmt.setString(13,p_User.getApartment()); // apartment
             stmt.setBoolean(14,p_User.getActive());// IsActive
             stmt.setString(15,p_User.getActivationCode()); //activationcode
+            stmt.setBoolean(16,p_User.isHaveDelivary()); //IsHaveDelivary
             ResultSet res =  stmt.executeQuery();
             res.next();
-            int iResult = res.getInt(0);
+            int iResult = res.getInt(1);
             return iResult;
         }
 
@@ -101,11 +103,9 @@ public class UserDB {
                 ObjUser.setApartment(res.getString(13)); // apartment
                 ObjUser.setActive(res.getBoolean(14));// IsActive
                 ObjUser.setActivationCode(res.getString(15)); //activationcode
+                ObjUser.setHaveDelivary(res.getBoolean(16)); //activationcode
                 return ObjUser;
             }
-
-
-
         }
 
         catch (Exception e)

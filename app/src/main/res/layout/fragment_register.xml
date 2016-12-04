@@ -35,22 +35,21 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/border"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
 
             <TextView
                 android:id="@+id/lblRegisterUserName"
                 android:layout_width="match_parent"
                 android:layout_height="88px"
-                android:layout_marginTop="10dp"
-
                 android:layout_weight="0.75"
-                android:paddingTop="9dp"
                 android:text="إسم المستخدم"
                 android:textColor="#000"
                 android:textSize="14sp" />
@@ -60,12 +59,12 @@
                 style="@style/myedittext"
                 android:layout_width="match_parent"
                 android:layout_height="88px"
-                android:layout_marginTop="10dp"
+
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
-                android:ems="10"
+
                 android:inputType="textPersonName"
-                android:paddingTop="0dp" />
+               />
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +93,7 @@
 
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
-                android:ems="10"
+
 
                 android:inputType="textEmailAddress"
                 android:paddingTop="0dp" />
@@ -189,7 +188,7 @@
                 >
 
                 <include
-                    android:id="Include_RegisterddlRegisterCity"
+                    android:id="@+id/Include_RegisterddlRegisterCity"
                     layout="@layout/control_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></include>
@@ -198,7 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:layout_marginTop="10dp">
                 <include
-                    android:id="Include_RegisterbtnRegisterGPS"
+                    android:id="@+id/Include_RegisterbtnRegisterGPS"
                     layout="@layout/control_gpsbutton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -209,21 +208,25 @@
 
         </LinearLayout>
 
+
+
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+            android:gravity="center"
+            >
 
-        <TextView
-            android:id="@+id/lblRegisterRegisterType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:text="نوع التسجيل"
-            android:textColor="#000"
-            android:textSize="14sp"
-                        />
+            <TextView
+                android:id="@+id/lblRegisterRegisterType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:text="نوع التسجيل"
+                android:textColor="#000"
+                android:textSize="14sp"
+                            />
 
 
             <LinearLayout
@@ -232,7 +235,7 @@
                 android:layout_weight="0.25">
 
                 <include
-                    android:id="Include_RegisterddlRegisterType"
+                    android:id="@+id/Include_RegisterddlRegisterType"
                     layout="@layout/control_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></include>
@@ -247,49 +250,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:id="@+id/lblRegisterRepresentative_Linear1"
+            >
 
-            <EditText
-                android:id="@+id/txtRegisterName"
-                style="@style/myedittext"
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_weight="1"
-                android:background="@drawable/textbox_enabled"
-                android:ems="10"
-                android:inputType="textPersonName"
-
-                android:paddingTop="0dp" />
-
-
-            <RelativeLayout
-                android:id="@+id/Relative_btnGPS"
+            <TextView
+                android:id="@+id/lblRegisterRepresentative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_weight="0.75"
+                android:text="اتاحة مندوب"
+                android:textColor="#000"
+                android:textSize="14sp"
+                />
 
-                <Button
-                    android:id="@+id/btnRegisterGPS"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25">
+
+                <include
+                    android:id="@+id/Include_RegisterddlRepresentive"
+                    layout="@layout/control_dropdown"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:background="@drawable/button_gps"
-                    android:text="تحديد موقعي"
-
-
-                    />
-
-                <ImageView
-                    android:layout_width="92px"
-                    android:layout_height="88px"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/gps_icon" />
-
-            </RelativeLayout>
+                    android:layout_height="wrap_content"></include>
+            </LinearLayout>
 
 
 
         </LinearLayout>
+
+
+
     </LinearLayout>
 </RelativeLayout>

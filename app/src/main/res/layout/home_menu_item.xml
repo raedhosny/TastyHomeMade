@@ -104,10 +104,19 @@
             </TextView>
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/txtHomeMenuItemRequest"
+            android:text="طلب"
+            android:background="@drawable/button"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/txtHomeMenuItemLinear3"
+            android:layout_below="@+id/txtHomeMenuItemLinear3"
             android:layout_above="@id/txtHomeMenuItemRequest"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -123,15 +132,6 @@
                 android:text="وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف "
                 />
         </LinearLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/txtHomeMenuItemRequest"
-            android:text="طلب"
-            android:background="@drawable/button"
-            />
-
 
     </RelativeLayout>
 </LinearLayout>

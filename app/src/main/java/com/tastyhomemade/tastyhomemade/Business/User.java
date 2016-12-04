@@ -17,9 +17,19 @@ public class User {
     String District;
     String Street;
     String Building;
+
+    public boolean isHaveDelivary() {
+        return IsHaveDelivary;
+    }
+
+    public void setHaveDelivary(boolean haveDelivary) {
+        IsHaveDelivary = haveDelivary;
+    }
+
     String Apartment;
     Boolean IsActive;
     String ActivationCode;
+    boolean IsHaveDelivary;
 
     public User() {
     }

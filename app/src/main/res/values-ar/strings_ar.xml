@@ -87,7 +87,10 @@
         <item>لا</item>
     </string-array>
     <string name="DataSavedSuccessfuly">
-        تم الحفظ <بنجاح></بنجاح>
+        تم الحفظ بنجاح
+    </string>
+    <string name="Error_PleaseSelectRepresentative">
+        فضل اخنر اتاحة مندوب
     </string>
 
 </resources>

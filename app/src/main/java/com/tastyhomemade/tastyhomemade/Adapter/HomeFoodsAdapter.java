@@ -58,7 +58,7 @@ public class HomeFoodsAdapter extends BaseAdapter {
 
         int iUserId = ObjFoodsList.get(position).getUserId();
 
-        new UsersDB().
+        //new UsersDB().
 
 
         return v;

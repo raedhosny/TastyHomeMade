@@ -9,9 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.ArrayList;
@@ -35,15 +38,15 @@ import java.util.Objects;
  * Created by raed on 11/22/2016.
  */
 
-public class RegisterFragment extends Fragment implements View.OnClickListener {
+public class RegisterFragment extends Fragment implements View.OnClickListener{
 
-    EditText txtRegisterName;
     EditText txtRegisterEmail;
     EditText txtRegisterUserName;
     EditText txtRegisterPassword;
     EditText txtRegisterConfirmPassword;
     Spinner ddlRegisterCity;
     Spinner ddlRegisterType;
+    Spinner ddlRepresentive;
     Button btnRegisterSave;
     List<Cities> ObjCitesList ;
     List<RegisterTypes> ObjRegisterTypesList;
@@ -57,15 +60,42 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        txtRegisterName = (EditText) view.findViewById(R.id.txtRegisterName);
         txtRegisterEmail = (EditText) view.findViewById(R.id.txtRegisterEmail);
         txtRegisterUserName = (EditText) view.findViewById(R.id.txtRegisterUserName);
         txtRegisterPassword = (EditText) view.findViewById(R.id.txtRegisterPassword);
         txtRegisterConfirmPassword = (EditText) view.findViewById(R.id.txtRegisterConfirmPassword);
-        ddlRegisterCity = (Spinner) view.findViewById(R.id.ddlRegisterCity);
-        ddlRegisterType = (Spinner) view.findViewById(R.id.ddlRegisterType);
+        ddlRegisterCity = (Spinner) view.findViewById(R.id.Include_RegisterddlRegisterCity).findViewById(R.id.ddlSpinner);
+        ddlRegisterType = (Spinner) view.findViewById(R.id.Include_RegisterddlRegisterType).findViewById(R.id.ddlSpinner);
+        ddlRepresentive = (Spinner) view.findViewById(R.id.Include_RegisterddlRepresentive).findViewById(R.id.ddlSpinner);
+
         btnRegisterSave = (Button) view.findViewById(R.id.btnRegisterSave);
         btnRegisterSave.setOnClickListener(this);
+        ddlRegisterType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (view.getParent() == ddlRegisterType)
+                {
+                    LinearLayout  lblRegisterRepresentative_Linear1 = (LinearLayout)getActivity().findViewById(R.id.lblRegisterRepresentative_Linear1);
+                    if (ddlRegisterType.getSelectedItemPosition() == 1)
+                    {
+                        lblRegisterRepresentative_Linear1.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        lblRegisterRepresentative_Linear1.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
 
 
         Thread t = new Thread(new Runnable() {
@@ -75,14 +105,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 ObjCitesList = FillCities();
 
                 ObjRegisterTypesList = FillRegisterTypes();
+
+                FillHaveRepresentive();
+
             }
         });
         t.start();
 
+
+
     }
 
-    @Override
-    public void onClick(View v) {
+
+        public void onClick(View v) {
+
         if (v == btnRegisterSave) {
             Configuration ObjConfiguration = getResources().getConfiguration();
             ObjConfiguration.setLocale(new Locale("ar"));
@@ -119,6 +155,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 return;
             }
 
+            //Validate Have Representative
+            if (ddlRepresentive.getSelectedItemPosition() == 0)
+            {
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PleaseSelectRepresentative,new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+
             // get City id
 
             Cities ObjCityTemp = new Cities() ;
@@ -144,12 +188,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
             final int iRegisterTypeId = ObjRegisterTypesTemp.getId();
 
+            boolean IsHaveDelivary = false;
+
+            if (ddlRepresentive.getSelectedItemPosition()==1)
+                IsHaveDelivary = true;
+            else if (ddlRepresentive.getSelectedItemPosition()==2)
+                IsHaveDelivary = false;
+            final boolean IsHaveDelivaryResult  = IsHaveDelivary;
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     User ObjUser= new User();
                     ObjUser.setId(-1);
-                    ObjUser.setName(txtRegisterName.getText().toString());
+                    ObjUser.setName("");
                     ObjUser.setUsername(txtRegisterUserName.getText().toString());
                     ObjUser.setPassword(txtRegisterPassword.getText().toString());
                     ObjUser.setEmail(txtRegisterEmail.getText().toString());
@@ -163,8 +214,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     ObjUser.setApartment("Nothing");
                     ObjUser.setActive(false);
                     ObjUser.setActivationCode(java.util.UUID.randomUUID().toString().replace("-",""));
+                    ObjUser.setHaveDelivary(IsHaveDelivaryResult);
 
                     int iResult = new UserDB().InsertUpdate(ObjUser);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.DataSavedSuccessfuly,new Settings(getContext()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
+                            new Utils().ShowActivity(getContext(),null,"Main");
+                        }
+                    });
 
                 }
             });
@@ -172,7 +231,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-
 
     private List<Cities> FillCities() {
 
@@ -218,5 +276,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         return ObjRegisterTypesList;
 
     }
+
+    private void FillHaveRepresentive() {
+
+
+        final ArrayAdapter<String> ObjHaveRepresentiveAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, Utils.GetResourceArrayName(getContext(),R.array.myboolean,new Settings(getContext()).getCurrentLanguageId()));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ddlRepresentive.setAdapter(ObjHaveRepresentiveAdapter );
+            }
+        });
+
+
+    }
+
 
 }

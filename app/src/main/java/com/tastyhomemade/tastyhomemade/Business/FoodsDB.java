@@ -137,7 +137,7 @@ public class FoodsDB {
 
             List<Foods> ObjFoodList = new ArrayList<Foods>();
 
-            if (ObjResultSet.next())
+           while(ObjResultSet.next())
             {
                 Foods ObjFood = new Foods();
 
@@ -154,7 +154,7 @@ public class FoodsDB {
 
                 ObjFoodList.add(ObjFood);
             }
-            return new ObjFoodList();
+            return  ObjFoodList;
 
 
         }
