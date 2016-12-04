@@ -117,4 +117,54 @@ public class FoodsDB {
 
 
     }
+
+    public List<Foods> SelectByCategoryId (int p_iCategoryId,int p_iLanguageId)
+    {
+        try {
+
+            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Foods_SelectByCategoryId \n" +
+                            "   @CategoryId\n" +
+                            "  ,@LanguageId"
+
+            );
+            stmt.setInt(1,p_iCategoryId);
+            stmt.setInt(2,p_iLanguageId);
+
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+            List<Foods> ObjFoodList = new ArrayList<Foods>();
+
+            if (ObjResultSet.next())
+            {
+                Foods ObjFood = new Foods();
+
+                ObjFood.setId(ObjResultSet.getInt(1));
+                ObjFood.setCategoryId(ObjResultSet.getInt(2));
+                ObjFood.setUserId(ObjResultSet.getInt(3));
+                ObjFood.setRequestTimeFrom(ObjResultSet.getTime(4));
+                ObjFood.setRequestTimeTo(ObjResultSet.getTime(5));
+                ObjFood.setPhoto(Base64.decode(ObjResultSet.getString(6),Base64.DEFAULT));
+                ObjFood.setPrice(ObjResultSet.getFloat(7));
+                ObjFood.setLanguageId(ObjResultSet.getInt(10));
+                ObjFood.setName(ObjResultSet.getString(11));
+                ObjFood.setDescription(ObjResultSet.getString(12));
+
+                ObjFoodList.add(ObjFood);
+            }
+            return new ObjFoodList();
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return null;
+
+
+    }
 }

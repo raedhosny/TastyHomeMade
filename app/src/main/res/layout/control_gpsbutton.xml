@@ -1,0 +1,25 @@
+<RelativeLayout
+android:id="@+id/Relative_btnGPS"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+<Button
+    android:id="@+id/btnRegisterGPS"
+    android:layout_width="match_parent"
+    android:layout_height="88px"
+    android:background="@drawable/button_gps"
+    android:text="تحديد موقعي"
+
+
+    />
+
+<ImageView
+    android:layout_width="92px"
+    android:layout_height="88px"
+    android:layout_alignParentLeft="true"
+    android:src="@drawable/gps_icon" />
+
+</RelativeLayout>

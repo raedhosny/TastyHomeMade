@@ -3,133 +3,246 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
         android:id="@+id/Relative_RegisterSave"
-        android:layout_alignParentBottom="true"
-        >
+        android:layout_width="match_parent"
 
-            <Button
-                android:id="@+id/btnRegisterSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
-                android:height="111px"
-                android:background="@drawable/button"
-                android:text="حفظ"
+        <Button
+            android:id="@+id/btnRegisterSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:height="111px"
+            android:background="@drawable/button"
+            android:text="حفظ"
 
 
-                />
+            />
 
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/Linear_RegisterSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/border"
-        android:id="@+id/Linear_RegisterSave"
-        android:layout_alignParentTop="true"
         android:layout_above="@id/Relative_RegisterSave"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp"
-        >
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:padding="8sp">
 
-            <TextView
-                android:id="@+id/lblRegisterName"
-                android:layout_width="wrap_content"
-                android:layout_height="88px"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="اللقب"
-                android:textSize="14sp"
-                android:textColor="#000"
-                />
-
-            <TextView
-                android:id="@+id/lblRegisterEmail"
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="18dp"
-                android:layout_weight="1"
-                android:paddingTop="9dp"
-                android:text="البريد الألكتروني"
-                android:textSize="14sp"
-                android:textColor="#000"
-                />
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lblRegisterUserName"
                 android:layout_width="match_parent"
                 android:layout_height="88px"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
+
+                android:layout_weight="0.75"
                 android:paddingTop="9dp"
                 android:text="إسم المستخدم"
-                android:textSize="14sp"
                 android:textColor="#000"
-                />
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/txtRegisterUserName"
+                style="@style/myedittext"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingTop="0dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:id="@+id/lblRegisterEmail"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+
+                android:layout_weight="0.75"
+
+                android:text="البريد الألكتروني"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/txtRegisterEmail"
+                style="@style/myedittext"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+
+                android:layout_weight="0.25"
+                android:background="@drawable/textbox_enabled"
+                android:ems="10"
+
+                android:inputType="textEmailAddress"
+                android:paddingTop="0dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lbRegisterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="88px"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
+
+                android:layout_weight="0.75"
                 android:paddingTop="9dp"
                 android:text="كلمة السر"
-                android:textSize="14sp"
                 android:textColor="#000"
-                />
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/txtRegisterPassword"
+                style="@style/myedittext"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+
+                android:layout_weight="0.25"
+                android:background="@drawable/textbox_enabled"
+
+                android:ems="10"
+
+                android:paddingTop="0dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lblRegisterConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="88px"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:paddingTop="9dp"
-                android:text="تاكيد كلمة السر"
-                android:textSize="14sp"
-                android:textColor="#000"
-                />
 
+                android:layout_weight="0.75"
+                android:text="تاكيد كلمة السر"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/txtRegisterConfirmPassword"
+                style="@style/myedittext"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:layout_weight="0.25"
+                android:background="@drawable/textbox_enabled"
+                android:paddingTop="0dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
 
             <TextView
                 android:id="@+id/lblRegisterCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:layout_weight="1"
-                android:paddingTop="9dp"
-                android:text="المدينه"
-                android:textSize="14sp"
-                android:textColor="#000"
-                />
 
-            <TextView
-                android:id="@+id/lblRegisterRegisterType"
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="55dp"
-                android:layout_weight="1"
-                android:paddingTop="9dp"
-                android:text="نوع التسجيل"
-                android:textSize="14sp"
+                android:layout_weight="0.75"
+
+                android:text="المدينه"
                 android:textColor="#000"
-                />
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:orientation="vertical"
+                >
+
+                <include
+                    android:id="Include_RegisterddlRegisterCity"
+                    layout="@layout/control_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></include>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                <include
+                    android:id="Include_RegisterbtnRegisterGPS"
+                    layout="@layout/control_gpsbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    ></include>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lblRegisterRegisterType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:text="نوع التسجيل"
+            android:textColor="#000"
+            android:textSize="14sp"
+                        />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25">
+
+                <include
+                    android:id="Include_RegisterddlRegisterType"
+                    layout="@layout/control_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></include>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -140,96 +253,16 @@
 
             <EditText
                 android:id="@+id/txtRegisterName"
+                style="@style/myedittext"
                 android:layout_width="match_parent"
                 android:layout_height="88px"
                 android:layout_weight="1"
                 android:background="@drawable/textbox_enabled"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:paddingTop="0dp"
 
-                style="@style/myedittext"
-                />
+                android:paddingTop="0dp" />
 
-            <EditText
-                android:id="@+id/txtRegisterEmail"
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/textbox_enabled"
-                android:ems="10"
-                android:paddingTop="0dp"
-
-                style="@style/myedittext"
-                android:inputType="textEmailAddress" />
-
-            <EditText
-                android:id="@+id/txtRegisterUserName"
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/textbox_enabled"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:paddingTop="0dp"
-
-                style="@style/myedittext"
-                />
-
-            <EditText
-                android:id="@+id/txtRegisterPassword"
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/textbox_enabled"
-                android:ems="10"
-
-                android:paddingTop="0dp"
-
-                style="@style/myedittext"
-                />
-
-            <EditText
-                android:id="@+id/txtRegisterConfirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="10dp"
-
-                android:background="@drawable/textbox_enabled"
-
-                android:paddingTop="0dp"
-
-                style="@style/myedittext"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:background="@drawable/spinner" />
-
-                <ImageView
-                    android:layout_width="102px"
-                    android:layout_height="88px"
-                    android:layout_alignParentLeft="true"
-                    android:background="@drawable/dropdown" />
-
-                <Spinner
-                    android:id="@+id/ddlRegisterCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:paddingTop="0dp"
-                    android:spinnerMode="dialog"
-                    android:theme="@android:style/Theme.Holo.Light" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/Relative_btnGPS"
@@ -255,31 +288,7 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="88px"
-                android:layout_marginTop="10dp">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:background="@drawable/spinner" />
-
-                <ImageView
-                    android:layout_width="102px"
-                    android:layout_height="88px"
-                    android:layout_alignParentLeft="true"
-                    android:background="@drawable/dropdown" />
-
-                <Spinner
-                    android:id="@+id/ddlRegisterType"
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:spinnerMode="dialog"
-                    android:theme="@android:style/Theme.Holo.Light"
-                    android:background="@null"
-                    />
-            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>

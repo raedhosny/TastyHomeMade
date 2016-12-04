@@ -44,14 +44,19 @@
                 android:textAlignment="center"
                 android:gravity="center"
                 />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            >
             <ImageView
                 android:id="@+id/txtHomeMenuItemDeliverable"
-                android:layout_width="match_parent"
+                android:layout_width="85px"
                 android:layout_height="85px"
                 android:src="@drawable/deliverable"
-                android:layout_weight="0.2"
                 />
+        </LinearLayout>
 
             <RatingBar
                 android:layout_width="match_parent"
@@ -82,6 +87,7 @@
                 android:textSize="10sp"
                 android:layout_weight="1"
                 android:gravity="left"
+                android:id="@+id/lblHomeMenuItemTimeFromTo"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -92,6 +98,7 @@
                 android:text="أكل او مشروب 1"
                 android:layout_weight="1"
                 android:gravity="right"
+                android:id="@+id/lblHomeMenuItemName"
                 >
                 أكل او مشروب 1
             </TextView>
@@ -111,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|right"
-                android:id="@+id/txtHomeMenuItemDescription"
+                android:id="@+id/lblHomeMenuItemDescription"
                 android:textColor="#000"
                 android:text="وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف "
                 />
@@ -122,6 +129,7 @@
             android:layout_alignParentBottom="true"
             android:id="@+id/txtHomeMenuItemRequest"
             android:text="طلب"
+            android:background="@drawable/button"
             />
 
 
