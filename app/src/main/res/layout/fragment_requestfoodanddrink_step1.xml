@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="111px"
+        android:background="@drawable/button"
+        android:layout_alignParentBottom="true"
+        android:text="التالي"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/btnNext"
+        />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@id/btnNext"
+        android:layout_marginBottom="5dp"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border">
+
+                <include layout="@layout/details_menu_item" android:id="@+id/include_details_item">
+
+                </include>
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="عدد الطلبات"
+                        android:textColor="#000"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/txtNumberOfOrders"
+                        android:layout_width="match_parent"
+                        android:layout_height="88px"
+                        android:layout_weight="0.9"
+                        android:background="@drawable/textbox_enabled"
+                        android:gravity="center"
+
+                        android:inputType="number" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="6 ريال"
+                        android:textColor="#000" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="الإضافات"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <ListView
+                    android:id="@+id/lvGradients"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"></ListView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="إضافات اخري"
+                        android:textColor="#000" />
+
+
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="219px"
+                        android:background="@drawable/textbox_enabled"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/txtAdditionalGradients"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="السعر الكلي 6 ريال"
+                        android:textColor="#000"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/lblTotalPrice"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

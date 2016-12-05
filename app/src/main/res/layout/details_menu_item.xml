@@ -8,13 +8,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="777px"
+        android:layout_height="wrap_content"
         android:background="@drawable/border"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+
+
+        >
 
         <LinearLayout
-            android:id="@+id/txtHomeMenuItemLinear1"
+            android:id="@+id/Linear1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border_style2"
@@ -23,7 +26,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="375px"
-                android:id="@+id/ImageHomeMenuItem"
+                android:id="@+id/ImageFood"
                 ></ImageView>
         </LinearLayout>
 
@@ -34,11 +37,11 @@
             android:layout_marginLeft="2px"
             android:layout_marginRight="2px"
             android:layout_marginBottom="2px"
-            android:id="@+id/txtHomeMenuItemLinear2"
-            android:layout_alignBottom="@id/txtHomeMenuItemLinear1">
+            android:id="@+id/Linear2"
+            android:layout_alignBottom="@id/Linear1">
 
             <TextView
-                android:id="@+id/txtHomeMenuItemPrice"
+                android:id="@+id/lblPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="3 ريال"
@@ -53,8 +56,9 @@
             android:layout_weight="0.2"
             android:gravity="center"
             >
+
             <ImageView
-                android:id="@+id/txtHomeMenuItemDeliverable"
+                android:id="@+id/ImageDeliverable"
                 android:layout_width="85px"
                 android:layout_height="85px"
                 android:src="@drawable/deliverable"
@@ -64,7 +68,7 @@
             <RatingBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtHomeMenuItemRating"
+                android:id="@+id/FoodRating"
                 style="?android:attr/ratingBarStyleSmall"
                 android:numStars="5"
                 android:rating="4"
@@ -77,11 +81,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtHomeMenuItemLinear1"
+            android:layout_below="@id/Linear1"
             android:orientation="horizontal"
             android:layout_marginTop="5sp"
-            android:id="@+id/txtHomeMenuItemLinear3"
+            android:id="@+id/Linear3"
             >
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,8 +95,9 @@
                 android:textSize="10sp"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:id="@+id/lblHomeMenuItemTimeFromTo"
+                android:id="@+id/lblTimeFromTo"
                 />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,36 +107,30 @@
                 android:text="أكل او مشروب 1"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:id="@+id/lblHomeMenuItemName"
+                android:id="@+id/lblName"
                 >
                 أكل او مشروب 1
             </TextView>
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/BtnHomeMenuItemRequest"
-            android:text="طلب"
-            android:background="@drawable/button"
-            />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/txtHomeMenuItemLinear3"
-            android:layout_above="@id/BtnHomeMenuItemRequest"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Linear3"
+
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10sp"
 
             >
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|right"
-                android:id="@+id/lblHomeMenuItemDescription"
+                android:id="@+id/lblDescription"
                 android:textColor="#000"
                 android:text="وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف "
                 />
