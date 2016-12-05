@@ -23,5 +23,6 @@
         android:layout_height="88px"
         android:background="@null"
         android:spinnerMode="dialog"
-        android:theme="@android:style/Theme.Holo.Light"></Spinner>
+        android:theme="@android:style/Theme.Holo.Light"
+        ></Spinner>
 </RelativeLayout>

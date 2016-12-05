@@ -47,6 +47,12 @@ public class Utils {
             Transaction.commit();
         }
         else
+        if (sSelectedItem== "RequestForm")
+        {
+            Transaction.replace(R.id.main_content,new LoginFragment());
+            Transaction.commit();
+        }
+        else
         if (sSelectedItem.equals( p_ItemsList.get(0).getName()))
         {
             Transaction.replace(R.id.main_content ,new ProfileFragment());

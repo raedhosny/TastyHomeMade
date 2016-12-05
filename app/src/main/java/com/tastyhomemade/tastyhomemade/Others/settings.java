@@ -75,7 +75,6 @@ public class Settings {
         editor.commit();
     }
 
-
     public  void Clear ()
     {
         SharedPreferences Preferences = ((AppCompatActivity)context).getPreferences(Context.MODE_PRIVATE);

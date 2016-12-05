@@ -115,4 +115,50 @@ public class UserDB {
         return ObjUser;
     }
 
+
+    public User Select(int p_iId)
+    {
+        User ObjUser = new User();
+        ObjUser.setId(-1);
+
+        try {
+
+            java.sql.Connection myConnection = new DB().CreateConnection();
+            PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [SP_users_Login] \n" +
+                    "   @Username=?\n" +
+                    "  ,@Password=?\n");
+
+
+            stmt.setInt(1,p_iId); //id
+
+
+            ResultSet res =  stmt.executeQuery();
+            if (res.next()) {
+                ObjUser.setId(res.getInt(1)); //id
+                ObjUser.setName(res.getString(2)); //name
+                ObjUser.setUsername(res.getString(3)); //username
+                ObjUser.setPassword(res.getString(4)); //password
+                ObjUser.setEmail(res.getString(5)); //email
+                ObjUser.setRegisterTypeId(res.getInt(6)); //registertypeid
+                ObjUser.setCurrentLocation_Longitude(res.getDouble(7)); //current location longtitude
+                ObjUser.setCurrentLocation_Latitude(res.getDouble(8)); // current location latitude
+                ObjUser.setCityId(res.getInt(9)); // cityid
+                ObjUser.setDistrict(res.getString(10)); //district
+                ObjUser.setStreet(res.getString(11)); //street
+                ObjUser.setBuilding(res.getString(12));// building
+                ObjUser.setApartment(res.getString(13)); // apartment
+                ObjUser.setActive(res.getBoolean(14));// IsActive
+                ObjUser.setActivationCode(res.getString(15)); //activationcode
+                ObjUser.setHaveDelivary(res.getBoolean(16)); //activationcode
+                return ObjUser;
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return ObjUser;
+    }
+
 }

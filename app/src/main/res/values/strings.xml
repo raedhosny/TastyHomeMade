@@ -101,5 +101,8 @@
      <string name="Error_PleaseSelectRepresentative">
         Please Select Representative
     </string>
+    <string name="RequestTimeFromTo">
+        Request Time From [X] to [Y]
+    </string>
 
 </resources>

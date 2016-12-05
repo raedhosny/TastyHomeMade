@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView lblMainUserName;
     Button btnMainLogin;
     Button btnMainLogout;
+    int iCategoryId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +167,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lblMainUserName.setText(ObjResources.getString(R.string.Visitor));
 
         }
+
+        new Utils().ShowActivity(this,null,"Main");
     }
 
+    public int getCategoryId() {
+        return iCategoryId;
+    }
+
+    public void setCategoryId(int iCategoryId) {
+        this.iCategoryId = iCategoryId;
+    }
 }

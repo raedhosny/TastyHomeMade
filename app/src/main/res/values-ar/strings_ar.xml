@@ -93,4 +93,8 @@
         فضل اخنر اتاحة مندوب
     </string>
 
+    <string name="RequestTimeFromTo">
+        وقت الطلب من [X] إلي [Y]
+    </string>
+
 </resources>
