@@ -49,7 +49,7 @@ public class FoodsDB {
             stmt.setInt(6,p_ObjFoods.getUserId());
             stmt.setTime(7,p_ObjFoods.getRequestTimeFrom());
             stmt.setTime(8,p_ObjFoods.getRequestTimeTo());
-            stmt.setString(9, Base64.encodeToString( p_ObjFoods.getPhoto(),Base64.DEFAULT));
+            stmt.setString(9,  p_ObjFoods.getPhoto());
             stmt.setFloat(10,p_ObjFoods.getPrice());
             stmt.setBoolean(11,p_ObjFoods.isVisible());
 
@@ -97,11 +97,11 @@ public class FoodsDB {
                 ObjFood.setUserId(ObjResultSet.getInt(3));
                 ObjFood.setRequestTimeFrom(ObjResultSet.getTime(4));
                 ObjFood.setRequestTimeTo(ObjResultSet.getTime(5));
-                ObjFood.setPhoto(Base64.decode(ObjResultSet.getString(6),Base64.DEFAULT));
+                ObjFood.setPhoto(ObjResultSet.getString(6));
                 ObjFood.setPrice(ObjResultSet.getFloat(7));
-                ObjFood.setLanguageId(ObjResultSet.getInt(10));
-                ObjFood.setName(ObjResultSet.getString(11));
-                ObjFood.setDescription(ObjResultSet.getString(12));
+                ObjFood.setLanguageId(ObjResultSet.getInt(11));
+                ObjFood.setName(ObjResultSet.getString(12));
+                ObjFood.setDescription(ObjResultSet.getString(13));
                 return ObjFood;
             }
             return new Foods();
@@ -146,11 +146,11 @@ public class FoodsDB {
                 ObjFood.setUserId(ObjResultSet.getInt(3));
                 ObjFood.setRequestTimeFrom(ObjResultSet.getTime(4));
                 ObjFood.setRequestTimeTo(ObjResultSet.getTime(5));
-                ObjFood.setPhoto(Base64.decode(ObjResultSet.getString(6),Base64.DEFAULT));
+                ObjFood.setPhoto(ObjResultSet.getString(6));
                 ObjFood.setPrice(ObjResultSet.getFloat(7));
-                ObjFood.setLanguageId(ObjResultSet.getInt(10));
-                ObjFood.setName(ObjResultSet.getString(11));
-                ObjFood.setDescription(ObjResultSet.getString(12));
+                ObjFood.setLanguageId(ObjResultSet.getInt(11));
+                ObjFood.setName(ObjResultSet.getString(12));
+                ObjFood.setDescription(ObjResultSet.getString(13));
 
                 ObjFoodList.add(ObjFood);
             }

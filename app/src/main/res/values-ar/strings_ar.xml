@@ -96,5 +96,10 @@
     <string name="RequestTimeFromTo">
         وقت الطلب من [X] إلي [Y]
     </string>
-
+       <string name="Currency">
+        ريال
+    </string>
+ <string name="Error_YouAreNotLoginYet">
+       انت غير مسجل دخول بعد, فضلا قم بتسجيل اولا ان كنت غير مسجل
+    </string>
 </resources>

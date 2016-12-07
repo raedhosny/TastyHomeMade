@@ -260,7 +260,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             //Bitmap ObjBitmapTemp = ((BitmapDrawable)imgAddFoodPhoto.getDrawable()).getBitmap();
             ByteArrayOutputStream ObjByteArrayTemp = new ByteArrayOutputStream();
             ObjBitmapTemp.compress(Bitmap.CompressFormat.JPEG,100,ObjByteArrayTemp );
-            ObjFood.setPhoto(ObjByteArrayTemp.toByteArray() );
+            ObjFood.setPhoto(Base64.encodeToString(ObjByteArrayTemp.toByteArray(),Base64.DEFAULT) );
             ObjFood.setPrice(Float.parseFloat(txtAddFoodOrderPrice.getText().toString()) );
             ObjFood.setName(txtAddFoodName.getText().toString().trim());
             ObjFood.setDescription(txtAddFoodDescription.getText().toString().trim());

@@ -81,6 +81,16 @@ public class Utils {
         }
     }
 
+    public static void SetCurrentLanguage (Context p_Context ,int p_iLanguage)
+    {
+        Configuration ObjConfiguration = p_Context.getResources().getConfiguration();
+        if (p_iLanguage == 1) // Arabic
+            ObjConfiguration.setLocale(new Locale("ar"));
+        else if (p_iLanguage == 2) // English
+            ObjConfiguration.setLocale(new Locale("en"));
+    }
+
+
     public static String GetResourceName(Context p_Context, int p_iResourceName,int p_iLanguage)
     {
         Configuration ObjConfiguration = p_Context.getResources().getConfiguration();

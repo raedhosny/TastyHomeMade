@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:layout_above="@id/btnNext"
+       android:layout_above="@id/btnNext"
         android:layout_marginBottom="5dp"
         >
 
@@ -72,6 +72,7 @@
                         android:layout_weight="0.9"
                         android:background="@drawable/textbox_enabled"
                         android:gravity="center"
+                        style="@style/myedittext"
 
                         android:inputType="number" />
 
@@ -109,13 +110,14 @@
                         android:textColor="#000" />
 
 
-
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="219px"
                         android:background="@drawable/textbox_enabled"
                         android:layout_marginTop="10dp"
                         android:id="@+id/txtAdditionalGradients"
+                        android:gravity="top"
+                        style="@style/myedittext"
                         />
 
                     <TextView

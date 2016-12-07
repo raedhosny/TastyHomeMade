@@ -105,4 +105,12 @@
         Request Time From [X] to [Y]
     </string>
 
+    <string name="Currency">
+        SR
+    </string>
+
+    <string name="Error_YouAreNotLoginYet">
+        You are not login yet, please register if you are not yet
+    </string>
+
 </resources>

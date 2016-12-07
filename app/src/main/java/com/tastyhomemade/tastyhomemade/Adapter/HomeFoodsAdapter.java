@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.User;
@@ -22,6 +23,7 @@ import com.tastyhomemade.tastyhomemade.R;
 import org.w3c.dom.Text;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -54,7 +56,7 @@ public class HomeFoodsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
 
 
         View v = View.inflate(context, R.layout.home_menu_item, null);
@@ -77,7 +79,7 @@ public class HomeFoodsAdapter extends BaseAdapter {
             ObjImagedeliverable.setVisibility(View.GONE);
         }
 
-        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()));
+        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context,R.string.Currency,new Settings(context).getCurrentLanguageId()));
         lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
         lblHomeMenuItemDescription.setText(ObjFoodsList.get(position).getDescription());
         String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
@@ -85,9 +87,10 @@ public class HomeFoodsAdapter extends BaseAdapter {
         Time ObjRequestTimeFrom = ObjFoodsList.get(position).getRequestTimeFrom();
         Time ObjRequestTimeTo = ObjFoodsList.get(position).getRequestTimeTo();
 
+        SimpleDateFormat formater = new SimpleDateFormat("h:mm a");
 
-        sTemp = sTemp.replace("[X]", String.format("%1$tH:%1$tM", ObjRequestTimeFrom));
-        sTemp = sTemp.replace("[Y]", String.format("%1$tH:%1$tM", ObjRequestTimeTo));
+        sTemp = sTemp.replace("[X]", formater.format(ObjRequestTimeFrom));
+        sTemp = sTemp.replace("[Y]", formater.format(ObjRequestTimeTo));
         if (new Settings(context).getCurrentLanguageId() == 1) {
             sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
         }
@@ -100,7 +103,13 @@ public class HomeFoodsAdapter extends BaseAdapter {
         BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Utils().ShowActivity(context,null,"RequestForm");
+                if (new Settings(context).getUserId() != -1) {
+                    new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
+                }
+                else
+                {
+                    Toast.makeText(context,new Utils().GetResourceName(context,R.string.Error_YouAreNotLoginYet,new Settings(context).getCurrentLanguageId()),  Toast.LENGTH_LONG).show();
+                }
             }
         });
 

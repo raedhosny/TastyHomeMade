@@ -17,11 +17,11 @@ public class Foods {
     private int UserId;
     private java.sql.Time RequestTimeFrom;
     private java.sql.Time RequestTimeTo;
-    private byte[] Photo;
+    private String Photo;
     private float Price;
     private boolean IsVisible;
 
-    public Foods(int id, int languageId, String name, String description, int categoryId, int userId, java.sql.Time requestTimeFrom, java.sql.Time requestTimeTo, byte[] photo, float price,boolean IsVisible) {
+    public Foods(int id, int languageId, String name, String description, int categoryId, int userId, java.sql.Time requestTimeFrom, java.sql.Time requestTimeTo, String photo, float price,boolean IsVisible) {
         Id = id;
         LanguageId = languageId;
         Name = name;
@@ -103,7 +103,7 @@ public class Foods {
         RequestTimeTo = requestTimeTo;
     }
 
-    public byte[] getPhoto() {
+    public String getPhoto() {
         return Photo;
     }
 
@@ -115,7 +115,7 @@ public class Foods {
         IsVisible = visible;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(String photo) {
         Photo = photo;
     }
 

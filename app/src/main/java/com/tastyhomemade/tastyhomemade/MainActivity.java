@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMainLogout = (Button)this.findViewById(R.id.btnMainLogout);
         btnMainLogout.setOnClickListener(this);
 
+        new Utils().SetCurrentLanguage(this,new Settings(this).getCurrentLanguageId());
         LoadMainInfo();
 
         Drawer_Layout.closeDrawer(lvMainMenu);
@@ -143,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void LoadMainInfo ()
     {
+
         FillSideMenu();
         Settings ObjSettings = new Settings(this);
         if (ObjSettings .getUserId() != -1)
@@ -157,17 +159,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnMainLogin.setVisibility(View.VISIBLE);
             btnMainRegister.setVisibility(View.VISIBLE);
             btnMainLogout.setVisibility(View.GONE);
-            Configuration ObjConfiguration = getResources().getConfiguration();
-            if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
-                ObjConfiguration.setLocale(new Locale("ar"));
-            else
-                ObjConfiguration.setLocale(new Locale("en"));
-            Resources ObjResources = new Resources(this.getAssets(),getResources().getDisplayMetrics(),ObjConfiguration);
-            lblMainUserName.setText(ObjResources.getString(R.string.Visitor));
+
+            lblMainUserName.setText(new Utils().GetResourceName(this,R.string.Visitor,ObjSettings.getCurrentLanguageId()));
 
         }
 
-        new Utils().ShowActivity(this,null,"Main","-1");
+      new Utils().ShowActivity(this,null,"Main","-1");
     }
 
 
