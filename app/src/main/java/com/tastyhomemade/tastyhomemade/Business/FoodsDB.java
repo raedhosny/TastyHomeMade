@@ -125,8 +125,8 @@ public class FoodsDB {
             java.sql.Connection ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_SelectByCategoryId \n" +
-                            "   @CategoryId\n" +
-                            "  ,@LanguageId"
+                            "   @CategoryId=?\n" +
+                            "  ,@LanguageId=?"
 
             );
             stmt.setInt(1,p_iCategoryId);

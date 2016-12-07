@@ -35,7 +35,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int iCategoryId = ((MainActivity)getActivity()).getCategoryId();
+
+        int iCategoryId = getArguments().getInt("CategoryId");
         FillData(iCategoryId);
     }
 
@@ -47,10 +48,18 @@ public class MainFragment extends Fragment {
             public void run() {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
-                    ObjFoodsList.addAll(new FoodsDB().SelectByCategoryId(iCategoryId, new Settings(getContext()).getCurrentLanguageId()));
-                    HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
-                    ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
-                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                    ObjFoodsList.addAll(new FoodsDB().SelectByCategoryId(iCategoryId, new Settings(getActivity()).getCurrentLanguageId()));
+                    final HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
+                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
+                    getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                }
+                            }
+                    );
+
                 }
                 catch (Exception ex)
                 {

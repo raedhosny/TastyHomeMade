@@ -3,6 +3,7 @@ package com.tastyhomemade.tastyhomemade.Others;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,7 @@ public class Utils {
 
     }
 
-    public void ShowActivity(Context p_context, List<MainMenuItem> p_ItemsList,  String sSelectedItem) {
+    public void ShowActivity(Context p_context, List<MainMenuItem> p_ItemsList,  String sSelectedItem, String ... args) {
         FragmentManager Manager = ((AppCompatActivity)p_context).getSupportFragmentManager();
 
         Manager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -31,7 +32,11 @@ public class Utils {
 
         if (sSelectedItem== "Main")
         {
-            Transaction.replace(R.id.main_content ,new MainFragment());
+            MainFragment ObjMainFragment = new MainFragment();
+            Bundle ObjBundle = new Bundle();
+            ObjBundle.putInt("CategoryId",Integer.parseInt(args[0]));
+            ObjMainFragment.setArguments(ObjBundle);
+            Transaction.replace(R.id.main_content ,ObjMainFragment);
             Transaction.commit();
         }
 
@@ -49,7 +54,11 @@ public class Utils {
         else
         if (sSelectedItem== "RequestForm")
         {
-            Transaction.replace(R.id.main_content,new LoginFragment());
+            RequestFoodStep1Fragment ObjRequestFoodStep1Fragment = new RequestFoodStep1Fragment();
+            Bundle ObjBundle = new Bundle();
+            ObjBundle.putInt("FoodId",Integer.parseInt(args[0]));
+            ObjRequestFoodStep1Fragment.setArguments(ObjBundle);
+            Transaction.replace(R.id.main_content,ObjRequestFoodStep1Fragment);
             Transaction.commit();
         }
         else

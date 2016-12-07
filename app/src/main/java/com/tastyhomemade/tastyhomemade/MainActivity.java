@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView lblMainUserName;
     Button btnMainLogin;
     Button btnMainLogout;
-    int iCategoryId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,14 +167,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        new Utils().ShowActivity(this,null,"Main");
+        new Utils().ShowActivity(this,null,"Main","-1");
     }
 
-    public int getCategoryId() {
-        return iCategoryId;
-    }
 
-    public void setCategoryId(int iCategoryId) {
-        this.iCategoryId = iCategoryId;
-    }
 }

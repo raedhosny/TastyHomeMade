@@ -284,7 +284,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                         @Override
                         public void run() {
                             Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.DataSavedSuccessfuly,new Settings(getActivity()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                            new Utils().ShowActivity(getContext(),null,"Main");
+                            new Utils().ShowActivity(getContext(),null,"Main","-1");
                         }
                     });
                 }

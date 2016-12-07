@@ -55,6 +55,8 @@ public class HomeFoodsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+
         View v = View.inflate(context, R.layout.home_menu_item, null);
 
         RatingBar ObjRatingBar = (RatingBar) v.findViewById(R.id.txtHomeMenuItemRating);
@@ -98,7 +100,7 @@ public class HomeFoodsAdapter extends BaseAdapter {
         BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Utils().ShowActivity();
+                new Utils().ShowActivity(context,null,"RequestForm");
             }
         });
 

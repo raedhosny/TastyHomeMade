@@ -14,8 +14,16 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.tastyhomemade.tastyhomemade.Business.Foods;
+import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
+import com.tastyhomemade.tastyhomemade.Business.Orders;
+import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
+import com.tastyhomemade.tastyhomemade.Business.User;
+import com.tastyhomemade.tastyhomemade.Business.UserDB;
+import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.R;
 
+import java.util.Calendar;
 
 
 /**
@@ -34,14 +42,15 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     EditText txtAdditionalGradients;
     TextView lblTotalPrice;
     Button btnNext;
+    int iFoodId =-1;
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_requestfoodanddrink_step1,null);
     }
-
-
 
 
     @Override
@@ -57,10 +66,36 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
         txtAdditionalGradients = (EditText) view.findViewById(R.id.txtAdditionalGradients);
         btnNext = (Button)view.findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
+
+        Bundle ObjBundle =  getArguments();
+        iFoodId = ObjBundle.getInt("FoodId");
     }
 
     @Override
     public void onClick(View view) {
 
+        Calendar c = Calendar.getInstance();
+        Foods ObjFood = new FoodsDB().Select(iFoodId,new Settings(getContext()).getCurrentLanguageId());
+        User ObjFoodMakerUser = new UserDB().Select(ObjFood.getUserId());
+
+
+        Orders ObjOrder = new Orders(-1,
+                                    iFoodId,
+                                    new Settings(getContext()).getUserId(),
+                                    new java.sql.Date(Calendar.getInstance().getTime().getYear(),Calendar.getInstance().getTime().getMonth(),Calendar.getInstance().getTime().getDay()),
+                                    ObjFoodMakerUser.isHaveDelivary(),
+                                    -1,
+                                    -1,
+                                    -1,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null
+                                    );
+
+        int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
+        // Go to step 2
     }
 }
