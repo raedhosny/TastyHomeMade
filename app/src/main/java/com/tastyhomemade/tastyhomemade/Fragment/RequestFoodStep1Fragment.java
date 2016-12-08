@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
@@ -21,6 +22,7 @@ import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.Calendar;
@@ -43,6 +45,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     TextView lblTotalPrice;
     Button btnNext;
     int iFoodId =-1;
+    EditText txtNumberOfOrders;
 
 
 
@@ -64,6 +67,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
         lblDescription = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblDescription);
         lvGradients = (ListView)view.findViewById(R.id.lvGradients);
         txtAdditionalGradients = (EditText) view.findViewById(R.id.txtAdditionalGradients);
+        txtNumberOfOrders = (EditText)view.findViewById(R.id.txtNumberOfOrders);
         btnNext = (Button)view.findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
 
@@ -73,6 +77,17 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+
+        if (txtNumberOfOrders.getText().toString().trim().length() == 0)
+        {
+            Toast.makeText(this, Utils.GetResourceName(this,R.string.Error_PleaseEnterNumberOfOrders,new Settings(this).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
+            return ;
+        }
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
 
         Calendar c = Calendar.getInstance();
         Foods ObjFood = new FoodsDB().Select(iFoodId,new Settings(getContext()).getCurrentLanguageId());
@@ -97,5 +112,10 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
 
         int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
         // Go to step 2
+
+            }
+        });
+
+        t.start();
     }
 }

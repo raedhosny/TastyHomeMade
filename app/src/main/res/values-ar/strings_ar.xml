@@ -102,4 +102,7 @@
  <string name="Error_YouAreNotLoginYet">
        انت غير مسجل دخول بعد, فضلا قم بتسجيل اولا ان كنت غير مسجل
     </string>
+    <string name="Error_PleaseEnterNumberOfOrders">
+       فضلا ادخل عدد الطلبات
+    </string>
 </resources>

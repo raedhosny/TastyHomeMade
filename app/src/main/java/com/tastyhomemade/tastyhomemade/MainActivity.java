@@ -42,7 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        new Utils().SetCurrentLanguage(this,new Settings(this).getCurrentLanguageId());
         setContentView(R.layout.activity_main);
+
         Drawer_Layout = (DrawerLayout)this. findViewById(R.id.Drawer_Layout);
         btnMainForm = (Button) this. findViewById(R.id.btnMainForm);
         txtSearch  = (EditText) this. findViewById(R.id.txtSearch);
@@ -57,10 +60,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMainLogout = (Button)this.findViewById(R.id.btnMainLogout);
         btnMainLogout.setOnClickListener(this);
 
-        new Utils().SetCurrentLanguage(this,new Settings(this).getCurrentLanguageId());
         LoadMainInfo();
 
         Drawer_Layout.closeDrawer(lvMainMenu);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+       // LoadMainInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // LoadMainInfo();
     }
 
     @Override
@@ -83,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
 
             new Utils().ShowActivity(MainActivity.this,null,"Login");
-            LoadMainInfo ();
+            //LoadMainInfo ();
             // Go to main activity
 
         }

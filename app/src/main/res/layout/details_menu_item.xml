@@ -40,16 +40,18 @@
             android:id="@+id/Linear2"
             android:layout_alignBottom="@id/Linear1">
 
-            <TextView
-                android:id="@+id/lblPrice"
+            <RatingBar
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="3 ريال"
-                android:textColor="#000"
+                android:layout_height="wrap_content"
+                android:id="@+id/FoodRating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:rating="4"
                 android:layout_weight="0.4"
-                android:textAlignment="center"
-                android:gravity="center"
+                android:layout_gravity="center"
+
                 />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,16 +67,17 @@
                 />
         </LinearLayout>
 
-            <RatingBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/FoodRating"
-                style="?android:attr/ratingBarStyleSmall"
-                android:numStars="5"
-                android:rating="4"
-                android:layout_weight="0.4"
-                android:layout_gravity="center"
 
+
+            <TextView
+                android:id="@+id/lblPrice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="3 ريال"
+                android:textColor="#000"
+                android:layout_weight="0.4"
+                android:textAlignment="center"
+                android:gravity="center"
                 />
         </LinearLayout>
 
@@ -91,26 +94,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
-                android:textSize="10sp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="أكل او مشروب 1"
                 android:layout_weight="1"
-                android:gravity="left"
-                android:id="@+id/lblTimeFromTo"
-                />
+                android:textAlignment="viewStart"
+                android:id="@+id/lblName"
+                >
+                أكل او مشروب 1
+            </TextView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:text="أكل او مشروب 1"
+                android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
+                android:textSize="10sp"
                 android:layout_weight="1"
-                android:gravity="right"
-                android:id="@+id/lblName"
-                >
-                أكل او مشروب 1
-            </TextView>
+                android:textAlignment="viewEnd"
+                android:id="@+id/lblTimeFromTo"
+                />
+
+
 
         </LinearLayout>
 
@@ -132,6 +137,7 @@
                 android:gravity="top|right"
                 android:id="@+id/lblDescription"
                 android:textColor="#000"
+                android:textAlignment="viewStart"
                 android:text="وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف "
                 />
         </LinearLayout>

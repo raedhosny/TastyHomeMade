@@ -85,9 +85,19 @@ public class Utils {
     {
         Configuration ObjConfiguration = p_Context.getResources().getConfiguration();
         if (p_iLanguage == 1) // Arabic
+        {
+            Locale.setDefault(new Locale("ar"));
             ObjConfiguration.setLocale(new Locale("ar"));
+            ObjConfiguration.setLayoutDirection(new Locale("ar"));
+        }
         else if (p_iLanguage == 2) // English
+        {
+            Locale.setDefault(new Locale("en"));
             ObjConfiguration.setLocale(new Locale("en"));
+            ObjConfiguration.setLayoutDirection(new Locale("en"));
+        }
+        p_Context.getResources().updateConfiguration(ObjConfiguration,p_Context.getResources().getDisplayMetrics());
+
     }
 
 
