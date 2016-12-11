@@ -24,6 +24,12 @@ import com.tastyhomemade.tastyhomemade.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Created by raed on 11/22/2016.
@@ -68,7 +74,11 @@ public class Utils {
             Transaction.replace(R.id.main_content, ObjRequestFoodStep2Fragment);
             Transaction.commit();
         } else if (sSelectedItem.equals(p_ItemsList.get(0).getName())) {
-            Transaction.replace(R.id.main_content, new ProfileFragment());
+            Bundle ObjBundle = new Bundle();
+            ObjBundle.putInt("UserId",new Settings(p_context).getUserId());
+            ProfileFragment ObjProfileFragment = new ProfileFragment();
+            ObjProfileFragment.setArguments(ObjBundle);
+            Transaction.replace(R.id.main_content, ObjProfileFragment);
 
             Transaction.commit();
         } else if (sSelectedItem.equals(p_ItemsList.get(1).getName())) {
@@ -174,6 +184,85 @@ public class Utils {
         return "";
     }
 
+    public static String GetGoogleMapCity(double p_Latitude, double p_Longitude,int p_iLanguageId) {
+        String sObjTemp = "";
+        if (p_iLanguageId==1) // Arabic
+            sObjTemp = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=" + p_Latitude + "," + p_Longitude + "&sensor=true&language=ar";
+        else
+            sObjTemp = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=" + p_Latitude + "," + p_Longitude + "&sensor=true";
+        try {
+//            URL ObjUrl = new URL(sObjTemp);
+//            HttpURLConnection ObjUrlCon = (HttpURLConnection) ObjUrl.openConnection();
+//            ObjUrlCon.setRequestMethod("GET");
+//            ObjUrlCon.setRequestProperty("User-Agent","Mozilla/5.0");
+//            ObjUrlCon.getResponseCode();
+//            BufferedReader ObjReader = new BufferedReader(new InputStreamReader(ObjUrlCon.getInputStream()));
+//            StringBuffer ObjStringBuffer = new StringBuffer();
+//            String sTemp ="";
+//            while ((sTemp = ObjReader.readLine()) !=null)
+//            {
+//                ObjStringBuffer.append(sTemp);
+//            }
+//            ObjReader.close();
+//
+//            sObjTemp = ObjStringBuffer.toString();
+
+            DocumentBuilderFactory ObjFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder ObjBuilder = ObjFactory.newDocumentBuilder();
+            Document  ObjDoc = ObjBuilder.parse(new URL(sObjTemp).openStream());
+
+            ObjDoc.getDocumentElement().normalize();
+
+            NodeList ObjNodeList =ObjDoc.getElementsByTagName("type");
+            Node ObjMainNode= null;
+            for (int i=0;i<ObjNodeList .getLength();i++)
+            {
+                if (ObjNodeList.item(i).getNodeType() == Node.ELEMENT_NODE &&  ObjNodeList.item(i).getTextContent() != null && ObjNodeList.item(i).getTextContent() .equals("postal_code")) {
+                    ObjMainNode = ObjNodeList.item(i).getParentNode();
+                    break;
+                }
+            }
+
+            int FoundNodes=0;
+            Node ObjTargetNode = null;
+            if (ObjMainNode != null)
+            {
+                for (int i=0;i<ObjMainNode.getChildNodes().getLength(); i++)
+                {
+                    Node ObjNodeTemp = ObjMainNode.getChildNodes().item(i);
+                    if (ObjNodeTemp.getNodeType() == Node.ELEMENT_NODE &&  ObjNodeTemp .getNodeName()=="address_component")
+                    {
+                        FoundNodes = 0;
+                       for (int j=0;j< ObjNodeTemp.getChildNodes().getLength() ; j++)
+                       {
+                           if (FoundNodes == 2)
+                           {
+                               ObjTargetNode = ObjNodeTemp.getChildNodes().item(0);
+                               break;
+                           }
+
+                           if (ObjNodeTemp.getChildNodes().item(j).getNodeName() == "administrative_area_level_1")
+                               FoundNodes = FoundNodes +1;
+                           else if (ObjNodeTemp.getChildNodes().item(j).getNodeName()== "political")
+                               FoundNodes = FoundNodes +1;
+                       }
+                    }
+                }
+            }
+
+
+
+            if (ObjTargetNode !=null)
+                return ObjTargetNode.getTextContent();
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
+
+
     public class GoogleMapClass extends AsyncTask<Double,String,String>
     {
         Settings ObjSettings;
@@ -194,6 +283,28 @@ public class Utils {
             super.onPreExecute();
         }
     }
+
+    public class GoogleMapClassCity extends AsyncTask<Double,String,String>
+    {
+        Settings ObjSettings;
+        public GoogleMapClassCity(Context p_Context)
+        {
+            ObjSettings = new Settings(p_Context);
+        }
+
+        @Override
+        protected String doInBackground(Double... params) {
+
+            String sResult = Utils.GetGoogleMapCity(params[0],params[1],ObjSettings.getCurrentLanguageId());
+            return sResult;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+    }
+
 
 
 }

@@ -62,7 +62,7 @@ public class MainMenuAdapter extends BaseAdapter{
             public void onClick(View view) {
                 String sSelectedItem  =((TextView)view).getText().toString();
                 new Utils().ShowActivity ((MainActivity)context,AllItems,sSelectedItem);
-                ((DrawerLayout)((MainActivity)context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity)context).findViewById(R.id.lvMainMenu));;
+                ((DrawerLayout)((MainActivity)context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity)context).findViewById(R.id.Linear_SideMenu));;
 
             }
         });

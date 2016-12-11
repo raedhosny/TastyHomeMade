@@ -124,9 +124,9 @@ public class UserDB {
         try {
 
             java.sql.Connection myConnection = new DB().CreateConnection();
-            PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [SP_users_Login] \n" +
-                    "   @Username=?\n" +
-                    "  ,@Password=?\n");
+            PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [SP_users_Select] \n" +
+                    "   @Id=?"
+                    );
 
 
             stmt.setInt(1,p_iId); //id

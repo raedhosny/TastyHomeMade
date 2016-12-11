@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -14,246 +13,221 @@
         android:orientation="vertical"
         android:padding="5px">
 
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:height="111px"
+            android:background="@drawable/button"
+            android:text="حفظ"
+            android:layout_marginBottom="10dp"
+            >
+
+
+        </Button>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:padding="5dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.75"
-                android:gravity="right"
-                android:padding="5dp"
-
-                >
-
-                <TextView
-                    android:id="@+id/lblProfileName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="88px"
-                    android:gravity="center_vertical"
-                    android:text="اللقب"
-                    android:textColor="#000" />
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/lblProfileEmail"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="88px"
-                    android:layout_below="@+id/lblProfileName"
-                    android:layout_marginTop="9dp"
+                    android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="العنوان الالكتورني"
-
                     android:textColor="#000" />
 
 
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/textbox_disabled"
+                    android:enabled="false"
+                    style="@style/myedittext"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/lblProfileUserName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="88px"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/lblProfileEmail"
-                    android:layout_marginTop="9dp"
-
+                    android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="إسم المستخدم"
                     android:textColor="#000" />
 
+                <EditText
+                    android:id="@+id/txtUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/textbox_disabled"
+                    android:enabled="false"
+                    style="@style/myedittext"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/lblProfilePassword"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="88px"
                     android:layout_below="@id/lblProfileUserName"
-                    android:layout_marginTop="9dp"
+                    android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="كلمة السر"
                     android:textColor="#000" />
 
+                <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/textbox_enabled"
+                    style="@style/myedittext"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/lblProfilePasswordConfirm"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="88px"
-
-                    android:layout_below="@+id/lblProfilePassword"
-                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="تاكيد كلمة السر"
                     android:textColor="#000" />
 
+                <EditText
+                    android:id="@+id/txtPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="88px"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/textbox_enabled"
+                    style="@style/myedittext"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/lblProfileCity"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="88px"
-                    android:layout_below="@+id/lblProfilePasswordConfirm"
-                    android:layout_marginTop="30dp"
+                    android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="المدينه"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/Include_ddlCity"
+                        layout="@layout/control_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></include>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <include
+                            android:id="@+id/Include_btnRegisterGPS"
+                            layout="@layout/control_gpsbutton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            ></include>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/lblRegisterType"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="88px"
-                    android:layout_below="@id/lblProfileCity"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center_vertical"
+                    android:layout_weight="0.75"
                     android:text="نوع التسجيل"
-                    android:textColor="#000" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-
-                android:orientation="vertical"
-                android:padding="5dp">
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    />
 
                 <EditText
-                    android:id="@+id/txtProfileName"
+                    android:id="@+id/txtRegisterType"
                     android:layout_width="match_parent"
                     android:layout_height="88px"
-                    android:background="@drawable/textbox_enabled" />
-
-                <EditText
-                    android:id="@+id/txtProfileEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:layout_below="@id/txtProfileName"
-                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.25"
                     android:background="@drawable/textbox_disabled"
-
+                    android:enabled="false"
+                    style="@style/myedittext"
                     />
 
-                <EditText
-                    android:id="@+id/txtProfileUserName"
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:layout_below="@id/txtProfileEmail"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/textbox_disabled" />
+            </LinearLayout>
 
-                <EditText
-                    android:id="@+id/txtProfilePassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:background="@drawable/textbox_enabled"
-                    android:layout_below="@+id/txtProfileUserName"
-                    android:layout_marginTop="10dp"
-                    />
-
-                <EditText
-                    android:id="@+id/txtProfilePasswordConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:layout_below="@id/txtProfilePassword"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/textbox_enabled" />
-
-                <RelativeLayout
-                    android:id="@+id/Relative_ddlProfileCity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtProfilePasswordConfirm"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:layout_width="102px"
-                        android:layout_height="88px"
-
-                        android:layout_alignParentLeft="true"
-                        android:background="@drawable/dropdown" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="88px"
-                        android:background="@drawable/spinner"
-
-                        />
-
-                    <Spinner
-                        android:id="@+id/ddlProfileCity"
-                        android:layout_width="match_parent"
-                        android:layout_height="88px"
-                        android:background="@null"
-                        android:spinnerMode="dialog"
-                        android:theme="@android:style/Theme.Holo.Light"
-                       ></Spinner>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/Relative_btnGPS"
-                    android:layout_below="@id/Relative_ddlProfileCity"
-                    android:layout_marginTop="10dp"
-                    >
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:background="@drawable/button_gps"
-                    android:text="تحديد موقعي"
-                    android:id="@+id/btnGPS"
-
-
-                    />
-                    <ImageView
-                        android:layout_width="92px"
-                        android:layout_height="88px"
-                        android:src="@drawable/gps_icon"
-                        android:layout_alignParentLeft="true"
-                        />
-
-                </RelativeLayout>
-
-
-
-                <EditText
-                    android:id="@+id/txtProfileRegisterType"
-                    android:layout_width="match_parent"
-                    android:layout_height="88px"
-                    android:layout_below="@id/Relative_btnGPS"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/textbox_disabled" />
-
-
-
-
-            </RelativeLayout>
 
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp">
-
-
-            <Button
-                android:id="@+id/btnProfileSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:height="111px"
-                android:background="@drawable/button"
-                android:text="حفظ"
-
-                >
-
-
-            </Button>
-
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
