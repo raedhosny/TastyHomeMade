@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.tastyhomemade.tastyhomemade.Adapter.CategoriesAdapter;
 import com.tastyhomemade.tastyhomemade.Adapter.MainMenuAdapter;
+import com.tastyhomemade.tastyhomemade.Business.Categories;
+import com.tastyhomemade.tastyhomemade.Business.CategoriesDB;
 import com.tastyhomemade.tastyhomemade.Business.MainMenuItem;
 import com.tastyhomemade.tastyhomemade.Fragment.ProfileFragment;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
@@ -31,38 +35,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnMainForm;
     EditText txtSearch;
     Button btnSearch;
-    ListView lvMainMenu;
+    ListView lvMainMenu, lvCategories;
     List<MainMenuItem> FilteredSideMenuItemsList;
     List<MainMenuItem> AllSideMenuItemsList;
     Button btnMainRegister;
     TextView lblMainUserName;
     Button btnMainLogin;
     Button btnMainLogout;
+    LinearLayout Linear_SideMenu;
+    Settings ObjSettings;
+    List<Categories> ObjCategoriesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new Utils().SetCurrentLanguage(this,new Settings(this).getCurrentLanguageId());
+        new Utils().SetCurrentLanguage(this, new Settings(this).getCurrentLanguageId());
         setContentView(R.layout.activity_main);
 
-        Drawer_Layout = (DrawerLayout)this. findViewById(R.id.Drawer_Layout);
-        btnMainForm = (Button) this. findViewById(R.id.btnMainForm);
-        txtSearch  = (EditText) this. findViewById(R.id.txtSearch);
-        btnSearch = (Button) this. findViewById(R.id.btnSearch);
-        btnMainRegister = (Button) this. findViewById(R.id.btnMainRegister);
+        Drawer_Layout = (DrawerLayout) this.findViewById(R.id.Drawer_Layout);
+        btnMainForm = (Button) this.findViewById(R.id.btnMainForm);
+        txtSearch = (EditText) this.findViewById(R.id.txtSearch);
+        btnSearch = (Button) this.findViewById(R.id.btnSearch);
+        btnMainRegister = (Button) this.findViewById(R.id.btnMainRegister);
         btnMainForm.setOnClickListener(this);
         btnMainRegister.setOnClickListener(this);
-        lvMainMenu = (ListView)this. findViewById(R.id.lvMainMenu);
+        lvMainMenu = (ListView) this.findViewById(R.id.lvMainMenu);
+        lvCategories = (ListView) this.findViewById(R.id.lvCategories);
         lblMainUserName = (TextView) this.findViewById(R.id.lblMainUserName);
-        btnMainLogin = (Button)this.findViewById(R.id.btnMainLogin);
+        btnMainLogin = (Button) this.findViewById(R.id.btnMainLogin);
         btnMainLogin.setOnClickListener(this);
-        btnMainLogout = (Button)this.findViewById(R.id.btnMainLogout);
+        btnMainLogout = (Button) this.findViewById(R.id.btnMainLogout);
         btnMainLogout.setOnClickListener(this);
+        Linear_SideMenu = (LinearLayout) findViewById(R.id.Linear_SideMenu);
+        ObjSettings = new Settings(this);
 
         LoadMainInfo();
 
-        Drawer_Layout.closeDrawer(lvMainMenu);
+        Drawer_Layout.closeDrawer(Linear_SideMenu);
 
 
     }
@@ -70,73 +80,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-       // LoadMainInfo();
+        // LoadMainInfo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-       // LoadMainInfo();
+        // LoadMainInfo();
     }
 
     @Override
     public void onClick(View view) {
-        if (view == btnMainForm)
-        {
-            if (Drawer_Layout.isDrawerOpen(lvMainMenu)  ) {
-                Drawer_Layout.closeDrawer(lvMainMenu);
+        if (view == btnMainForm) {
+            if (Drawer_Layout.isDrawerOpen(Linear_SideMenu)) {
+                Drawer_Layout.closeDrawer(Linear_SideMenu);
 
+            } else {
+                Drawer_Layout.openDrawer(Linear_SideMenu);
             }
-            else {
-                Drawer_Layout.openDrawer(lvMainMenu);
-            }
-        }
-        else if (view  == btnMainRegister)
-        {
-            new Utils().ShowActivity(MainActivity.this,null,"Register");
-        }
-        else if (view  == btnMainLogin)
-        {
+        } else if (view == btnMainRegister) {
+            new Utils().ShowActivity(MainActivity.this, null, "Register");
+        } else if (view == btnMainLogin) {
 
-            new Utils().ShowActivity(MainActivity.this,null,"Login");
+            new Utils().ShowActivity(MainActivity.this, null, "Login");
             //LoadMainInfo ();
             // Go to main activity
 
-        }
-        else if (view == btnMainLogout)
-        {
+        } else if (view == btnMainLogout) {
             Settings ObjSettings = new Settings(this);
             ObjSettings.Clear();
 
-            LoadMainInfo ();
-
+            LoadMainInfo();
 
 
         }
 
     }
 
-    private void FillSideMenu ()
-    {
+    private void FillSideMenu() {
 //        // Fill Main Menu List
-        List<String> ItemsListTemp= new ArrayList<String>(Arrays.asList(Utils.GetResourceArrayName(this, R.array.MainMenuStrings,new Settings(this).getCurrentLanguageId())));
+        List<String> ItemsListTemp = new ArrayList<String>(Arrays.asList(Utils.GetResourceArrayName(this, R.array.MainMenuStrings, new Settings(this).getCurrentLanguageId())));
         List<String> ItemsListFiltered = new ArrayList<String>();
 
-        FilteredSideMenuItemsList =  new ArrayList<MainMenuItem>();
-        AllSideMenuItemsList =  new ArrayList<MainMenuItem>();
+        FilteredSideMenuItemsList = new ArrayList<MainMenuItem>();
+        AllSideMenuItemsList = new ArrayList<MainMenuItem>();
 
-        for (String ItemTemp : ItemsListTemp)
-        {
+        for (String ItemTemp : ItemsListTemp) {
             int iId = Integer.valueOf(ItemTemp.split(",")[0]);
             String sName = ItemTemp.split(",")[1];
             String[] UserTypesList = ItemTemp.split(",")[2].split(";");
 
-            AllSideMenuItemsList.add(new MainMenuItem(iId,sName));
+            AllSideMenuItemsList.add(new MainMenuItem(iId, sName));
 
-            for (String sUserType : UserTypesList)
-            {
-                if (sUserType.equals( new Settings(this).getUserType()))
-                {
+            for (String sUserType : UserTypesList) {
+                if (sUserType.equals(new Settings(this).getUserType())) {
                     ItemsListFiltered.add(iId + "," + sName);
                 }
             }
@@ -146,41 +143,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (String ItemTemp : ItemsListFiltered) {
             int iId = Integer.valueOf(ItemTemp.split(",")[0]);
             String sName = ItemTemp.split(",")[1];
-            MainMenuItem ItemList = new MainMenuItem(iId,sName);
-            FilteredSideMenuItemsList.add(ItemList );
+            MainMenuItem ItemList = new MainMenuItem(iId, sName);
+            FilteredSideMenuItemsList.add(ItemList);
         }
 
-        View Header = getLayoutInflater().inflate(R.layout.main_menu_header,null);
-        if (lvMainMenu.getHeaderViewsCount() == 0 )
+        View Header = getLayoutInflater().inflate(R.layout.main_menu_header, null);
+        if (lvMainMenu.getHeaderViewsCount() == 0)
             lvMainMenu.addHeaderView(Header);
-        lvMainMenu.setAdapter(new MainMenuAdapter(this,FilteredSideMenuItemsList,AllSideMenuItemsList));
-        Drawer_Layout.closeDrawer(lvMainMenu);
+        lvMainMenu.setAdapter(new MainMenuAdapter(this, FilteredSideMenuItemsList, AllSideMenuItemsList));
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ObjCategoriesList = new CategoriesDB().SelectAll(ObjSettings.getCurrentLanguageId());
+                final CategoriesAdapter ObjCategoriesAdapter = new CategoriesAdapter(MainActivity.this, ObjCategoriesList);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (lvCategories.getHeaderViewsCount() == 0)
+                        {
+                            View CategoriesHeader = getLayoutInflater().inflate(R.layout.categories_menu_header,null);
+                            lvCategories.addHeaderView(CategoriesHeader);
+                        }
+                        lvCategories.setAdapter(ObjCategoriesAdapter);
+                    }
+                });
+
+
+            }
+        });
+        t.start();
+
+        Drawer_Layout.closeDrawer(Linear_SideMenu);
 
     }
 
-    public void LoadMainInfo ()
-    {
-
+    public void LoadMainInfo() {
         FillSideMenu();
         Settings ObjSettings = new Settings(this);
-        if (ObjSettings .getUserId() != -1)
-        {
+        if (ObjSettings.getUserId() != -1) {
             btnMainLogin.setVisibility(View.GONE);
             btnMainRegister.setVisibility(View.GONE);
             btnMainLogout.setVisibility(View.VISIBLE);
             lblMainUserName.setText(ObjSettings.getUserName());
-        }
-        else
-        {
+        } else {
             btnMainLogin.setVisibility(View.VISIBLE);
             btnMainRegister.setVisibility(View.VISIBLE);
             btnMainLogout.setVisibility(View.GONE);
 
-            lblMainUserName.setText(new Utils().GetResourceName(this,R.string.Visitor,ObjSettings.getCurrentLanguageId()));
+            lblMainUserName.setText(new Utils().GetResourceName(this, R.string.Visitor, ObjSettings.getCurrentLanguageId()));
 
         }
 
-      new Utils().ShowActivity(this,null,"Main","-1");
+        new Utils().ShowActivity(this, null, "Main", "-1");
     }
 
 

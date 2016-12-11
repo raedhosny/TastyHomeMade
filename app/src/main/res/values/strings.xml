@@ -17,23 +17,7 @@
         <item>عميل</item>
 
     </string-array>
-    <string name="Error_PasswordDoesNotMatch">
-        Password Does Not Match
-    </string>
-    <string name="Error_InvalidEmailAddress">
-        Invalid email address
-    </string>
 
-    <string name="Error_PleaseSelectCity">
-        Please Select City
-    </string>
-
-        <string name="Error_PleaseSelectRegisterType">
-        Please Select Register Type
-    </string>
-    <string name="Error_WrongUserNameOrPassword">
-        Wrong Username or Password
-    </string>
      <string name="Visitor">
        Visitor
     </string>
@@ -73,22 +57,7 @@
         <item>AM</item>
         <item>PM</item>
     </string-array>
-    <string name="Error_PleaseEnterFoodName">
-        Please Enter Food Name
-    </string>
 
-    <string name="Error_PleaseSelectFoodCategory">
-        Please Select Food Category
-    </string>
-     <string name="Error_PleaseEnterFooDescription">
-        Please Enter Food Description
-    </string>
-    <string name="Error_PleaseAddPhotoForFood">
-        Please Add Photo For Food
-    </string>
-    <string name="Error_PleaseSelectIsFoodVisibleToCustomerOrNot">
-        Please Select Is Food Visible To Customer Or Not
-    </string>
     <string-array name="myboolean">
         <item>--Select--</item>
         <item>Yes</item>
@@ -109,11 +78,23 @@
         SR
     </string>
 
-    <string name="Error_YouAreNotLoginYet">
-        You are not login yet, please register if you are not yet
+    <string name="GpsSettingsTitle">
+        GPS SETTINGS
     </string>
-    <string name="Error_PleaseEnterNumberOfOrders">
-        Please enter number of orders
+    <string name="GpsSettingsDescription">
+        GPS is not enabled, Do u want to go to settings menu ?
+    </string>
+     <string name="GpsSettingsPositiveButton">
+        Settings
+    </string>
+    <string name="GpsSettingsNegativeButton">
+        Cancel
+    </string>
+    <string name="OrderHasBeenSubmitted">
+        Order has been submitted
+    </string>
+      <string name="CategoriesHeader">
+        Categories
     </string>
 
 </resources>

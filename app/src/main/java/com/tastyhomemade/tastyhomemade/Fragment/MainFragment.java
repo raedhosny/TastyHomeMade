@@ -29,15 +29,17 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main,null);
+        return inflater.inflate(R.layout.fragment_main, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int iCategoryId = getArguments().getInt("CategoryId");
+        final int iCategoryId = getArguments().getInt("CategoryId");
+
         FillData(iCategoryId);
+
     }
 
     private void FillData(int p_iCategoryId) {
@@ -60,9 +62,7 @@ public class MainFragment extends Fragment {
                             }
                     );
 
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }

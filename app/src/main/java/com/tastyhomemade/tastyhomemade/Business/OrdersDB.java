@@ -31,7 +31,11 @@ public class OrdersDB {
                             "  ,@ShippingBuilding=?\n" +
                             "  ,@ShippingApartment=?\n" +
                             "  ,@ShippingOtherDetails=?\n" +
-                            "  ,@ShippingDeliveryDate=?");
+                            "  ,@ShippingDeliveryDate=?\n" +
+                            "  ,@NumberOfOrders=?\n" +
+                            "  ,@OrderAddress=?\n"+
+                            "  ,@IsCompleteOrder=?"
+                            );
 
 
             stmt.setInt(1,p_ObjOrder.getId());
@@ -48,6 +52,9 @@ public class OrdersDB {
             stmt.setString(12,p_ObjOrder.getShippingApartment());
             stmt.setString(13,p_ObjOrder.getShippingOtherDetails());
             stmt.setDate(14,p_ObjOrder.getShippingDeliveryDate());
+            stmt.setInt(15,p_ObjOrder.getNumberOfOrders());
+            stmt.setString(16,p_ObjOrder.getOrderAddress());
+            stmt.setBoolean(17,p_ObjOrder.isCompleteOrder());
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
@@ -101,6 +108,9 @@ public class OrdersDB {
                 ObjOrder.setShippingApartment(ObjResultSet.getString(12));
                 ObjOrder.setShippingOtherDetails(ObjResultSet.getString(13));
                 ObjOrder.setShippingDeliveryDate(ObjResultSet.getDate(14));
+                ObjOrder.setNumberOfOrders(ObjResultSet.getInt(15));
+                ObjOrder.setOrderAddress(ObjResultSet.getString(16));
+                ObjOrder.setCompleteOrder(ObjResultSet.getBoolean(17));
 
                 return ObjOrder;
             }

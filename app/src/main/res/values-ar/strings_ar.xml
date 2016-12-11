@@ -11,23 +11,7 @@
         <item>8,الأكثرا طلبا,All</item>
     </string-array>
 
-      <string name="Error_PasswordDoesNotMatch">
-       كلمة السر غير متواقفه
-    </string>
-     <string name="Error_InvalidEmailAddress">
-         خطأ في البريد الالكتروني
-    </string>
-    <string name="Error_PleaseSelectCity">
-       فضلا اختر المدينه
-    </string>
 
-       <string name="Error_PleaseSelectRegisterType">
-        فضلا اختر نوع  التسجيل اولا
-    </string>
-
-     <string name="Error_WrongUserNameOrPassword">
-      خطأ في إسم المستخدم او كلمة السر
-    </string>
 
        <string name="Visitor">
       زائر
@@ -37,34 +21,72 @@
        اختر صوره
     </string>
 
-    <string name="Error_PleaseEnterFoodName">
-        فضلا ادخل اسم الوجبه
-    </string>
 
-    <string name="Error_PleaseSelectFoodCategory">
-       فضلا اختر فئة الطعام
-    </string>
-     <string name="Error_PleaseEnterFooDescription">
-        فضلا ادخل وصف للوجبه
-    </string>
-    <string name="Error_PleaseAddPhotoForFood">
-        فضلا اضف صوره للوجبه
-    </string>
-    <string name="Error_PleaseSelectIsFoodVisibleToCustomerOrNot">
-        فضلا اختر هل الوجبه سوف تظهر للعميل ام لا
-    </string>
     <string-array name="DayNight">
         <item>صباحا</item>
         <item>مساءا</item>
     </string-array>
 
     <string-array name="minutes">
-        <item>00</item><item>01</item><item>02</item><item>03</item><item>04</item><item>05</item><item>06</item><item>07</item><item>08</item><item>09</item><item>10</item>
-        <item>11</item><item>12</item><item>13</item><item>14</item><item>15</item><item>16</item><item>17</item><item>18</item><item>19</item><item>20</item>
-        <item>21</item><item>22</item><item>23</item><item>24</item><item>25</item><item>26</item><item>27</item><item>28</item><item>29</item><item>30</item>
-        <item>31</item><item>32</item><item>33</item><item>34</item><item>35</item><item>36</item><item>37</item><item>38</item><item>39</item><item>40</item>
-        <item>41</item><item>42</item><item>43</item><item>44</item><item>45</item><item>46</item><item>47</item><item>48</item><item>50</item><item>51</item>
-        <item>52</item><item>53</item><item>54</item><item>55</item><item>56</item><item>57</item><item>58</item><item>59</item>
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
     </string-array>
 
     <string-array name="hours">
@@ -99,10 +121,24 @@
        <string name="Currency">
         ريال
     </string>
- <string name="Error_YouAreNotLoginYet">
-       انت غير مسجل دخول بعد, فضلا قم بتسجيل اولا ان كنت غير مسجل
+
+     <string name="GpsSettingsTitle">
+        اعداد تحديد الموقع
     </string>
-    <string name="Error_PleaseEnterNumberOfOrders">
-       فضلا ادخل عدد الطلبات
+    <string name="GpsSettingsDescription">
+        تحديد الموقع غير مفعل, هل تريد الذهاب للاعدادت للتفعيل
     </string>
+     <string name="GpsSettingsPositiveButton">
+        الاعدادات
+    </string>
+    <string name="GpsSettingsNegativeButton">
+        الغاء
+    </string>
+     <string name="OrderHasBeenSubmitted">
+        تم تسجيل طلبك بنجاح
+    </string>
+          <string name="CategoriesHeader">
+        الفئات
+    </string>
+
 </resources>

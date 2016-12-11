@@ -10,10 +10,9 @@
     android:layout_height="match_parent"
     android:layout_margin="0dp"
     android:background="@drawable/background"
-    android:orientation="vertical"
-    android:padding="0dp"
     android:layoutDirection="locale"
-    >
+    android:orientation="vertical"
+    android:padding="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,8 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="64px"
         android:background="@drawable/top_bar_2"
-        android:orientation="horizontal"
-       >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,12 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
                 android:text="أهلا"
                 android:textColor="#000000"
                 android:textSize="5pt"
-                android:textStyle="bold"
-                android:layout_marginRight="10dp"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/lblMainUserName"
@@ -77,38 +74,36 @@
                 />
 
             <Button
-                android:layout_width="60dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="5dp"
-                android:padding="0dp"
-                android:text="تسجيل"
-                android:background="@drawable/button"
-                android:layout_gravity="center_vertical"
                 android:id="@+id/btnMainRegister"
-                />
-
-
-            <Button
                 android:layout_width="60dp"
                 android:layout_height="20dp"
-                android:layout_marginRight="5dp"
-                android:padding="0dp"
-                android:text="دخول"
-                android:background="@drawable/button"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/btnMainLogin"
-                />
+                android:layout_marginRight="5dp"
+                android:background="@drawable/button"
+                android:padding="0dp"
+                android:text="تسجيل" />
 
 
             <Button
+                android:id="@+id/btnMainLogin"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
+                android:background="@drawable/button"
+                android:padding="0dp"
+                android:text="دخول" />
+
+
+            <Button
+                android:id="@+id/btnMainLogout"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/button"
                 android:padding="0dp"
                 android:text="خروج"
-                android:background="@drawable/button"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/btnMainLogout"
 
                 />
 
@@ -117,25 +112,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-
-            android:orientation="horizontal"
-            android:gravity="left"
             android:layout_marginLeft="15dp"
-            >
 
+            android:layout_weight="0.5"
+            android:gravity="left"
+            android:orientation="horizontal">
 
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="viewEnd"
                 android:layout_gravity="center_vertical"
                 android:text="اليوم 19 أكتوبر 2016"
+                android:textAlignment="viewEnd"
                 android:textColor="#000000"
-                android:textSize="5pt"
-                />
+                android:textSize="5pt" />
 
         </LinearLayout>
 
@@ -145,31 +137,28 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="92px"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/top_bar_3"
         android:orientation="horizontal"
-        android:padding="5dp"
-        android:layout_gravity="center_vertical"
-        >
+        android:padding="5dp">
 
         <Button
             android:id="@+id/btnMainForm"
             android:layout_width="67px"
             android:layout_height="62px"
 
-            android:background="@drawable/mainform_btn"
             android:layout_weight="0.05"
-            />
+            android:background="@drawable/mainform_btn" />
 
         <EditText
             android:id="@+id/txtSearch"
+            style="@style/myedittext"
             android:layout_width="match_parent"
             android:layout_height="60px"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/search_text"
             android:layout_weight="0.90"
-            style="@style/myedittext"
-            />
+            android:background="@drawable/search_text" />
 
         <Button
             android:id="@+id/btnSearch"
@@ -177,7 +166,6 @@
             android:layout_height="60px"
             android:layout_weight="0.05"
             android:background="@drawable/search_btn" />
-
 
 
     </LinearLayout>
@@ -197,17 +185,38 @@
 
         </RelativeLayout>
 
-        <ListView
-            android:id="@+id/lvMainMenu"
+        <LinearLayout
             android:layout_width="562px"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
-            android:background="#e5e5e5"
-
+            android:orientation="vertical"
+            android:id="@+id/Linear_SideMenu"
             >
 
-        </ListView>
+
+            <ListView
+                android:id="@+id/lvMainMenu"
+                android:layout_width="562px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+
+                android:background="#e5e5e5"
+
+                >
+
+
+            </ListView>
+
+            <ListView
+                android:id="@+id/lvCategories"
+                android:layout_width="562px"
+                android:layout_height="match_parent"
+                android:background="#e5e5e5"
+
+                ></ListView>
+
+        </LinearLayout>
 
     </android.support.v4.widget.DrawerLayout>
 

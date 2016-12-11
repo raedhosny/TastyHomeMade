@@ -21,11 +21,22 @@ public class Orders {
     String ShippingApartment;
     String ShippingOtherDetails;
     Date ShippingDeliveryDate;
+    int NumberOfOrders;
+    String OrderAddress;
+    boolean IsCompleteOrder;
+
+    public int getNumberOfOrders() {
+        return NumberOfOrders;
+    }
+
+    public void setNumberOfOrders(int numberOfOrders) {
+        NumberOfOrders = numberOfOrders;
+    }
 
     public Orders() {
     }
 
-    public Orders(int id, int food_Id, int user_Id, Date requestDate, boolean isShippingToClient, double shipping_Longitude, double shipping_Latitude, int shippingCountryId, String shippingDistrict, String shippingStreet, String shippingBuilding, String shippingApartment, String shippingOtherDetails, Date shippingDeliveryDate) {
+    public Orders(int id, int food_Id, int user_Id, Date requestDate, boolean isShippingToClient, double shipping_Longitude, double shipping_Latitude, int shippingCountryId, String shippingDistrict, String shippingStreet, String shippingBuilding, String shippingApartment, String shippingOtherDetails, Date shippingDeliveryDate,int NumberOfOrders,String OrderAddress,boolean IsCompleteOrder) {
         Id = id;
         Food_Id = food_Id;
         User_Id = user_Id;
@@ -40,6 +51,17 @@ public class Orders {
         ShippingApartment = shippingApartment;
         ShippingOtherDetails = shippingOtherDetails;
         ShippingDeliveryDate = shippingDeliveryDate;
+        NumberOfOrders = NumberOfOrders;
+        OrderAddress = OrderAddress;
+        IsCompleteOrder = IsCompleteOrder;
+    }
+
+    public boolean isCompleteOrder() {
+        return IsCompleteOrder;
+    }
+
+    public void setCompleteOrder(boolean completeOrder) {
+        IsCompleteOrder = completeOrder;
     }
 
     public int getId() {
@@ -152,5 +174,13 @@ public class Orders {
 
     public void setShippingDeliveryDate(Date shippingDeliveryDate) {
         ShippingDeliveryDate = shippingDeliveryDate;
+    }
+
+    public String getOrderAddress() {
+        return OrderAddress;
+    }
+
+    public void setOrderAddress(String orderAddress) {
+        OrderAddress = orderAddress;
     }
 }

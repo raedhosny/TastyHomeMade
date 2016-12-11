@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="115px"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/button"
@@ -18,41 +19,498 @@
 
     </Button>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:layout_above="@id/btnConfirmOrder"
         android:layout_marginBottom="5dp"
-        android:orientation="vertical"
-        android:padding="5dp">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include layout="@layout/details_menu_item"></include>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent" android:layout_marginTop="5dp"
             android:layout_height="match_parent"
-            android:background="@drawable/border"
-            android:padding="10dp"
+
+
             android:orientation="vertical"
-            >
-            <TextView
+            android:padding="5dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="موقع التسليم"
-                android:textColor="#000"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                />
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/include_details_item"
+                    layout="@layout/details_menu_item"></include>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/border"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="موقع التسليم"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+
+                    android:orientation="vertical"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5">
+
+                            <include
+                                android:id="@+id/Include_Tab_MakingAddress"
+                                layout="@layout/tab_enabled"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="5sp"
+                            android:layout_height="wrap_content">
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5">
+
+                            <include
+                                android:id="@+id/Include_Tab_ReceiveAddress"
+                                layout="@layout/tab_disabled"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/Linear_Tab1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="visible"
+                        android:background="@drawable/border_style3"
+                        >
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/border_style4"
+                            android:padding="5dp">
+
+                            <WebView
+                                android:id="@+id/webview_CurrentLocation_Tab1"
+                                android:layout_width="match_parent"
+                                android:layout_height="482px"
+                                android:background="@drawable/border_style3"></WebView>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/lblAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="address"
+                            android:textColor="#000"
+                            android:textSize="16sp"
+                            android:layout_marginTop="10dp"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/Linear_Tab2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:visibility="gone"
+                        android:background="@drawable/border_style3"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Button
+
+
+                                android:id="@+id/btnCurrentLocation"
+                                android:layout_width="181px"
+                                android:layout_height="50px"
+                                android:background="@drawable/settings_on" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:text="موقعي الحالي"
+                                android:textColor="#000" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal">
+
+                            <Button
+
+
+                                android:id="@+id/btnotherlocation"
+                                android:layout_width="181px"
+                                android:layout_height="50px"
+
+                                android:background="@drawable/settings_off" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:text="عنوان اخر"
+                                android:textColor="#000" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/Linear_Tab2_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/border_style4"
+                                android:padding="5dp">
+
+                                <WebView
+                                    android:id="@+id/webview_CurrentLocation_Tab2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="482px"
+                                    android:background="@drawable/border_style3"></WebView>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/lblAddressClient"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="address"
+                                android:textColor="#000"
+                                android:textSize="16sp"
+                                android:layout_marginTop="10dp"
+                                />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/Linear_Tab2_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.75"
+                                    android:text="المدينه"
+                                    android:textColor="#000" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.25">
+
+                                    <include
+                                        android:id="@+id/Include_ddlCity"
+                                        layout="@layout/control_dropdown"></include>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.75"
+                                    android:text="المنطقه"
+                                    android:textColor="#000" />
+
+                                <EditText
+                                    android:id="@+id/txtDistrict"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="88px"
+                                    android:layout_weight="0.25"
+
+                                    style="@style/myedittext"
+                                    android:background="@drawable/textbox_enabled"
+                                    >
+
+                                </EditText>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.75"
+                                    android:text="الشارع"
+                                    android:textColor="#000" />
+
+                                <EditText
+                                    android:id="@+id/txtStreet"
+                                    android:layout_width="match_parent"
+
+                                    android:layout_weight="0.25"
+                                    style="@style/myedittext"
+                                    android:layout_height="88px"
+                                    android:background="@drawable/textbox_enabled"
+                                    >
+
+                                </EditText>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.75"
+                                    android:text="المبني"
+                                    android:textColor="#000" />
+
+                                <EditText
+                                    android:id="@+id/txtBuilding"
+                                    android:layout_width="match_parent"
+
+                                    android:layout_weight="0.25"
+                                    style="@style/myedittext"
+                                    android:layout_height="88px"
+                                    android:background="@drawable/textbox_enabled"
+                                    >
+
+                                </EditText>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.75"
+                                    android:text="الشقه"
+                                    android:textColor="#000" />
+
+                                <EditText
+                                    android:id="@+id/txtAppartment"
+                                    android:layout_width="match_parent"
+
+                                    android:layout_weight="0.25"
+                                    style="@style/myedittext"
+                                    android:layout_height="88px"
+                                    android:background="@drawable/textbox_enabled"
+                                    >
+
+                                </EditText>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:textColor="#000">
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.75"
+                                    android:text="تفاصيل اخري"
+                                    android:textColor="#000"
+                                    />
+
+                                <EditText
+                                    android:id="@+id/txtOtherDetails"
+                                    android:layout_width="match_parent"
+
+                                    android:layout_weight="0.25"
+                                    style="@style/myedittext"
+                                    android:layout_height="88px"
+                                    android:background="@drawable/textbox_enabled"
+                                    >
+
+                                </EditText>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="موعد التسليم"
+                            android:textColor="#000"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75"
+                                android:text="التاريخ"
+                                android:textColor="#000" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.25"
+
+                                >
+
+                                <include
+                                    android:id="@+id/Include_Calender"
+                                    layout="@layout/control_calender"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                </include>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75"
+                                android:text="الوقت"
+                                android:textColor="#000" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.25"
+
+                                >
+
+                                <include
+                                    android:id="@+id/Include_Time"
+                                    layout="@layout/control_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                </include>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
-
-
-    </LinearLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

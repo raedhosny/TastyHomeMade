@@ -80,7 +80,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
 
         if (txtNumberOfOrders.getText().toString().trim().length() == 0)
         {
-            Toast.makeText(this, Utils.GetResourceName(this,R.string.Error_PleaseEnterNumberOfOrders,new Settings(this).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(),R.string.Error_PleaseEnterNumberOfOrders,new Settings(getActivity()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
             return ;
         }
 
@@ -107,12 +107,15 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
                                     null,
                                     null,
                                     null,
-                                    null
+                                    null,
+                                    Integer.parseInt(txtNumberOfOrders.getText().toString().trim()),
+                                    null,
+                                    false
                                     );
 
         int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
         // Go to step 2
-
+        new Utils().ShowActivity(getContext(),null,"RequestFormStep2",String.valueOf(iOrderId));
             }
         });
 

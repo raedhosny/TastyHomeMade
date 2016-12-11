@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+       <string name="Error_PasswordDoesNotMatch">
+       كلمة السر غير متواقفه
+    </string>
+     <string name="Error_InvalidEmailAddress">
+         خطأ في البريد الالكتروني
+    </string>
+    <string name="Error_PleaseSelectCity">
+       فضلا اختر المدينه
+    </string>
+       <string name="Error_PleaseSelectRegisterType">
+        فضلا اختر نوع  التسجيل اولا
+    </string>
+
+     <string name="Error_WrongUserNameOrPassword">
+      خطأ في إسم المستخدم او كلمة السر
+    </string>
+    <string name="Error_PleaseEnterFoodName">
+        فضلا ادخل اسم الوجبه
+    </string>
+
+    <string name="Error_PleaseSelectFoodCategory">
+       فضلا اختر فئة الطعام
+    </string>
+     <string name="Error_PleaseEnterFooDescription">
+        فضلا ادخل وصف للوجبه
+    </string>
+    <string name="Error_PleaseAddPhotoForFood">
+        فضلا اضف صوره للوجبه
+    </string>
+    <string name="Error_PleaseSelectIsFoodVisibleToCustomerOrNot">
+        فضلا اختر هل الوجبه سوف تظهر للعميل ام لا
+    </string>
+    <string name="Error_YouAreNotLoginYet">
+       انت غير مسجل دخول بعد, فضلا قم بتسجيل اولا ان كنت غير مسجل
+    </string>
+    <string name="Error_PleaseEnterNumberOfOrders">
+       فضلا ادخل عدد الطلبات
+    </string>
+</resources>
