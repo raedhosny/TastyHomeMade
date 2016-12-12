@@ -44,5 +44,8 @@
     <string name="Error_PleaseGetYourGPSLocationFirst">
         فضلا قم بتحديد موقعك اولا باستخدام نظام تحديد المواقع
     </string>
+   <string name="Error_PasswordCanNotBeZeroCharacters">
+        كلمة السر لا يمكن ان تكون خاليه من الحروف
+    </string>
 
 </resources>

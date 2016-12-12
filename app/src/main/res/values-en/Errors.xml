@@ -45,5 +45,8 @@
     <string name="Error_PleaseGetYourGPSLocationFirst">
         Please Get Your GPS Location First
     </string>
+      <string name="Error_PasswordCanNotBeZeroCharacters">
+        Password cannot be zero characters
+    </string>
 
 </resources>

@@ -140,6 +140,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             String sPassword = txtRegisterPassword.getText().toString().trim();
             String sConfirmPassword = txtRegisterConfirmPassword.getText().toString().trim();
 
+            if (sPassword.length() == 0)
+            {
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PasswordCanNotBeZeroCharacters,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (!sPassword.equals(sConfirmPassword)) {
                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PasswordDoesNotMatch,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
@@ -161,7 +167,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             }
 
             //Validate Have Representative
-            if (ddlRepresentive.getSelectedItemPosition() == 0)
+            if (ddlRegisterType.getSelectedItemPosition() == 1 && ddlRepresentive.getSelectedItemPosition() == 0)
             {
                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PleaseSelectRepresentative,new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
