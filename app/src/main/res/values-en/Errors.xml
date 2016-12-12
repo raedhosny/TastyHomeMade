@@ -39,4 +39,11 @@
     <string name="Error_PleaseEnterNumberOfOrders">
         Please enter number of orders
     </string>
+    <string name="Error_CantFindCity">
+        Cannot find current city
+    </string>
+    <string name="Error_PleaseGetYourGPSLocationFirst">
+        Please Get Your GPS Location First
+    </string>
+
 </resources>

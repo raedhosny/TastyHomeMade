@@ -1,5 +1,6 @@
 package com.tastyhomemade.tastyhomemade.Fragment;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -27,6 +28,7 @@ import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
+import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,8 +50,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     Spinner ddlRegisterType;
     Spinner ddlRepresentive;
     Button btnRegisterSave;
+    Button btnRegisterGPS;
     List<Cities> ObjCitesList ;
     List<RegisterTypes> ObjRegisterTypesList;
+    double iCurrentLatitude = -1,iCurrentLongtitude= -1;
+    Settings ObjSettings;
+    int GPS_SETTINGS_REQUEST_CODE = 3;
 
     @Nullable
     @Override
@@ -67,6 +73,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         ddlRegisterCity = (Spinner) view.findViewById(R.id.Include_RegisterddlRegisterCity).findViewById(R.id.ddlSpinner);
         ddlRegisterType = (Spinner) view.findViewById(R.id.Include_RegisterddlRegisterType).findViewById(R.id.ddlSpinner);
         ddlRepresentive = (Spinner) view.findViewById(R.id.Include_RegisterddlRepresentive).findViewById(R.id.ddlSpinner);
+        btnRegisterGPS = (Button) view.findViewById(R.id.Include_RegisterbtnRegisterGPS).findViewById(R.id.btnRegisterGPS);
+        btnRegisterGPS.setOnClickListener(this);
 
         btnRegisterSave = (Button) view.findViewById(R.id.btnRegisterSave);
         btnRegisterSave.setOnClickListener(this);
@@ -95,8 +103,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-
-
+        ObjSettings = new Settings(getContext());
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -120,14 +127,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         public void onClick(View v) {
 
         if (v == btnRegisterSave) {
-            Configuration ObjConfiguration = getResources().getConfiguration();
-            ObjConfiguration.setLocale(new Locale("ar"));
-            Resources ObjResources = new Resources(getContext().getAssets(), getResources().getDisplayMetrics(), ObjConfiguration);
+
 
 
             // Validate Email
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtRegisterEmail.getText()).matches() == false) {
-                Toast.makeText(getContext(), ObjResources.getString(R.string.Error_InvalidEmailAddress), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Utils.GetResourceName (getContext(), R.string.Error_InvalidEmailAddress,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -136,14 +141,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             String sConfirmPassword = txtRegisterConfirmPassword.getText().toString().trim();
 
             if (!sPassword.equals(sConfirmPassword)) {
-                Toast.makeText(getContext(), ObjResources.getString(R.string.Error_PasswordDoesNotMatch), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PasswordDoesNotMatch,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             //Validate City
-            if (ddlRegisterCity.getSelectedItemPosition() == 0)
+            if (iCurrentLatitude == -1 || iCurrentLongtitude == -1)
             {
-                Toast.makeText(getContext(), ObjResources.getString(R.string.Error_PleaseSelectCity), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PleaseSelectCity,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -151,7 +156,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             //Validate Register Type
             if (ddlRegisterType.getSelectedItemPosition() == 0)
             {
-                Toast.makeText(getContext(), ObjResources.getString(R.string.Error_PleaseSelectCity), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Utils.GetResourceName (getContext(),R.string.Error_PleaseSelectCity,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -221,7 +226,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                         @Override
                         public void run() {
                             Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.DataSavedSuccessfuly,new Settings(getContext()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                            new Utils().ShowActivity(getContext(),null,"Main");
+                            new Utils().ShowActivity(getContext(),null,"Main","-1");
                         }
                     });
 
@@ -230,7 +235,78 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             t.start();
 
         }
+        else if (v == btnRegisterGPS)
+        {
+            try {
+                GPSTracker ObjGPSTracker = new GPSTracker(this);
+                if (ObjGPSTracker.getCanGetLocation()) {
+                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
+                    String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
+                    int iSelectedIndex = 0;
+                    for (int i = 0; i < ObjCitesList.size(); i++) {
+                        if (sCurrentCity.contains(ObjCitesList.get(i).getName())) {
+                            iSelectedIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (iSelectedIndex == 0) {
+                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                        iCurrentLatitude = -1;
+                        iCurrentLongtitude = -1;
+                    } else {
+                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                        iCurrentLatitude = ObjGPSTracker.getLatitude();
+                        iCurrentLongtitude = ObjGPSTracker.getlongtitude();
+                        ddlRegisterCity.setSelection(iSelectedIndex);
+                    }
+                } else {
+                    ObjGPSTracker.ShowSettingsAlert();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GPS_SETTINGS_REQUEST_CODE) {
+            try {
+                GPSTracker ObjGPSTracker = new GPSTracker(this);
+                if (ObjGPSTracker.getCanGetLocation()) {
+                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
+                    String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
+                    int iSelectedIndex = 0;
+                    for (int i = 0; i < ObjCitesList.size(); i++) {
+                        if (sCurrentCity.contains(ObjCitesList.get(i).getName())) {
+                            iSelectedIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (iSelectedIndex == 0) {
+                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                        iCurrentLatitude = -1;
+                        iCurrentLongtitude = -1;
+                    } else {
+                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                        iCurrentLatitude = ObjGPSTracker.getLatitude();
+                        iCurrentLongtitude = ObjGPSTracker.getlongtitude();
+                        ddlRegisterCity.setSelection(iSelectedIndex);
+                    }
+                } else {
+                    ObjGPSTracker.ShowSettingsAlert();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
 
     private List<Cities> FillCities() {
 
@@ -250,6 +326,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             @Override
             public void run() {
                 ddlRegisterCity.setAdapter(CitiesAdapter);
+                ddlRegisterCity.setEnabled(false);
             }
         });
         return ObjCitiesList;

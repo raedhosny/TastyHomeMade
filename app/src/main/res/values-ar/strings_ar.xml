@@ -140,5 +140,8 @@
           <string name="CategoriesHeader">
         الفئات
     </string>
+    <string name="SuccessfullyGotGPSLocation">
+        تم تحديد موقعك بنجاح
+    </string>
 
 </resources>

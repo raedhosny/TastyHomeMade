@@ -96,5 +96,8 @@
       <string name="CategoriesHeader">
         Categories
     </string>
+     <string name="SuccessfullyGotGPSLocation">
+        Successfully got your GPS Location
+    </string>
 
 </resources>

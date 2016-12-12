@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:background="@drawable/border"
+
         android:orientation="vertical"
         android:padding="5px">
 
@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:height="111px"
             android:background="@drawable/button"
             android:text="حفظ"
@@ -35,7 +35,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_alignParentTop="true"
-            android:padding="5dp">
+            android:layout_above="@id/btnSave"
+            android:padding="5dp"
+            android:background="@drawable/border"
+            android:layout_marginBottom="10dp"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +54,7 @@
                     android:layout_height="88px"
                     android:layout_weight="0.75"
                     android:gravity="center_vertical"
-                    android:text="العنوان الالكتورني"
+                    android:text="البريد الالكتورني"
                     android:textColor="#000" />
 
 
@@ -118,6 +122,7 @@
                     android:layout_weight="0.25"
                     android:background="@drawable/textbox_enabled"
                     style="@style/myedittext"
+                    android:inputType="textPassword"
                     />
 
             </LinearLayout>
@@ -145,6 +150,7 @@
                     android:layout_weight="0.25"
                     android:background="@drawable/textbox_enabled"
                     style="@style/myedittext"
+                    android:inputType="textPassword"
                     />
             </LinearLayout>
 
@@ -175,7 +181,7 @@
 
                     <include
                         android:id="@+id/Include_ddlCity"
-                        layout="@layout/control_dropdown"
+                        layout="@layout/control_dropdown_disabled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></include>
 
@@ -222,6 +228,7 @@
                     android:background="@drawable/textbox_disabled"
                     android:enabled="false"
                     style="@style/myedittext"
+                    android:gravity="center"
                     />
 
             </LinearLayout>

@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -75,7 +76,7 @@ public class Utils {
             Transaction.commit();
         } else if (sSelectedItem.equals(p_ItemsList.get(0).getName())) {
             Bundle ObjBundle = new Bundle();
-            ObjBundle.putInt("UserId",new Settings(p_context).getUserId());
+            ObjBundle.putInt("UserId", new Settings(p_context).getUserId());
             ProfileFragment ObjProfileFragment = new ProfileFragment();
             ObjProfileFragment.setArguments(ObjBundle);
             Transaction.replace(R.id.main_content, ObjProfileFragment);
@@ -137,9 +138,9 @@ public class Utils {
         return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=13&size=300x200&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
     }
 
-    public static String GetGoogleMapAddress(double p_Latitude, double p_Longitude,int p_iLanguageId) {
+    public static String GetGoogleMapAddress(double p_Latitude, double p_Longitude, int p_iLanguageId) {
         String sObjTemp = "";
-        if (p_iLanguageId==1) // Arabic
+        if (p_iLanguageId == 1) // Arabic
             sObjTemp = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + p_Latitude + "," + p_Longitude + "&sensor=true&language=ar";
         else
             sObjTemp = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + p_Latitude + "," + p_Longitude + "&sensor=true";
@@ -147,13 +148,12 @@ public class Utils {
             URL ObjUrl = new URL(sObjTemp);
             HttpURLConnection ObjUrlCon = (HttpURLConnection) ObjUrl.openConnection();
             ObjUrlCon.setRequestMethod("GET");
-            ObjUrlCon.setRequestProperty("User-Agent","Mozilla/5.0");
+            ObjUrlCon.setRequestProperty("User-Agent", "Mozilla/5.0");
             ObjUrlCon.getResponseCode();
             BufferedReader ObjReader = new BufferedReader(new InputStreamReader(ObjUrlCon.getInputStream()));
             StringBuffer ObjStringBuffer = new StringBuffer();
-            String sTemp ="";
-            while ((sTemp = ObjReader.readLine()) !=null)
-            {
+            String sTemp = "";
+            while ((sTemp = ObjReader.readLine()) != null) {
                 ObjStringBuffer.append(sTemp);
             }
             ObjReader.close();
@@ -168,10 +168,9 @@ public class Utils {
 
                     while (ObjKeysList.hasNext()) {
                         String sResult = ObjKeysList.next();
-                        if ( sResult.equals("formatted_address"))
-                        {
+                        if (sResult.equals("formatted_address")) {
 
-                            sResult =ObjArray.getJSONObject(i).getString("formatted_address");
+                            sResult = ObjArray.getJSONObject(i).getString("formatted_address");
                             return sResult;
                         }
                     }
@@ -184,76 +183,43 @@ public class Utils {
         return "";
     }
 
-    public static String GetGoogleMapCity(double p_Latitude, double p_Longitude,int p_iLanguageId) {
+    public static String GetGoogleMapCity(double p_Latitude, double p_Longitude, int p_iLanguageId) {
         String sObjTemp = "";
-        if (p_iLanguageId==1) // Arabic
+        if (p_iLanguageId == 1) // Arabic
             sObjTemp = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=" + p_Latitude + "," + p_Longitude + "&sensor=true&language=ar";
         else
             sObjTemp = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=" + p_Latitude + "," + p_Longitude + "&sensor=true";
         try {
-//            URL ObjUrl = new URL(sObjTemp);
-//            HttpURLConnection ObjUrlCon = (HttpURLConnection) ObjUrl.openConnection();
-//            ObjUrlCon.setRequestMethod("GET");
-//            ObjUrlCon.setRequestProperty("User-Agent","Mozilla/5.0");
-//            ObjUrlCon.getResponseCode();
-//            BufferedReader ObjReader = new BufferedReader(new InputStreamReader(ObjUrlCon.getInputStream()));
-//            StringBuffer ObjStringBuffer = new StringBuffer();
-//            String sTemp ="";
-//            while ((sTemp = ObjReader.readLine()) !=null)
-//            {
-//                ObjStringBuffer.append(sTemp);
-//            }
-//            ObjReader.close();
-//
-//            sObjTemp = ObjStringBuffer.toString();
+
 
             DocumentBuilderFactory ObjFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder ObjBuilder = ObjFactory.newDocumentBuilder();
-            Document  ObjDoc = ObjBuilder.parse(new URL(sObjTemp).openStream());
+            Document ObjDoc = ObjBuilder.parse(new URL(sObjTemp).openStream());
 
             ObjDoc.getDocumentElement().normalize();
 
-            NodeList ObjNodeList =ObjDoc.getElementsByTagName("type");
-            Node ObjMainNode= null;
-            for (int i=0;i<ObjNodeList .getLength();i++)
-            {
-                if (ObjNodeList.item(i).getNodeType() == Node.ELEMENT_NODE &&  ObjNodeList.item(i).getTextContent() != null && ObjNodeList.item(i).getTextContent() .equals("postal_code")) {
-                    ObjMainNode = ObjNodeList.item(i).getParentNode();
-                    break;
-                }
-            }
+            NodeList ObjNodeList = ObjDoc.getElementsByTagName("address_component");
 
-            int FoundNodes=0;
-            Node ObjTargetNode = null;
-            if (ObjMainNode != null)
-            {
-                for (int i=0;i<ObjMainNode.getChildNodes().getLength(); i++)
+            String sCity ="";
+            List<Node> ObjNodeListTemp = new ArrayList<Node>();
+            for (int i = 0; i < ObjNodeList.getLength(); i++) {
+                ObjNodeListTemp.clear();
+                for (int j=0;j< ObjNodeList.item(i).getChildNodes().getLength() ; j++)
                 {
-                    Node ObjNodeTemp = ObjMainNode.getChildNodes().item(i);
-                    if (ObjNodeTemp.getNodeType() == Node.ELEMENT_NODE &&  ObjNodeTemp .getNodeName()=="address_component")
+                    if (ObjNodeList.item(i).getChildNodes().item(j).getNodeType() == Node.ELEMENT_NODE)
                     {
-                        FoundNodes = 0;
-                       for (int j=0;j< ObjNodeTemp.getChildNodes().getLength() ; j++)
-                       {
-                           if (FoundNodes == 2)
-                           {
-                               ObjTargetNode = ObjNodeTemp.getChildNodes().item(0);
-                               break;
-                           }
-
-                           if (ObjNodeTemp.getChildNodes().item(j).getNodeName() == "administrative_area_level_1")
-                               FoundNodes = FoundNodes +1;
-                           else if (ObjNodeTemp.getChildNodes().item(j).getNodeName()== "political")
-                               FoundNodes = FoundNodes +1;
-                       }
+                        ObjNodeListTemp.add(ObjNodeList.item(i).getChildNodes().item(j));
                     }
                 }
+
+                if (ObjNodeListTemp.size() == 4 && ObjNodeListTemp.get(2).getTextContent() .equals("administrative_area_level_1") && ObjNodeListTemp.get(3).getTextContent() .equals("political") )
+                {
+                    sCity = ObjNodeListTemp.get(0).getTextContent();
+                    break;
+                }
+
             }
-
-
-
-            if (ObjTargetNode !=null)
-                return ObjTargetNode.getTextContent();
+            return sCity;
 
 
         } catch (Exception ex) {
@@ -263,18 +229,17 @@ public class Utils {
     }
 
 
-    public class GoogleMapClass extends AsyncTask<Double,String,String>
-    {
+    public class GoogleMapClass extends AsyncTask<Double, String, String> {
         Settings ObjSettings;
-        public GoogleMapClass(Context p_Context)
-        {
+
+        public GoogleMapClass(Context p_Context) {
             ObjSettings = new Settings(p_Context);
         }
 
         @Override
         protected String doInBackground(Double... params) {
 
-            String sResult = Utils.GetGoogleMapAddress(params[0],params[1],ObjSettings.getCurrentLanguageId());
+            String sResult = Utils.GetGoogleMapAddress(params[0], params[1], ObjSettings.getCurrentLanguageId());
             return sResult;
         }
 
@@ -284,18 +249,17 @@ public class Utils {
         }
     }
 
-    public class GoogleMapClassCity extends AsyncTask<Double,String,String>
-    {
+    public class GoogleMapClassCity extends AsyncTask<Double, String, String> {
         Settings ObjSettings;
-        public GoogleMapClassCity(Context p_Context)
-        {
+
+        public GoogleMapClassCity(Context p_Context) {
             ObjSettings = new Settings(p_Context);
         }
 
         @Override
         protected String doInBackground(Double... params) {
 
-            String sResult = Utils.GetGoogleMapCity(params[0],params[1],ObjSettings.getCurrentLanguageId());
+            String sResult = Utils.GetGoogleMapCity(params[0], params[1], ObjSettings.getCurrentLanguageId());
             return sResult;
         }
 
@@ -304,7 +268,6 @@ public class Utils {
             super.onPreExecute();
         }
     }
-
 
 
 }

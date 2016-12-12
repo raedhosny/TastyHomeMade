@@ -36,7 +36,7 @@ public class CitiesDB {
             while (ObjResultSet.next())
             {
                 Cities ObjCity = new Cities();
-                ObjCity.setId(ObjResultSet.getInt("id"));
+                ObjCity.setId(ObjResultSet.getInt("Cityid"));
                 ObjCity.setLanguageId(ObjResultSet.getInt("LanguageId"));
                 ObjCity.setName(ObjResultSet.getString("Name"));
                 ObjCitiesList.add(ObjCity);

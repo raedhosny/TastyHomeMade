@@ -38,4 +38,11 @@
     <string name="Error_PleaseEnterNumberOfOrders">
        فضلا ادخل عدد الطلبات
     </string>
+    <string name="Error_CantFindCity">
+        لم يتم ايجاد مدينتك الحاليه
+    </string>
+    <string name="Error_PleaseGetYourGPSLocationFirst">
+        فضلا قم بتحديد موقعك اولا باستخدام نظام تحديد المواقع
+    </string>
+
 </resources>
