@@ -4,6 +4,8 @@ import android.util.Base64;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Raed on 12/6/2016.
@@ -34,7 +36,8 @@ public class OrdersDB {
                             "  ,@ShippingDeliveryDate=?\n" +
                             "  ,@NumberOfOrders=?\n" +
                             "  ,@OrderAddress=?\n"+
-                            "  ,@IsCompleteOrder=?"
+                            "  ,@IsCompleteOrder=?\n"+
+                            "  ,@IsReportDelayed=?"
                             );
 
 
@@ -55,6 +58,7 @@ public class OrdersDB {
             stmt.setInt(15,p_ObjOrder.getNumberOfOrders());
             stmt.setString(16,p_ObjOrder.getOrderAddress());
             stmt.setBoolean(17,p_ObjOrder.isCompleteOrder());
+            stmt.setBoolean(18,p_ObjOrder.isReportDelayed());
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
@@ -111,6 +115,7 @@ public class OrdersDB {
                 ObjOrder.setNumberOfOrders(ObjResultSet.getInt(15));
                 ObjOrder.setOrderAddress(ObjResultSet.getString(16));
                 ObjOrder.setCompleteOrder(ObjResultSet.getBoolean(17));
+                ObjOrder.setReportDelayed(ObjResultSet.getBoolean("isReportDelayed"));
 
                 return ObjOrder;
             }
@@ -124,5 +129,60 @@ public class OrdersDB {
         }
 
         return null;
+    }
+
+    public List<Orders> SelectByUserId (int p_iUserId)
+    {
+        try {
+
+            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Orders_SelectByUserId \n" +
+                            "   @User_Id=?"
+
+            );
+            stmt.setInt(1,p_iUserId);
+
+
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+            List<Orders> ObjOrdersList = new ArrayList<Orders>();
+
+            while (ObjResultSet.next())
+            {
+                Orders ObjOrder = new Orders();
+
+                ObjOrder.setId(ObjResultSet.getInt(1));
+                ObjOrder.setFood_Id(ObjResultSet.getInt(2));
+                ObjOrder.setUser_Id(ObjResultSet.getInt(3));
+                ObjOrder.setRequestDate(ObjResultSet.getDate(4));
+                ObjOrder.setShippingToClient(ObjResultSet.getBoolean(5));
+                ObjOrder.setShipping_Longitude(ObjResultSet.getDouble(6));
+                ObjOrder.setShipping_Latitude(ObjResultSet.getDouble(7));
+                ObjOrder.setShippingCountryId(ObjResultSet.getInt(8));
+                ObjOrder.setShippingDistrict(ObjResultSet.getString(9));
+                ObjOrder.setShippingStreet(ObjResultSet.getString(10));
+                ObjOrder.setShippingBuilding(ObjResultSet.getString(11));
+                ObjOrder.setShippingApartment(ObjResultSet.getString(12));
+                ObjOrder.setShippingOtherDetails(ObjResultSet.getString(13));
+                ObjOrder.setShippingDeliveryDate(ObjResultSet.getDate(14));
+                ObjOrder.setNumberOfOrders(ObjResultSet.getInt(15));
+                ObjOrder.setOrderAddress(ObjResultSet.getString(16));
+                ObjOrder.setCompleteOrder(ObjResultSet.getBoolean(17));
+                ObjOrder.setReportDelayed(ObjResultSet.getBoolean("isReportDelayed"));
+
+                ObjOrdersList.add(ObjOrder);
+            }
+            return ObjOrdersList;
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return new ArrayList<Orders>();
     }
 }

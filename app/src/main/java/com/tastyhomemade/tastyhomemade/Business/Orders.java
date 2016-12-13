@@ -24,6 +24,7 @@ public class Orders {
     int NumberOfOrders;
     String OrderAddress;
     boolean IsCompleteOrder;
+    boolean IsReportDelayed;
 
     public int getNumberOfOrders() {
         return NumberOfOrders;
@@ -36,7 +37,7 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(int id, int food_Id, int user_Id, Date requestDate, boolean isShippingToClient, double shipping_Longitude, double shipping_Latitude, int shippingCountryId, String shippingDistrict, String shippingStreet, String shippingBuilding, String shippingApartment, String shippingOtherDetails, Date shippingDeliveryDate,int NumberOfOrders,String OrderAddress,boolean IsCompleteOrder) {
+    public Orders(int id, int food_Id, int user_Id, Date requestDate, boolean isShippingToClient, double shipping_Longitude, double shipping_Latitude, int shippingCountryId, String shippingDistrict, String shippingStreet, String shippingBuilding, String shippingApartment, String shippingOtherDetails, Date shippingDeliveryDate, int NumberOfOrders, String OrderAddress, boolean IsCompleteOrder, boolean IsReportDelayed) {
         Id = id;
         Food_Id = food_Id;
         User_Id = user_Id;
@@ -54,6 +55,7 @@ public class Orders {
         NumberOfOrders = NumberOfOrders;
         OrderAddress = OrderAddress;
         IsCompleteOrder = IsCompleteOrder;
+        IsReportDelayed = IsReportDelayed;
     }
 
     public boolean isCompleteOrder() {
@@ -182,5 +184,13 @@ public class Orders {
 
     public void setOrderAddress(String orderAddress) {
         OrderAddress = orderAddress;
+    }
+
+    public boolean isReportDelayed() {
+        return IsReportDelayed;
+    }
+
+    public void setReportDelayed(boolean reportDelayed) {
+        IsReportDelayed = reportDelayed;
     }
 }

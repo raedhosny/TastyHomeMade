@@ -74,7 +74,8 @@ public class Utils {
             ObjRequestFoodStep2Fragment.setArguments(ObjBundle);
             Transaction.replace(R.id.main_content, ObjRequestFoodStep2Fragment);
             Transaction.commit();
-        } else if (sSelectedItem.equals(p_ItemsList.get(0).getName())) {
+        }
+        else if (sSelectedItem.equals(p_ItemsList.get(0).getName())) { // Profile
             Bundle ObjBundle = new Bundle();
             ObjBundle.putInt("UserId", new Settings(p_context).getUserId());
             ProfileFragment ObjProfileFragment = new ProfileFragment();
@@ -82,10 +83,20 @@ public class Utils {
             Transaction.replace(R.id.main_content, ObjProfileFragment);
 
             Transaction.commit();
-        } else if (sSelectedItem.equals(p_ItemsList.get(1).getName())) {
+        } else if (sSelectedItem.equals(p_ItemsList.get(1).getName())) { // Settings
             Transaction.replace(R.id.main_content, new SettingsFragment());
             Transaction.commit();
-        } else if (sSelectedItem.equals(p_ItemsList.get(5).getName()))  // Add Foods and Drinks
+        }
+        else if (sSelectedItem.equals(p_ItemsList.get(4).getName())) {  // Orders Follow Up
+            OrdersFollowUpFragment ObjOrdersFollowUpFragment = new OrdersFollowUpFragment();
+            Bundle ObjBundle = new Bundle();
+            ObjBundle.putInt("UserId", Integer.parseInt(args[0]));
+            ObjOrdersFollowUpFragment.setArguments(ObjBundle);
+            Transaction.replace(R.id.main_content, ObjOrdersFollowUpFragment);
+            Transaction.commit();
+        }
+
+        else if (sSelectedItem.equals(p_ItemsList.get(5).getName()))  // Add Foods and Drinks // Add Food And Drinks
         {
             Transaction.replace(R.id.main_content, new AddFoodsAndDrinksFragment());
             Transaction.commit();
