@@ -147,5 +147,8 @@
         <string name="ReportDelay">
        ابلاغ عن تأخير
     </string>
+        <string name="price">
+        السعر
+    </string>
 
 </resources>

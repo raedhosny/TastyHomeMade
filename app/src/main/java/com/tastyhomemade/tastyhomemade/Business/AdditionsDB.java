@@ -68,11 +68,11 @@ public class AdditionsDB {
             Additions ObjAddition = new Additions();
             if (ObjResultSet.next())
             {
-                ObjAddition.setId(ObjResultSet.getInt(1));
-                ObjAddition.setLanguageId(ObjResultSet.getInt(2));
-                ObjAddition.setName(ObjResultSet.getString(3));
-                ObjAddition.setPhoto(Base64.decode(ObjResultSet.getString(4),Base64.DEFAULT));
-                ObjAddition.setPrice(ObjResultSet.getFloat(5));
+                ObjAddition.setId(ObjResultSet.getInt("Id"));
+                ObjAddition.setLanguageId(ObjResultSet.getInt("LanguageId"));
+                ObjAddition.setName(ObjResultSet.getString("Name"));
+                ObjAddition.setPhoto(Base64.decode(ObjResultSet.getString("Photo"),Base64.DEFAULT));
+                ObjAddition.setPrice(ObjResultSet.getFloat("Price"));
                 return ObjAddition;
 
             }

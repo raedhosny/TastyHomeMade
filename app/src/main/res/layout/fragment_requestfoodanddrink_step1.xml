@@ -20,15 +20,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-       android:layout_above="@id/btnNext"
-        android:layout_marginBottom="5dp"
-        >
+        android:layout_above="@id/btnNext"
+        android:layout_marginBottom="10dp"
+       >
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
+
             >
 
             <LinearLayout
@@ -42,10 +43,11 @@
 
             </LinearLayout>
 
+
             <LinearLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/border"
                 android:orientation="vertical"
@@ -82,8 +84,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="6 ريال"
-                        android:textColor="#000" />
+                        android:text="0 ريال"
+                        android:textColor="#000"
+                        android:id="@+id/lblOrderCountPrice" />
 
                 </LinearLayout>
 
@@ -96,17 +99,24 @@
                     android:layout_marginTop="10dp"
                     />
 
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+
+                    <!--&gt;-->
                 <ListView
                     android:id="@+id/lvGradients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    ></ListView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    ></ListView>
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_marginTop="20dp">-->
 
                     <TextView
                         android:layout_width="match_parent"
@@ -137,9 +147,10 @@
                         />
 
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

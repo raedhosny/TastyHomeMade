@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Relative_ddlProfileCity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/border"
+   >
+
+    <ImageView
+        android:layout_width="102px"
+        android:layout_height="88px"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/button_decrease"
+        android:id="@+id/imgDropDownDecrease"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="88px"
+        android:background="@drawable/spinner"
+
+        />
+
+    <ImageView
+        android:layout_width="102px"
+        android:layout_height="88px"
+
+        android:background="@drawable/button_increase"
+        android:id="@+id/imgDropDownIncrease"
+        android:layout_alignParentRight="true"
+        />
+
+
+    <TextView
+        android:id="@+id/txtDropDownItem"
+        android:layout_width="match_parent"
+        android:layout_height="88px"
+        android:background="@null"
+        android:textColor="#000"
+        android:gravity="center"
+
+
+        ></TextView>
+</RelativeLayout>

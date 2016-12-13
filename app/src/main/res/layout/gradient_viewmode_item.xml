@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    >
+
+    <TextView
+        android:id="@+id/lblGradient"
+        style="@style/myedittext"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.35"
+        android:text="إضافه 1"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25">
+
+        <include
+            layout="@layout/control_dropdown_addremove"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Include_control_dropdown_addremove"
+            ></include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0.35"
+        android:gravity="center"
+        >
+    <TextView
+    android:id="@+id/lblPrice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="3"
+
+    android:gravity="center"
+    style="@style/myedittext"
+    android:textSize="14sp"
+    />
+    <TextView
+        android:id="@+id/lblCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ريال"
+
+        android:gravity="center"
+        style="@style/myedittext"
+        android:textSize="14sp"
+        />
+    </LinearLayout>
+
+</LinearLayout>

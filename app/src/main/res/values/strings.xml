@@ -103,6 +103,9 @@
     <string name="ReportDelay">
         Report Delay
     </string>
+    <string name="price">
+        price
+    </string>
 
 
 </resources>

@@ -2,6 +2,8 @@ package com.tastyhomemade.tastyhomemade.Business;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Raed on 12/3/2016.
@@ -38,6 +40,49 @@ public class Foods_AdditionsDB {
         }
 
         return -1;
+
+
+    }
+
+    public List<Foods_Additions> SelectByFoodId (int p_iFoodId)
+    {
+        try {
+
+            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Foods_Additions_SelectByFoodsId\n" +
+                            "   @FoodId=?"
+
+            );
+            stmt.setInt(1,p_iFoodId);
+
+
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+            List<Foods_Additions> ObjFoodsAdditionsList = new ArrayList<Foods_Additions>();
+
+            while(ObjResultSet.next())
+            {
+                Foods_Additions ObjFoodAddition = new Foods_Additions();
+
+                ObjFoodAddition.setId(ObjResultSet.getInt("Id"));
+                ObjFoodAddition.setFoodId(ObjResultSet.getInt("FoodId"));
+                ObjFoodAddition.setAdditionId(ObjResultSet.getInt("AdditionId"));
+
+
+                ObjFoodsAdditionsList.add(ObjFoodAddition);
+            }
+            return  ObjFoodsAdditionsList;
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return null;
 
 
     }
