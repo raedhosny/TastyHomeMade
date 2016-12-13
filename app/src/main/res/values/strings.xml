@@ -100,4 +100,9 @@
         Successfully got your GPS Location
     </string>
 
+    <string name="ReportDelay">
+        Report Delay
+    </string>
+
+
 </resources>

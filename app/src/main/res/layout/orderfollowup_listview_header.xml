@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@drawable/border_style4_header"
+xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="الوقت"
+    android:textColor="#fff"
+    android:gravity="center"
+    android:layout_weight="0.50"
+    android:padding="5dp"
+
+    />
+<View
+    android:layout_width="1dp"
+    android:layout_height="match_parent"
+    android:background="#a7a7a7" />
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="الاجراء"
+    android:textColor="#fff"
+    android:gravity="center"
+    android:layout_weight="0.50"
+    android:padding="5dp"
+    />
+
+</LinearLayout>

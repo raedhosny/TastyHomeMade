@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="5dp"
+
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
+
+        <LinearLayout
+            android:id="@+id/Linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_style2">
+
+            <ImageView
+                android:id="@+id/ImageFood"
+                android:layout_width="match_parent"
+                android:layout_height="375px"></ImageView>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/Linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/Linear1"
+            android:layout_marginBottom="2px"
+            android:layout_marginLeft="2px"
+            android:layout_marginRight="2px"
+            android:background="#CCe5e5e5">
+
+            <RatingBar
+                android:id="@+id/FoodRating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_weight="0.4"
+                android:numStars="5"
+                android:rating="4"
+
+                />
+
+
+            <ImageView
+                android:id="@+id/ImageDeliverable"
+                android:layout_width="85px"
+                android:layout_height="85px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/deliverable" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Linear4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/Linear1"
+            android:layout_marginBottom="2px"
+            android:layout_marginLeft="2px"
+            android:layout_marginRight="2px"
+            android:background="#CCe5e5e5"
+            android:padding="5dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="80px"
+                android:background="@drawable/button_style2"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/ReportDelay"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/button2" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/Linear3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linear1"
+            android:layout_marginTop="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="أكل او مشروب 1"
+                android:textAlignment="viewStart"
+                android:textColor="#000"
+                android:textSize="12sp"
+                android:textStyle="bold">
+                أكل او مشروب 1</TextView>
+
+            <TextView
+                android:id="@+id/lblTimeFromTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
+                android:textAlignment="viewEnd"
+                android:textColor="#000"
+                android:textSize="10sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Linear3"
+
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/border_style4"
+
+            >
+
+         <ListView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/lvOrderActions"
+             ></ListView>
+
+
+    </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

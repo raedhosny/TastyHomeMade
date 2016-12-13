@@ -144,4 +144,8 @@
         تم تحديد موقعك بنجاح
     </string>
 
+        <string name="ReportDelay">
+       ابلاغ عن تأخير
+    </string>
+
 </resources>
