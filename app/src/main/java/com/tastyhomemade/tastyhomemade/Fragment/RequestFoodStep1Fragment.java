@@ -1,9 +1,12 @@
 package com.tastyhomemade.tastyhomemade.Fragment;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -46,6 +50,8 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     Button btnNext;
     int iFoodId =-1;
     EditText txtNumberOfOrders;
+    TextView lblTimeFromTo;
+
 
 
 
@@ -65,14 +71,18 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
         FoodRating  = (RatingBar)view.findViewById(R.id.include_details_item).findViewById(R.id.FoodRating);
         lblName = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblName);
         lblDescription = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblDescription);
+        lblTimeFromTo = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblTimeFromTo);
         lvGradients = (ListView)view.findViewById(R.id.lvGradients);
         txtAdditionalGradients = (EditText) view.findViewById(R.id.txtAdditionalGradients);
         txtNumberOfOrders = (EditText)view.findViewById(R.id.txtNumberOfOrders);
         btnNext = (Button)view.findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
 
+
+
         Bundle ObjBundle =  getArguments();
         iFoodId = ObjBundle.getInt("FoodId");
+        FillData(iFoodId);
     }
 
     @Override
@@ -110,12 +120,67 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
                                     null,
                                     Integer.parseInt(txtNumberOfOrders.getText().toString().trim()),
                                     null,
+                                    false,
                                     false
                                     );
 
         int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
         // Go to step 2
         new Utils().ShowActivity(getContext(),null,"RequestFormStep2",String.valueOf(iOrderId));
+            }
+        });
+
+        t.start();
+    }
+
+    private void FillData(int p_FoodId)
+    {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                final Foods ObjFood = new FoodsDB().Select(iFoodId,new Settings(getContext()).getCurrentLanguageId());
+                final User ObjUser = new UserDB().Select(ObjFood.getUserId());
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lblPrice.setText(String.valueOf(ObjFood.getPrice()) + " " + Utils.GetResourceName(getContext(),R.string.Currency,new Settings(getContext()).getCurrentLanguageId()));
+                    }
+                });
+
+                byte[] Photo = Base64.decode(ObjFood.getPhoto(),Base64.DEFAULT);
+                final Bitmap ObjBitmapTemp = BitmapFactory.decodeByteArray(Photo ,0,Photo .length);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ImageFood.setImageBitmap(ObjBitmapTemp);
+                        lblName.setText(ObjFood.getName());
+                        lblDescription.setText(ObjFood.getName());
+                        if (ObjUser.isHaveDelivary())
+                            ImageDeliverable.setVisibility(View.VISIBLE);
+                        else
+                            ImageDeliverable.setVisibility(View.GONE);
+
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+
+                        String sTemp = Utils.GetResourceName(getContext(), R.string.RequestTimeFromTo, new Settings(getContext()).getCurrentLanguageId());
+
+                        sTemp = sTemp.replace("[X]", sdf.format(ObjFood.getRequestTimeFrom()));
+                        sTemp = sTemp.replace("[Y]", sdf.format(ObjFood.getRequestTimeTo()));
+                        if (new Settings(getContext()).getCurrentLanguageId() == 1) {
+                            sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
+                        }
+                        lblTimeFromTo.setText(sTemp);
+
+                    }
+                });
+
+
+
+
+
             }
         });
 

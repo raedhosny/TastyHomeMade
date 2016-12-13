@@ -29,9 +29,9 @@ public class RegisterTypesDB {
 
             while (ObjResultSet.next()) {
                 RegisterTypes ObjRegisterTypes = new RegisterTypes();
-                ObjRegisterTypes.setId(ObjResultSet.getInt(1));
-                ObjRegisterTypes.setLanguageId(ObjResultSet.getInt(3));
-                ObjRegisterTypes.setName(ObjResultSet.getString(4));
+                ObjRegisterTypes.setId(ObjResultSet.getInt("RegisterTypesId"));
+                ObjRegisterTypes.setLanguageId(ObjResultSet.getInt("LanguageId"));
+                ObjRegisterTypes.setName(ObjResultSet.getString("Name"));
                 ObjRegisterTypesList.add(ObjRegisterTypes);
             }
 

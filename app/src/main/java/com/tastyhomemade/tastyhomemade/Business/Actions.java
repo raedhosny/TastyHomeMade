@@ -12,7 +12,7 @@ public class Actions {
     public Actions() {
     }
 
-    public Actions(int id, int languageId, int name) {
+    public Actions(int id, int languageId, String name) {
         Id = id;
         LanguageId = languageId;
         Name = name;
