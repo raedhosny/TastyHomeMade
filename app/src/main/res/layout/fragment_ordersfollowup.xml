@@ -8,14 +8,21 @@
         <!--android:layout_height="match_parent"-->
         <!--android:orientation="vertical"-->
         <!--&gt;-->
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight="1dp"
-            android:id="@+id/lvOrders">
+            android:id="@+id/lvOrders"
+
+            >
 
         </ListView>
+    </ScrollView>
 
 
     <!--</LinearLayout>-->

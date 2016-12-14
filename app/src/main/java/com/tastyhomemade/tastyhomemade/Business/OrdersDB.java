@@ -62,6 +62,8 @@ public class OrdersDB {
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
+            ObjConnection.close();
+
             if (ObjResultSet.next())
                 return ObjResultSet.getInt(1);
             return -1;

@@ -46,7 +46,7 @@ public class OrdersFollowUpFragment extends Fragment {
                     public void run() {
 
                         lvOrders.setAdapter(ObjOrdersFollowUpAdapter);
-                        //Utils.setListViewHeightBasedOnChildren(lvOrders);
+                        Utils.setListViewHeightBasedOnChildren(lvOrders);
                     }
                 });
             }

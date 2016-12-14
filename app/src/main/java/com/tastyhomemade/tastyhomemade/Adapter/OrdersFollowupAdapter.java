@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tastyhomemade.tastyhomemade.Business.Foods;
@@ -176,9 +177,9 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                     }
                 });
 
-                final ListView lvOrderActions = (ListView) ((MainActivity) context).findViewById(R.id.lvOrderActions);
+                final ListView lvOrderActions = (ListView) vv.findViewById(R.id.lvOrderActions);
 
-                List<Orders_Actions> Obj_Orders_Actions_List = new Orders_ActionsDB().SelectByOrderId(ObjOrder.getId());
+                final List<Orders_Actions> Obj_Orders_Actions_List = new Orders_ActionsDB().SelectByOrderId(ObjOrder.getId());
 
                 final OrdersActionsAdapter ObjOrdersActionsAdapter = new OrdersActionsAdapter(context, Obj_Orders_Actions_List);
 
@@ -188,7 +189,10 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                         View Header = vv.inflate(context,R.layout.orderfollowup_listview_header, null);
                         if (lvOrderActions.getHeaderViewsCount() == 0)
                             lvOrderActions.addHeaderView(Header);
+
                         lvOrderActions.setAdapter(ObjOrdersActionsAdapter);
+                        lvOrderActions.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,77 * Obj_Orders_Actions_List.size() +77 ));
+
 
                     }
                 });
