@@ -1,6 +1,7 @@
 package com.tastyhomemade.tastyhomemade.Adapter;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -26,8 +27,7 @@ public class OrdersActionsAdapter extends BaseAdapter {
     Context context;
     Settings ObjSettings;
 
-    public OrdersActionsAdapter(Context p_context,List<Orders_Actions> p_Orders_Actions_List)
-    {
+    public OrdersActionsAdapter(Context p_context, List<Orders_Actions> p_Orders_Actions_List) {
         context = p_context;
         Obj_Orders_Actions_List = p_Orders_Actions_List;
         ObjSettings = new Settings(p_context);
@@ -51,23 +51,31 @@ public class OrdersActionsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        View v = View.inflate(context, R.layout.orderfollowup_listview_item,null);
+        View v = View.inflate(context, R.layout.orderfollowup_listview_item, null);
 
-        TextView lblTime = (TextView) v.findViewById(R.id.lblTime);
+        final TextView lblTime = (TextView) v.findViewById(R.id.lblTime);
         final TextView lblAction = (TextView) v.findViewById(R.id.lblAction);
-        SimpleDateFormat sdf = null;
 
-        if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
-            sdf = new SimpleDateFormat("dd MMMM yyyy h:mm a",new Locale("ar"));
-        else if (ObjSettings.getCurrentLanguageId() == 2) // English
-            sdf = new SimpleDateFormat("dd MMMM yyyy",new Locale("en"));
-        lblTime.setText(sdf.format(  Obj_Orders_Actions_List.get(position).getActionDate()));
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy h:mm a", ObjSettings.getCurrentLanguageId() == 1 ? new Locale("ar") : new Locale("en"));
 
-        Thread t= new Thread(new Runnable() {
+        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Actions ObjAction = new ActionsDB().Select(Obj_Orders_Actions_List.get(position).getActionId(),ObjSettings.getCurrentLanguageId());
-                lblAction.setText(ObjAction.getName());
+                lblTime.setText(sdf.format(Obj_Orders_Actions_List.get(position).getActionDate()));
+            }
+        });
+
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Actions ObjAction = new ActionsDB().Select(Obj_Orders_Actions_List.get(position).getActionId(), ObjSettings.getCurrentLanguageId());
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lblAction.setText(ObjAction.getName());
+                    }
+                });
             }
         });
         t.start();

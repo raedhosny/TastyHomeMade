@@ -12,7 +12,7 @@ public class ConnectionProperties {
 
     public ConnectionProperties()
     {
-        IP = "192.168.1.6";
+        IP = "192.168.15.128";
         UserName = "sa";
         Password = "help";
         Port = "1433";

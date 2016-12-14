@@ -23,6 +23,7 @@ import com.tastyhomemade.tastyhomemade.Business.Orders_Actions;
 import com.tastyhomemade.tastyhomemade.Business.Orders_ActionsDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
+import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
@@ -64,59 +65,66 @@ public class OrdersFollowupAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final View v = View.inflate(context, R.layout.orderfollowup_list_item, null);
+        View v = View.inflate(context, R.layout.orderfollowup_list_item, null);
+
+        final View vv = v;
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
 
-                final Orders ObjOrder =  ObjOrderList.get(position);
 
-                final Button btnReportDelay = (Button) v.findViewById(R.id.btnReportDelay);
+                final Orders ObjOrder = ObjOrderList.get(position);
+                final Foods ObjFood = new FoodsDB().Select(ObjOrder.getFood_Id(), ObjSettings.getCurrentLanguageId());
+                final User ObjUser = new UserDB().Select(ObjFood.getUserId());
+
+                final Button btnReportDelay = (Button) vv.findViewById(R.id.btnReportDelay);
                 btnReportDelay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ObjOrder.setReportDelayed(true);
+
+
                         new OrdersDB().InsertUpdate(ObjOrder);
-                        ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+
+                        ((MainActivity)context).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                btnReportDelay.setVisibility(View.GONE);
-                               // notifyDataSetChanged();
+                        btnReportDelay.setVisibility(View.GONE);
                             }
                         });
-
+                        // notifyDataSetChanged();
                     }
                 });
 
                 if (ObjOrderList.get(position).isReportDelayed())
-                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            btnReportDelay.setVisibility(View.GONE);
-                            //notifyDataSetChanged();
-                        }
-                    });
+                    btnReportDelay.setVisibility(View.GONE);
+                //notifyDataSetChanged();
 
-                ImageView ImageFood = (ImageView) v.findViewById(R.id.ImageFood);
-                Foods ObjFood = new FoodsDB().Select(ObjOrder.getFood_Id(),ObjSettings.getCurrentLanguageId());
-                byte[] Photo = Base64.decode(ObjFood.getPhoto(),Base64.DEFAULT);
-                Bitmap ObjBitmap = BitmapFactory.decodeByteArray(Photo,0,Photo.length);
-                ImageFood.setImageBitmap(ObjBitmap);
+                final ImageView ImageFood = (ImageView) vv.findViewById(R.id.ImageFood);
 
-                final ImageView ImageDeliverable = (ImageView) v.findViewById(R.id.ImageDeliverable);
-                User ObjUser = new UserDB().Select(ObjFood.getUserId());
-                if (ObjUser.isHaveDelivary())
-                {
-                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+
+                byte[] Photo = Base64.decode(ObjFood.getPhoto(), Base64.DEFAULT);
+                final Bitmap ObjBitmap = BitmapFactory.decodeByteArray(Photo, 0, Photo.length);
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ImageFood.setImageBitmap(ObjBitmap);
+                    }
+                });
+
+
+                final ImageView ImageDeliverable = (ImageView) vv.findViewById(R.id.ImageDeliverable);
+
+                if (ObjUser.isHaveDelivary()) {
+                    ((MainActivity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             ImageDeliverable.setVisibility(View.VISIBLE);
                         }
                     });
-                }
-                else
-                {
-                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                } else {
+                    ((MainActivity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             ImageDeliverable.setVisibility(View.GONE);
@@ -124,22 +132,27 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                     });
                 }
 
-                RatingBar FoodRating = (RatingBar) v.findViewById(R.id.FoodRating );
+
+                // Code for Rating will be Later
+                // Code for Rating will be Later
+                // Code for Rating will be Later
+                // Code for Rating will be Later
+                final RatingBar FoodRating = (RatingBar) vv.findViewById(R.id.FoodRating);
                 // Code for Rating will be Later
                 // Code for Rating will be Later
                 // Code for Rating will be Later
                 // Code for Rating will be Later
 
-                final TextView lblName = (TextView) v.findViewById(R.id.lblName);
+                final TextView lblName = (TextView) vv.findViewById(R.id.lblName);
                 final String sNameTemp = ObjFood.getName();
-                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         lblName.setText(sNameTemp);
                     }
                 });
 
-                TextView lblTimeFromTo = (TextView)v.findViewById(R.id.lblTimeFromTo);
+                final TextView lblTimeFromTo = (TextView) vv.findViewById(R.id.lblTimeFromTo);
 
                 String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
 
@@ -153,19 +166,37 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                 if (new Settings(context).getCurrentLanguageId() == 1) {
                     sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
                 }
+                final String sTempFinal = sTemp;
 
-                ListView lvOrderActions =  (ListView)((AppCompatActivity)context).findViewById(R.id.lvOrderActions);
+                ((MainActivity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        lblTimeFromTo.setText(sTempFinal);
+                    }
+                });
+
+                final ListView lvOrderActions = (ListView) ((MainActivity) context).findViewById(R.id.lvOrderActions);
 
                 List<Orders_Actions> Obj_Orders_Actions_List = new Orders_ActionsDB().SelectByOrderId(ObjOrder.getId());
 
-                OrdersActionsAdapter ObjOrdersActionsAdapter  = new OrdersActionsAdapter(context,Obj_Orders_Actions_List);
+                final OrdersActionsAdapter ObjOrdersActionsAdapter = new OrdersActionsAdapter(context, Obj_Orders_Actions_List);
 
-                lvOrderActions.setAdapter(ObjOrdersActionsAdapter);
+                ((MainActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        View Header = vv.inflate(context,R.layout.orderfollowup_listview_header, null);
+                        if (lvOrderActions.getHeaderViewsCount() == 0)
+                            lvOrderActions.addHeaderView(Header);
+                        lvOrderActions.setAdapter(ObjOrdersActionsAdapter);
+
+                    }
+                });
 
             }
         });
-
         t.start();
+
         return v;
     }
 }

@@ -13,6 +13,7 @@ import com.tastyhomemade.tastyhomemade.Business.AdditionsDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods_Additions;
+import com.tastyhomemade.tastyhomemade.Business.OnDataChangedListener;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
@@ -30,6 +31,8 @@ public class GradientViewModeAdapter extends BaseAdapter {
     List<Foods_Additions> Obj_Foods_Additions_List;
     Context context;
     Settings ObjSettings;
+    OnDataChangedListener mOnDataChangedListener;
+
 
     public GradientViewModeAdapter(Context p_context, List<Foods_Additions> p_Foods_Additions_List) {
         context = p_context;
@@ -90,6 +93,8 @@ public class GradientViewModeAdapter extends BaseAdapter {
                                     public void run() {
                                         txtDropDownItem.setText(String.valueOf(iCountFinal) );
                                         lblPrice.setText(String.valueOf(iCountFinal*ObjAddition.getPrice()) );
+                                        if (mOnDataChangedListener!=null)
+                                            mOnDataChangedListener.onDataChanged();
                                     }
                                 }
                         );
@@ -119,6 +124,9 @@ public class GradientViewModeAdapter extends BaseAdapter {
                                     public void run() {
                                         txtDropDownItem.setText(String.valueOf(iCountFinal) );
                                         lblPrice.setText(String.valueOf(iCountFinal*ObjAddition.getPrice()) );
+                                        if (mOnDataChangedListener!=null)
+                                            mOnDataChangedListener.onDataChanged();
+
                                     }
                                 }
                         );
@@ -139,7 +147,7 @@ public class GradientViewModeAdapter extends BaseAdapter {
                     @Override
                     public void run() {
                         lblGradient.setText(ObjAddition.getName());
-                        lblPrice.setText(String.valueOf(ObjFood.getPrice()));
+                        lblPrice.setText("0"); // Must be initiated as Zero first time not item price
                         lblCurrency.setText (Utils.GetResourceName(context, R.string.Currency, ObjSettings.getCurrentLanguageId()));
                     }
                 });
@@ -152,4 +160,11 @@ public class GradientViewModeAdapter extends BaseAdapter {
 
         return v;
     }
+
+
+    public void setmOnDataChangedListener(OnDataChangedListener mOnDataChangedListener) {
+        this.mOnDataChangedListener = mOnDataChangedListener;
+    }
+
+
 }

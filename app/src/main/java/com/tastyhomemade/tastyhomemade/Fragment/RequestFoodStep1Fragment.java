@@ -26,8 +26,11 @@ import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods_Additions;
 import com.tastyhomemade.tastyhomemade.Business.Foods_AdditionsDB;
+import com.tastyhomemade.tastyhomemade.Business.OnDataChangedListener;
 import com.tastyhomemade.tastyhomemade.Business.Orders;
 import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
+import com.tastyhomemade.tastyhomemade.Business.Orders_Additions;
+import com.tastyhomemade.tastyhomemade.Business.Orders_AdditionsDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
@@ -56,19 +59,17 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     EditText txtAdditionalGradients;
     TextView lblTotalPrice;
     Button btnNext;
-    int iFoodId =-1;
+    int iFoodId = -1;
     EditText txtNumberOfOrders;
     TextView lblTimeFromTo;
     TextView lblOrderCountPrice;
     List<Foods_Additions> ObjFoodsAdditionsList = new ArrayList<Foods_Additions>();
 
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_requestfoodanddrink_step1,null);
+        return inflater.inflate(R.layout.fragment_requestfoodanddrink_step1, null);
     }
 
 
@@ -76,16 +77,20 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ImageFood = (ImageView) view.findViewById(R.id.include_details_item).findViewById(R.id.ImageFood);
-        lblPrice = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblPrice);
-        FoodRating  = (RatingBar)view.findViewById(R.id.include_details_item).findViewById(R.id.FoodRating);
-        ImageDeliverable = (ImageView)view.findViewById(R.id.include_details_item).findViewById(R.id.ImageDeliverable);
-        lblName = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblName);
-        lblDescription = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblDescription);
-        lblTimeFromTo = (TextView)view.findViewById(R.id.include_details_item).findViewById(R.id.lblTimeFromTo);
-        lvGradients = (ListView)view.findViewById(R.id.lvGradients);
-
+        lblPrice = (TextView) view.findViewById(R.id.include_details_item).findViewById(R.id.lblPrice);
+        FoodRating = (RatingBar) view.findViewById(R.id.include_details_item).findViewById(R.id.FoodRating);
+        ImageDeliverable = (ImageView) view.findViewById(R.id.include_details_item).findViewById(R.id.ImageDeliverable);
+        lblName = (TextView) view.findViewById(R.id.include_details_item).findViewById(R.id.lblName);
+        lblDescription = (TextView) view.findViewById(R.id.include_details_item).findViewById(R.id.lblDescription);
+        lblTimeFromTo = (TextView) view.findViewById(R.id.include_details_item).findViewById(R.id.lblTimeFromTo);
+        lvGradients = (ListView) view.findViewById(R.id.lvGradients);
+        lblTotalPrice = (TextView) view.findViewById(R.id.lblTotalPrice);
         txtAdditionalGradients = (EditText) view.findViewById(R.id.txtAdditionalGradients);
-        txtNumberOfOrders = (EditText)view.findViewById(R.id.txtNumberOfOrders);
+        txtNumberOfOrders = (EditText) view.findViewById(R.id.txtNumberOfOrders);
+
+        /////////////////////////////////
+        // On Number of orders changes //
+        ////////////////////////////////
         txtNumberOfOrders.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -99,61 +104,21 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
 
             @Override
             public void afterTextChanged(Editable s) {
-                int iNumberOfOrders = 0;
-                try {
-                    iNumberOfOrders = Integer.parseInt(txtNumberOfOrders.getText().toString().trim());
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                    iNumberOfOrders = 0;
-                }
-
-                final int iNumberOfOrderFinal =iNumberOfOrders;
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Foods ObjFoods = new FoodsDB().Select(iFoodId,new Settings(getContext()).getCurrentLanguageId());
-                        double dPrice = ObjFoods.getPrice();
-                        dPrice =  dPrice * iNumberOfOrderFinal;
-                        final double dPriceFinal = dPrice;
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                lblOrderCountPrice.setText(String.valueOf(dPriceFinal) + " " + Utils.GetResourceName(getContext(),R.string.Currency,new Settings(getContext()).getCurrentLanguageId()));
-                            }
-                        });
-
-                    double dTotalGradientPrice = 0;
-                     for (int i=0;i<lvGradients.getCount();i++)
-                     {
-                         final TextView  lblPrice = (TextView) lvGradients.getChildAt(i).findViewById(R.id.lblPrice);
-                         final double dGradientPrice= Double.parseDouble( lblPrice.getText().toString().trim());
-                         dTotalGradientPrice +=dGradientPrice;
-
-                     }
-                        final  String sTotalPriceFinal = String.valueOf(dTotalGradientPrice + dPrice) + " " + Utils.GetResourceName(getContext(),R.string.Currency,new Settings(getContext()).getCurrentLanguageId());
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                lblTotalPrice.setText( sTotalPriceFinal );
-                            }
-                        });
-
-
-                    }
-                });
-
-                t.start();
+                CalculateTotalPrice();
             }
         });
 
-        btnNext = (Button)view.findViewById(R.id.btnNext);
+        ///////////////////////////////
+        // Number of Gradients changed
+        //////////////////////////////
+
+
+        btnNext = (Button) view.findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
-        lblOrderCountPrice = (TextView)view.findViewById(R.id.lblOrderCountPrice);
+        lblOrderCountPrice = (TextView) view.findViewById(R.id.lblOrderCountPrice);
 
 
-        Bundle ObjBundle =  getArguments();
+        Bundle ObjBundle = getArguments();
         iFoodId = ObjBundle.getInt("FoodId");
         FillData(iFoodId);
     }
@@ -161,10 +126,9 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
 
-        if (txtNumberOfOrders.getText().toString().trim().length() == 0)
-        {
-            Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(),R.string.Error_PleaseEnterNumberOfOrders,new Settings(getActivity()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-            return ;
+        if (txtNumberOfOrders.getText().toString().trim().length() == 0) {
+            Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterNumberOfOrders, new Settings(getActivity()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+            return;
         }
 
         Thread t = new Thread(new Runnable() {
@@ -172,58 +136,71 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
             public void run() {
 
 
-        Calendar c = Calendar.getInstance();
-        Foods ObjFood = new FoodsDB().Select(iFoodId,new Settings(getContext()).getCurrentLanguageId());
-        User ObjFoodMakerUser = new UserDB().Select(ObjFood.getUserId());
+                Calendar c = Calendar.getInstance();
+                Foods ObjFood = new FoodsDB().Select(iFoodId, new Settings(getContext()).getCurrentLanguageId());
+                User ObjFoodMakerUser = new UserDB().Select(ObjFood.getUserId());
 
+                // Insert Order
+                Orders ObjOrder = new Orders(-1,
+                        iFoodId,
+                        new Settings(getContext()).getUserId(),
+                        new java.sql.Date(Calendar.getInstance().getTime().getYear(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getDay()),
+                        ObjFoodMakerUser.isHaveDelivary(),
+                        -1,
+                        -1,
+                        -1,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        Integer.parseInt(txtNumberOfOrders.getText().toString().trim()),
+                        null,
+                        false,
+                        false
+                );
 
-        Orders ObjOrder = new Orders(-1,
-                                    iFoodId,
-                                    new Settings(getContext()).getUserId(),
-                                    new java.sql.Date(Calendar.getInstance().getTime().getYear(),Calendar.getInstance().getTime().getMonth(),Calendar.getInstance().getTime().getDay()),
-                                    ObjFoodMakerUser.isHaveDelivary(),
-                                    -1,
-                                    -1,
-                                    -1,
-                                    null,
-                                    null,
-                                    null,
-                                    null,
-                                    null,
-                                    null,
-                                    Integer.parseInt(txtNumberOfOrders.getText().toString().trim()),
-                                    null,
-                                    false,
-                                    false
-                                    );
+                int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
 
-        int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
-        // Go to step 2
-        new Utils().ShowActivity(getContext(),null,"RequestFormStep2",String.valueOf(iOrderId));
+                // Insert Order Gradients
+                List<Foods_Additions> ObjFoodsAdditions = new Foods_AdditionsDB().SelectByFoodId(iFoodId);
+
+                for (int i=0;i< lvGradients.getCount();i++)
+                {
+                    int iQuantity = Integer.parseInt (((TextView)lvGradients.getChildAt(i).findViewById(R.id.Include_control_dropdown_addremove).findViewById(R.id.txtDropDownItem)).getText().toString());
+                    Orders_Additions Obj_Orders_Additions = new Orders_Additions();
+                    Obj_Orders_Additions.setOrderId(iOrderId);
+                    Obj_Orders_Additions.setAdditionId(ObjFoodsAdditions.get(i).getAdditionId());
+                    Obj_Orders_Additions.setQuantity(iQuantity);
+                    new Orders_AdditionsDB().InsertUpdate(Obj_Orders_Additions);
+                }
+
+                // Go to step 2
+                new Utils().ShowActivity(getContext(), null, "RequestFormStep2", String.valueOf(iOrderId));
             }
         });
 
         t.start();
     }
 
-    private void FillData(int p_FoodId)
-    {
+    private void FillData(int p_FoodId) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
 
-                final Foods ObjFood = new FoodsDB().Select(iFoodId,new Settings(getContext()).getCurrentLanguageId());
+                final Foods ObjFood = new FoodsDB().Select(iFoodId, new Settings(getContext()).getCurrentLanguageId());
                 final User ObjUser = new UserDB().Select(ObjFood.getUserId());
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        lblPrice.setText(String.valueOf(ObjFood.getPrice()) + " " + Utils.GetResourceName(getContext(),R.string.Currency,new Settings(getContext()).getCurrentLanguageId()));
+                        lblPrice.setText(String.valueOf(ObjFood.getPrice()) + " " + Utils.GetResourceName(getContext(), R.string.Currency, new Settings(getContext()).getCurrentLanguageId()));
                     }
                 });
 
-                byte[] Photo = Base64.decode(ObjFood.getPhoto(),Base64.DEFAULT);
-                final Bitmap ObjBitmapTemp = BitmapFactory.decodeByteArray(Photo ,0,Photo .length);
+                byte[] Photo = Base64.decode(ObjFood.getPhoto(), Base64.DEFAULT);
+                final Bitmap ObjBitmapTemp = BitmapFactory.decodeByteArray(Photo, 0, Photo.length);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -256,18 +233,69 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
 
 
                 ObjFoodsAdditionsList = new Foods_AdditionsDB().SelectByFoodId(iFoodId);
-                final GradientViewModeAdapter ObjGradientsAdapter = new GradientViewModeAdapter (getContext(),ObjFoodsAdditionsList);
+                final GradientViewModeAdapter ObjGradientsAdapter = new GradientViewModeAdapter(getContext(), ObjFoodsAdditionsList);
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         lvGradients.setAdapter(ObjGradientsAdapter);
                         Utils.setListViewHeightBasedOnChildren(lvGradients);
+                        ObjGradientsAdapter.setmOnDataChangedListener(new OnDataChangedListener() {
+                            @Override
+                            public void onDataChanged() {
+                                CalculateTotalPrice();
+
+                            }
+                        });
                     }
                 });
 
 
+            }
+        });
 
+        t.start();
+    }
+
+    private void CalculateTotalPrice() {
+
+        int iNumberOfOrders = 0;
+        try {
+            iNumberOfOrders = Integer.parseInt(txtNumberOfOrders.getText().toString().trim());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            iNumberOfOrders = 0;
+        }
+
+        final int iNumberOfOrderFinal = iNumberOfOrders;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Foods ObjFoods = new FoodsDB().Select(iFoodId, new Settings(getContext()).getCurrentLanguageId());
+                double dPrice = ObjFoods.getPrice();
+                dPrice = dPrice * iNumberOfOrderFinal;
+                final double dPriceFinal = dPrice;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lblOrderCountPrice.setText(String.valueOf(dPriceFinal) + " " + Utils.GetResourceName(getContext(), R.string.Currency, new Settings(getContext()).getCurrentLanguageId()));
+                    }
+                });
+
+                double dTotalGradientPrice = 0;
+                for (int i = 0; i < lvGradients.getCount(); i++) {
+                    final TextView lblPrice = (TextView) lvGradients.getChildAt(i).findViewById(R.id.lblPrice);
+                    final double dGradientPrice = Double.parseDouble(lblPrice.getText().toString().trim());
+                    dTotalGradientPrice += dGradientPrice;
+
+                }
+                final String sTotalPriceFinal = String.valueOf(dTotalGradientPrice + dPrice) + " " + Utils.GetResourceName(getContext(), R.string.Currency, new Settings(getContext()).getCurrentLanguageId());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lblTotalPrice.setText(sTotalPriceFinal);
+                    }
+                });
 
 
             }

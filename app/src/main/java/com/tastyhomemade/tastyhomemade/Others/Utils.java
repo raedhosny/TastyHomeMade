@@ -94,7 +94,7 @@ public class Utils {
         else if (sSelectedItem.equals(p_ItemsList.get(4).getName())) {  // Orders Follow Up
             OrdersFollowUpFragment ObjOrdersFollowUpFragment = new OrdersFollowUpFragment();
             Bundle ObjBundle = new Bundle();
-            ObjBundle.putInt("UserId", Integer.parseInt(args[0]));
+            ObjBundle.putInt("UserId", new Settings(p_context).getUserId());
             ObjOrdersFollowUpFragment.setArguments(ObjBundle);
             Transaction.replace(R.id.main_content, ObjOrdersFollowUpFragment);
             Transaction.commit();
