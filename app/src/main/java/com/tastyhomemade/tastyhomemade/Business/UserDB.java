@@ -15,9 +15,10 @@ public class UserDB {
 
     public int InsertUpdate (User p_User)
     {
+        java.sql.Connection myConnection= null;
         try {
 
-            java.sql.Connection myConnection = new DB().CreateConnection();
+            myConnection = new DB().CreateConnection();
             PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [dbo].[SP_Users_InsertUpdate] \n" +
                     "   @Id=?\n" +
                     "  ,@Name=?\n" +
@@ -54,6 +55,8 @@ public class UserDB {
             stmt.setString(15,p_User.getActivationCode()); //activationcode
             stmt.setBoolean(16,p_User.isHaveDelivary()); //IsHaveDelivary
             ResultSet res =  stmt.executeQuery();
+
+
             res.next();
             int iResult = res.getInt(1);
             return iResult;
@@ -62,6 +65,16 @@ public class UserDB {
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+        finally {
+            try
+            {
+                myConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return -1;
@@ -72,10 +85,11 @@ public class UserDB {
     {
         User ObjUser = new User();
         ObjUser.setId(-1);
+        java.sql.Connection myConnection= null;
 
         try {
 
-            java.sql.Connection myConnection = new DB().CreateConnection();
+            myConnection = new DB().CreateConnection();
             PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [SP_users_Login] \n" +
                     "   @Username=?\n" +
                     "  ,@Password=?\n");
@@ -112,6 +126,16 @@ public class UserDB {
         {
             e.printStackTrace();
         }
+        finally {
+            try
+            {
+                myConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         return ObjUser;
     }
 
@@ -121,9 +145,10 @@ public class UserDB {
         User ObjUser = new User();
         ObjUser.setId(-1);
 
+        java.sql.Connection myConnection= null;
         try {
 
-            java.sql.Connection myConnection = new DB().CreateConnection();
+            myConnection = new DB().CreateConnection();
             PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [SP_users_Select] \n" +
                     "   @Id=?"
                     );
@@ -157,6 +182,16 @@ public class UserDB {
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+        finally {
+            try
+            {
+                myConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         return ObjUser;
     }

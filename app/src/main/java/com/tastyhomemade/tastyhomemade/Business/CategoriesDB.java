@@ -13,12 +13,16 @@ public class CategoriesDB {
 
     public List<Categories> SelectAll (int p_iLanguageId)
     {
+        java.sql.Connection ObjConnection= null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement("EXECUTE SP_Categories_SelectAll @LanguageId=?");
             stmt.setInt(1,p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();
+
+
+
             List<Categories> ObjCategoriesList = new ArrayList<Categories>();
 
             String sAll = "";
@@ -44,6 +48,15 @@ public class CategoriesDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return new ArrayList<Categories>();

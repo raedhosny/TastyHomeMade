@@ -23,9 +23,11 @@ public class FoodsDB {
 
     public int InsertUpdate (Foods p_ObjFoods)
     {
+        java.sql.Connection ObjConnection= null;
+
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE [dbo].[SP_Foods_InsertUpdate] \n" +
                     "   @Id=?\n" +
@@ -65,6 +67,16 @@ public class FoodsDB {
         {
             ex.printStackTrace();
         }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         return -1;
 
@@ -73,9 +85,10 @@ public class FoodsDB {
 
     public Foods Select (int p_iId,int p_iLanguageId)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_Select \n" +
                             "   @Id=?\n" +
@@ -112,6 +125,16 @@ public class FoodsDB {
         {
             ex.printStackTrace();
         }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         return null;
 
@@ -120,9 +143,10 @@ public class FoodsDB {
 
     public List<Foods> SelectByCategoryId (int p_iCategoryId,int p_iLanguageId)
     {
+        java.sql.Connection ObjConnection= null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_SelectByCategoryId \n" +
                             "   @CategoryId=?\n" +
@@ -161,6 +185,81 @@ public class FoodsDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        return null;
+
+
+    }
+
+    public List<Foods> SearchbyCustomer (String p_sName, int p_iCategoryId,int p_iUserId)
+    {
+        java.sql.Connection ObjConnection = null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Foods_SearchByCustomer\n" +
+                            "   @Name=?\n" +
+                            "  ,@CategoryId=?\n" +
+                            "  ,@UserId=?\n"
+
+            );
+            stmt.setString(1,p_sName);
+            stmt.setInt(2,p_iCategoryId);
+            stmt.setInt(3,p_iUserId);
+
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+
+
+            List<Foods> ObjFoodList = new ArrayList<Foods>();
+
+            while(ObjResultSet.next())
+            {
+                Foods ObjFood = new Foods();
+
+                ObjFood.setId(ObjResultSet.getInt("Id"));
+                ObjFood.setCategoryId(ObjResultSet.getInt("CategoryId"));
+                ObjFood.setUserId(ObjResultSet.getInt("UserId"));
+                ObjFood.setRequestTimeFrom(ObjResultSet.getTime("RequestTimeFrom"));
+                ObjFood.setRequestTimeTo(ObjResultSet.getTime("RequestTimeTo"));
+                ObjFood.setPhoto(ObjResultSet.getString("Photo"));
+                ObjFood.setPrice(ObjResultSet.getFloat("Price"));
+                ObjFood.setLanguageId(ObjResultSet.getInt("LanguageId"));
+                ObjFood.setName(ObjResultSet.getString("Name"));
+                ObjFood.setDescription(ObjResultSet.getString("Description"));
+
+                ObjFoodList.add(ObjFood);
+            }
+            return  ObjFoodList;
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return null;

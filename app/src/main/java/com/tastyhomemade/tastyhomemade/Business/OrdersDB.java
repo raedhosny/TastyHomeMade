@@ -15,9 +15,10 @@ public class OrdersDB {
 
     public int InsertUpdate (Orders p_ObjOrder)
     {
+        java.sql.Connection ObjConnection= null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE [dbo].[SP_Orders_InsertUpdate] \n" +
                             "   @Id=?\n" +
@@ -62,8 +63,6 @@ public class OrdersDB {
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
-            ObjConnection.close();
-
             if (ObjResultSet.next())
                 return ObjResultSet.getInt(1);
             return -1;
@@ -73,6 +72,16 @@ public class OrdersDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return -1;

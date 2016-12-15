@@ -99,6 +99,11 @@ public class Utils {
             Transaction.replace(R.id.main_content, ObjOrdersFollowUpFragment);
             Transaction.commit();
         }
+        else if (sSelectedItem.equals(p_ItemsList.get(6).getName())) {  // My Choices
+            MyChoicesFragment ObjMyChoicesFragment= new MyChoicesFragment();
+            Transaction.replace(R.id.main_content, ObjMyChoicesFragment);
+            Transaction.commit();
+        }
 
         else if (sSelectedItem.equals(p_ItemsList.get(5).getName()))  // Add Foods and Drinks // Add Food And Drinks
         {

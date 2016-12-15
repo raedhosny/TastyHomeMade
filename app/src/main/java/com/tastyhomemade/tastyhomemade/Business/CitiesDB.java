@@ -17,12 +17,16 @@ public class CitiesDB {
 
     public List<Cities> SelectAll (int p_iLanguageId)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-           java.sql.Connection ObjConnection = new DB().CreateConnection();
+           ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement("EXECUTE SP_Cities_SelectAll @LanguageId=?");
             stmt.setInt(1,p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();
+
+
+
             List<Cities> ObjCitiesList = new ArrayList<Cities>();
 
             String sAll = "";
@@ -48,6 +52,16 @@ public class CitiesDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return new ArrayList<Cities>();

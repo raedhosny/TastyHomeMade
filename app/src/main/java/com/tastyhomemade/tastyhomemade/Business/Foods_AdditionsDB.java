@@ -13,9 +13,10 @@ public class Foods_AdditionsDB {
 
     public int InsertUpdate (Foods_Additions p_Foods_Additions)
     {
+        java.sql.Connection ObjConnection= null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_Additions_InsertUpdate \n" +
                     "   @Id=?\n" +
@@ -28,6 +29,8 @@ public class Foods_AdditionsDB {
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
+
+
             if (ObjResultSet.next())
                 return ObjResultSet.getInt(1);
             return -1;
@@ -36,7 +39,18 @@ public class Foods_AdditionsDB {
         }
         catch (Exception ex)
         {
+
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return -1;
@@ -46,17 +60,17 @@ public class Foods_AdditionsDB {
 
     public List<Foods_Additions> SelectByFoodId (int p_iFoodId)
     {
+        java.sql.Connection ObjConnection= null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_Additions_SelectByFoodsId\n" +
                             "   @FoodId=?"
 
             );
+
             stmt.setInt(1,p_iFoodId);
-
-
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
@@ -79,7 +93,18 @@ public class Foods_AdditionsDB {
         }
         catch (Exception ex)
         {
+
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return null;

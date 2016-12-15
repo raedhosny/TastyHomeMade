@@ -12,11 +12,14 @@ import java.util.List;
 public class RegisterTypesDB {
 
     public List<RegisterTypes> SelectAll(int p_iLanguageId) {
+        java.sql.Connection MyConnection =null;
         try {
-            java.sql.Connection MyConnection = new DB().CreateConnection();
+            MyConnection = new DB().CreateConnection();
             PreparedStatement stmt = MyConnection.prepareStatement("EXECUTE SP_RegisterTypes_SelectAll @LanguageId=?");
             stmt.setInt(1, p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();
+
+
             List<RegisterTypes> ObjRegisterTypesList = new ArrayList<RegisterTypes>();
 
             String sAll = "";
@@ -40,6 +43,15 @@ public class RegisterTypesDB {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        finally {
+            try {
+                MyConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return new ArrayList<RegisterTypes>();

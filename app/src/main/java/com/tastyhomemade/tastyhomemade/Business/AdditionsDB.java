@@ -13,9 +13,10 @@ public class AdditionsDB {
 
     public int InsertUpdate (Additions p_ObjAdditions)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Additions_InsertUpdate \n" +
                             "   @Id=?\n" +
@@ -33,6 +34,7 @@ public class AdditionsDB {
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
+
             if (ObjResultSet.next())
                 return ObjResultSet.getInt(1);
             return -1;
@@ -41,7 +43,18 @@ public class AdditionsDB {
         }
         catch (Exception ex)
         {
+
+
             ex.printStackTrace();
+        }
+        finally {
+            try {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return -1;
@@ -51,9 +64,10 @@ public class AdditionsDB {
 
     public Additions Select (int p_iId,int p_iLanguageId)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Additions_Select\n" +
                             "   @Id=?\n" +
@@ -83,6 +97,13 @@ public class AdditionsDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex) {}
         }
 
         return null;
