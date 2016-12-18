@@ -31,7 +31,7 @@ public class GPSTrackerBackground extends AsyncTask<Void, Void, List<Double>> {
 
     public GPSTrackerBackground(Fragment p_Activity, OnTaskCompleted p_TaskCompleted) {
         super();
-        ObjWaitDialog = new WaitDialog(p_Activity.getActivity());
+       ObjWaitDialog = new WaitDialog(p_Activity.getContext());
         fragment = p_Activity;
         MyOnTaskCompleted = p_TaskCompleted;
 
@@ -52,12 +52,13 @@ public class GPSTrackerBackground extends AsyncTask<Void, Void, List<Double>> {
     @Override
     protected List<Double> doInBackground(Void... params) {
 
-        while (ObjGPSTracker.getCanGetLocation() &&  !ObjGPSTracker.getIsGotNewLocation())
+        while (ObjGPSTracker.getCanGetLocation() &&  !ObjGPSTracker.getIsGotNewLocation()) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
         ObjResultsList.add(ObjGPSTracker.getLatitude());
         ObjResultsList.add(ObjGPSTracker.getlongtitude());
 

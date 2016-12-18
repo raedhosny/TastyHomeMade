@@ -154,4 +154,8 @@
  <string name="PleaseWait">
         برجاء الانتظار
     </string>
+       <string name="numberofrequests">
+        عدد مرات الطلب
+    </string>
+
 </resources>

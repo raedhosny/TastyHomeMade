@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tastyhomemade.tastyhomemade.Business.MainMenuItem;
+import com.tastyhomemade.tastyhomemade.Business.OnGetCity;
 import com.tastyhomemade.tastyhomemade.Fragment.*;
 
 import java.io.BufferedReader;
@@ -135,6 +137,13 @@ public class Utils {
             Transaction.commit();
 
         }
+        else if (sSelectedItem.equals(p_ItemsList.get(7).getName()))  // Mostly Requested Item
+        {
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.MostlyRequested,new Settings(p_context).getCurrentLanguageId()));
+            Transaction.replace(R.id.main_content, new MostlyRequestedFragment());
+            Transaction.commit();
+        }
+
     }
 
     public static void SetCurrentLanguage(Context p_Context, int p_iLanguage) {
@@ -284,23 +293,29 @@ public class Utils {
 
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+           ex.printStackTrace();
         }
         return "";
     }
 
     public class GoogleMapClass extends AsyncTask<Double, String, String> {
         Settings ObjSettings;
+        String sAddress;
+
+        public String getCurrentAddress() {
+            return sAddress;
+        }
 
         public GoogleMapClass(Context p_Context) {
             ObjSettings = new Settings(p_Context);
+            sAddress ="";
         }
 
         @Override
         protected String doInBackground(Double... params) {
 
-            String sResult = Utils.GetGoogleMapAddress(params[0], params[1], ObjSettings.getCurrentLanguageId());
-            return sResult;
+            sAddress = Utils.GetGoogleMapAddress(params[0], params[1], ObjSettings.getCurrentLanguageId());
+            return sAddress;
         }
 
         @Override
@@ -311,21 +326,36 @@ public class Utils {
 
     public class GoogleMapClassCity extends AsyncTask<Double, String, String> {
         Settings ObjSettings;
+        String sCurrentCity;
+        OnGetCity ObjOnGetCity;
 
-        public GoogleMapClassCity(Context p_Context) {
+        public String getsCurrentCity() {
+            return sCurrentCity;
+        }
+
+        public GoogleMapClassCity(Context p_Context,OnGetCity p_ObjOnGetCity) {
             ObjSettings = new Settings(p_Context);
+            sCurrentCity = "";
+            ObjOnGetCity = p_ObjOnGetCity;
         }
 
         @Override
         protected String doInBackground(Double... params) {
 
-            String sResult = Utils.GetGoogleMapCity(params[0], params[1], ObjSettings.getCurrentLanguageId());
-            return sResult;
+            sCurrentCity = Utils.GetGoogleMapCity(params[0], params[1], ObjSettings.getCurrentLanguageId());
+            return sCurrentCity;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //super.onPostExecute(s);
+            ObjOnGetCity.GetCity(s);
+
         }
     }
 

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.tastyhomemade.tastyhomemade.Business.Cities;
 import com.tastyhomemade.tastyhomemade.Business.CitiesDB;
+import com.tastyhomemade.tastyhomemade.Business.OnGetCity;
 import com.tastyhomemade.tastyhomemade.Business.OnTaskCompleted;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypes;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
@@ -144,26 +145,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 ObjGPSTrackerBackground.execute();
                 GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
                 if (ObjGPSTracker.getCanGetLocation()) {
-                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
-                    String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
-                    int iSelectedIndex = 0;
-                    for (int i = 0; i < ObjCitiesList.size(); i++) {
-                        if (sCurrentCity.contains(ObjCitiesList.get(i).getName())) {
-                            iSelectedIndex = i;
-                            break;
-                        }
-                    }
+                    OnGetCity ObjOnGetCity = new OnGetCity() {
+                        @Override
+                        public void GetCity(String result) {
+                            int iSelectedIndex = 0;
+                            for (int i = 0; i < ObjCitiesList.size(); i++) {
+                                if (result.contains(ObjCitiesList.get(i).getName())) {
+                                    iSelectedIndex = i;
+                                    break;
+                                }
+                            }
 
-                    if (iSelectedIndex == 0) {
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                        iCurrentLatitude = -1;
-                        iCurrentLongtitude = -1;
-                    } else {
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                        iCurrentLatitude = ObjGPSTracker.getLatitude();
-                        iCurrentLongtitude = ObjGPSTracker.getlongtitude();
-                        ddlCity.setSelection(iSelectedIndex);
-                    }
+                            if (iSelectedIndex == 0) {
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                iCurrentLatitude = -1;
+                                iCurrentLongtitude = -1;
+                            } else {
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+                                ddlCity.setSelection(iSelectedIndex);
+                            }
+                        }
+                    };
+                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext(),ObjOnGetCity);
+                    ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude());
+                    //String sCurrentCity = ObjGoogleMapClass.getsCurrentCity();
+                    iCurrentLatitude = ObjGPSTracker.getLatitude();
+                    iCurrentLongtitude = ObjGPSTracker.getlongtitude();
+
                 } else {
                     ObjGPSTracker.ShowSettingsAlert();
                 }
@@ -197,26 +206,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
 
                 if (ObjGPSTracker.getCanGetLocation()) {
-                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
-                    String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
-                    int iSelectedIndex = 0;
-                    for (int i = 0; i < ObjCitiesList.size(); i++) {
-                        if (sCurrentCity.contains(ObjCitiesList.get(i).getName())) {
-                            iSelectedIndex = i;
-                            break;
-                        }
-                    }
+                    OnGetCity ObjOnGetCity = new OnGetCity() {
+                        @Override
+                        public void GetCity(String result) {
+                            int iSelectedIndex = 0;
+                            for (int i = 0; i < ObjCitiesList.size(); i++) {
+                                if (result.contains(ObjCitiesList.get(i).getName())) {
+                                    iSelectedIndex = i;
+                                    break;
+                                }
+                            }
 
-                    if (iSelectedIndex == 0) {
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                        iCurrentLatitude = -1;
-                        iCurrentLongtitude = -1;
-                    } else {
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                        iCurrentLatitude = ObjGPSTracker.getLatitude();
-                        iCurrentLongtitude = ObjGPSTracker.getlongtitude();
-                        ddlCity.setSelection(iSelectedIndex);
-                    }
+                            if (iSelectedIndex == 0) {
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                iCurrentLatitude = -1;
+                                iCurrentLongtitude = -1;
+                            } else {
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+                                ddlCity.setSelection(iSelectedIndex);
+                            }
+                        }
+                    };
+                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext(),ObjOnGetCity);
+                    ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude());
+                   // String sCurrentCity = ObjGoogleMapClass.getsCurrentCity();
+                    iCurrentLatitude = ObjGPSTracker.getLatitude();
+                    iCurrentLongtitude = ObjGPSTracker.getlongtitude();
+
                 } else {
                     ObjGPSTracker.ShowSettingsAlert();
                 }

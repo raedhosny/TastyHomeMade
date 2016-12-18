@@ -20,6 +20,7 @@ public class Foods {
     private String Photo;
     private float Price;
     private boolean IsVisible;
+    private int NumberOfRequestsCount;
 
     public Foods(int id, int languageId, String name, String description, int categoryId, int userId, java.sql.Time requestTimeFrom, java.sql.Time requestTimeTo, String photo, float price,boolean IsVisible) {
         Id = id;
@@ -33,6 +34,7 @@ public class Foods {
         Photo = photo;
         Price = price;
         this.IsVisible = IsVisible;
+        NumberOfRequestsCount = 0;
 
     }
 
@@ -125,5 +127,13 @@ public class Foods {
 
     public void setPrice(float price) {
         Price = price;
+    }
+
+    public int getNumberOfRequestsCount() {
+        return NumberOfRequestsCount;
+    }
+
+    public void setNumberOfRequestsCount(int numberOfRequestsCount) {
+        NumberOfRequestsCount = numberOfRequestsCount;
     }
 }

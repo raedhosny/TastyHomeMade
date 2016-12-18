@@ -266,4 +266,67 @@ public class FoodsDB {
 
 
     }
+
+    public List<Foods> SelectByRequestCount (int p_iLanguageId)
+    {
+        java.sql.Connection ObjConnection = null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Foods_SelectByRequestCount\n" +
+                            "   @LanguageId=?"
+
+            );
+            stmt.setInt(1,p_iLanguageId);
+
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+
+
+            List<Foods> ObjFoodList = new ArrayList<Foods>();
+
+            while(ObjResultSet.next())
+            {
+                Foods ObjFood = new Foods();
+
+                ObjFood.setId(ObjResultSet.getInt("Id"));
+                ObjFood.setCategoryId(ObjResultSet.getInt("CategoryId"));
+                ObjFood.setUserId(ObjResultSet.getInt("UserId"));
+                ObjFood.setRequestTimeFrom(ObjResultSet.getTime("RequestTimeFrom"));
+                ObjFood.setRequestTimeTo(ObjResultSet.getTime("RequestTimeTo"));
+                ObjFood.setPhoto(ObjResultSet.getString("Photo"));
+                ObjFood.setPrice(ObjResultSet.getFloat("Price"));
+                ObjFood.setLanguageId(ObjResultSet.getInt("LanguageId"));
+                ObjFood.setName(ObjResultSet.getString("Name"));
+                ObjFood.setDescription(ObjResultSet.getString("Description"));
+                ObjFood.setNumberOfRequestsCount(ObjResultSet.getInt("RequestCount"));
+
+                ObjFoodList.add(ObjFood);
+            }
+            return  ObjFoodList;
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        return null;
+
+
+    }
+
 }

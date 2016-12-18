@@ -33,7 +33,7 @@
             android:background="#CCe5e5e5"
             android:layout_marginLeft="5px"
             android:layout_marginRight="5px"
-            android:layout_marginBottom="5dp"
+
             android:id="@+id/txtHomeMenuItemLinear2"
             android:layout_alignBottom="@id/txtHomeMenuItemLinear1">
 
@@ -144,6 +144,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10sp"
+            android:layout_marginBottom="5dp"
 
             >
             <TextView
@@ -155,6 +156,21 @@
                 android:textAlignment="viewStart"
                 android:textDirection="locale"
                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"  android:background="#CCe5e5e5"
+            android:padding="5dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            >
+            <TextView android:id="@+id/lblNumberOfRequests" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="عدد مرات الطلب 100" android:textColor="#000" android:textDirection="anyRtl"
+
+                >
+            </TextView>
+
         </LinearLayout>
 
     </RelativeLayout>

@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.tastyhomemade.tastyhomemade.Business.Cities;
 import com.tastyhomemade.tastyhomemade.Business.CitiesDB;
 import com.tastyhomemade.tastyhomemade.Business.DB;
+import com.tastyhomemade.tastyhomemade.Business.OnGetCity;
 import com.tastyhomemade.tastyhomemade.Business.OnTaskCompleted;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypes;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
@@ -248,44 +250,58 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     }
                 };
 
-                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this,ObjOnTaskCompleted);
+                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this, ObjOnTaskCompleted);
                 ObjGPSTrackerBackground.execute();
                 GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
 
                 if (ObjGPSTracker.getCanGetLocation()) {
-                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
-                    String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
-                    int iSelectedIndex = 0;
-                    for (int i = 0; i < ObjCitesList.size(); i++) {
-                        if (sCurrentCity.contains(ObjCitesList.get(i).getName())) {
-                            iSelectedIndex = i;
-                            break;
+
+                    OnGetCity ObjOnGetCity = new OnGetCity() {
+                        @Override
+                        public void GetCity(String result) {
+                            int iSelectedIndex = 0;
+                            for (int i = 0; i < ObjCitesList.size(); i++) {
+                                if (result.contains(ObjCitesList.get(i).getName())) {
+                                    iSelectedIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (iSelectedIndex == 0) {
+
+
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+
+                                iCurrentLatitude = -1;
+                                iCurrentLongtitude = -1;
+                            } else {
+
+
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+
+
+                                final int iSelectedIndexFinal = iSelectedIndex;
+
+
+                                ddlRegisterCity.setSelection(iSelectedIndexFinal);
+
+
+                            }
                         }
-                    }
+                    };
 
-                    if (iSelectedIndex == 0) {
+                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext(),ObjOnGetCity);
+                    Log.d("Latitude is " , String.valueOf(ObjGPSTracker.getLatitude()));
+                    Log.d("Longitude is " , String.valueOf(ObjGPSTracker.getlongtitude()));
 
+                    ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude());
+                    //String sCurrentCity = ObjGoogleMapClass.getsCurrentCity();
+                    //Log.d("City is ",sCurrentCity);
+                    iCurrentLatitude = ObjGPSTracker.getLatitude();
+                    iCurrentLongtitude = ObjGPSTracker.getlongtitude();
 
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-
-
-                        iCurrentLatitude = -1;
-                        iCurrentLongtitude = -1;
-                    } else {
-
-
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-
-
-                        iCurrentLatitude = ObjGPSTracker.getLatitude();
-                        iCurrentLongtitude = ObjGPSTracker.getlongtitude();
-                        final int iSelectedIndexFinal = iSelectedIndex;
-
-
-                        ddlRegisterCity.setSelection(iSelectedIndexFinal);
-
-
-                    }
                 } else {
 
 
@@ -302,10 +318,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         }
 
 
-
     }
-
-
 
 
     @Override
@@ -313,7 +326,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GPS_SETTINGS_REQUEST_CODE) {
 
-            final Fragment ObjFragment = this;
+
             try {
 
                 OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
@@ -326,31 +339,40 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     }
                 };
 
-                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this,ObjOnTaskCompleted);
+                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this, ObjOnTaskCompleted);
                 ObjGPSTrackerBackground.execute();
                 GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
 
                 if (ObjGPSTracker.getCanGetLocation()) {
-                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
-                    String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
-                    int iSelectedIndex = 0;
-                    for (int i = 0; i < ObjCitesList.size(); i++) {
-                        if (sCurrentCity.contains(ObjCitesList.get(i).getName())) {
-                            iSelectedIndex = i;
-                            break;
-                        }
-                    }
+                    OnGetCity ObjOnGetCity = new OnGetCity() {
+                        @Override
+                        public void GetCity(String result) {
+                            int iSelectedIndex = 0;
+                            for (int i = 0; i < ObjCitesList.size(); i++) {
+                                if (result.contains(ObjCitesList.get(i).getName())) {
+                                    iSelectedIndex = i;
+                                    break;
+                                }
+                            }
 
-                    if (iSelectedIndex == 0) {
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                        iCurrentLatitude = -1;
-                        iCurrentLongtitude = -1;
-                    } else {
-                        Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                        iCurrentLatitude = ObjGPSTracker.getLatitude();
-                        iCurrentLongtitude = ObjGPSTracker.getlongtitude();
-                        ddlRegisterCity.setSelection(iSelectedIndex);
-                    }
+                            if (iSelectedIndex == 0) {
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                iCurrentLatitude = -1;
+                                iCurrentLongtitude = -1;
+                            } else {
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+                                ddlRegisterCity.setSelection(iSelectedIndex);
+                            }
+                        }
+                    };
+
+                    Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext(),ObjOnGetCity);
+                    ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude());
+                    //String sCurrentCity =ObjGoogleMapClass.getsCurrentCity();
+                    iCurrentLatitude = ObjGPSTracker.getLatitude();
+                    iCurrentLongtitude = ObjGPSTracker.getlongtitude();
+
                 } else {
                     ObjGPSTracker.ShowSettingsAlert();
                 }
@@ -363,51 +385,53 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
 
-        private List<Cities> FillCities () {
+    private List<Cities> FillCities() {
 
-            Settings ObjSettings = new Settings(getActivity());
-            List<String> ObjStringsList = new ArrayList<String>();
-
-
-            List<Cities> ObjCitiesList = new CitiesDB().SelectAll(ObjSettings.getCurrentLanguageId());
-            for (Cities ObjTemp : ObjCitiesList) {
-                ObjStringsList.add(ObjTemp.getName());
-            }
+        Settings ObjSettings = new Settings(getActivity());
+        List<String> ObjStringsList = new ArrayList<String>();
 
 
-            final ArrayAdapter<String> CitiesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
-
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ddlRegisterCity.setAdapter(CitiesAdapter);
-                    ddlRegisterCity.setEnabled(false);
-                }
-            });
-            return ObjCitiesList;
+        List<Cities> ObjCitiesList = new CitiesDB().SelectAll(ObjSettings.getCurrentLanguageId());
+        for (Cities ObjTemp : ObjCitiesList) {
+            ObjStringsList.add(ObjTemp.getName());
         }
 
-        private List<RegisterTypes> FillRegisterTypes () {
 
-            Settings ObjSettings = new Settings(getActivity());
-            List<String> ObjStringsList = new ArrayList<String>();
-            List<RegisterTypes> ObjRegisterTypesList = new RegisterTypesDB().SelectAll(ObjSettings.getCurrentLanguageId());
-            for (RegisterTypes ObjTemp : ObjRegisterTypesList) {
-                ObjStringsList.add(ObjTemp.getName());
+        final ArrayAdapter<String> CitiesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ddlRegisterCity.setAdapter(CitiesAdapter);
+                ddlRegisterCity.setEnabled(false);
             }
+        });
+        return ObjCitiesList;
+    }
 
+    private List<RegisterTypes> FillRegisterTypes() {
 
-            final ArrayAdapter<String> RegisterTypesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
-
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    ddlRegisterType.setAdapter(RegisterTypesAdapter);
-                }
-            });
-            return ObjRegisterTypesList;
-
+        Settings ObjSettings = new Settings(getActivity());
+        List<String> ObjStringsList = new ArrayList<String>();
+        List<RegisterTypes> ObjRegisterTypesList = new RegisterTypesDB().SelectAll(ObjSettings.getCurrentLanguageId());
+        for (RegisterTypes ObjTemp : ObjRegisterTypesList) {
+            ObjStringsList.add(ObjTemp.getName());
         }
+
+
+        final ArrayAdapter<String> RegisterTypesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ddlRegisterType.setAdapter(RegisterTypesAdapter);
+            }
+        });
+
+
+        return ObjRegisterTypesList;
+
+    }
 
     private void FillHaveRepresentive() {
 

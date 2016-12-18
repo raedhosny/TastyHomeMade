@@ -332,7 +332,8 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                     webview_CurrentLocation_Tab1.loadUrl(Utils.GetGoogleMapUrl(ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()));
                     Utils.GoogleMapClass ObjGoogleMapClass = new Utils().new GoogleMapClass(getContext());
                     try {
-                        String sAddress = ObjGoogleMapClass.execute(ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()).get();
+                        ObjGoogleMapClass.execute(ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude());
+                        String sAddress = ObjGoogleMapClass.getCurrentAddress();
 
                         lblAddress.setText(sAddress);
                     } catch (Exception ex) {
