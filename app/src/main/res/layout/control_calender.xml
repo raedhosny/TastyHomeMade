@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/timeselector_header"
         android:layout_width="match_parent"
-        android:layout_height="73px"
+        android:layout_height="24.33dp"
         android:background="@drawable/timeselector_header" />
 
 

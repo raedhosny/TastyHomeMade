@@ -191,7 +191,7 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                             lvOrderActions.addHeaderView(Header);
 
                         lvOrderActions.setAdapter(ObjOrdersActionsAdapter);
-                        lvOrderActions.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,77 * Obj_Orders_Actions_List.size() +77 ));
+                        lvOrderActions.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,26 * Obj_Orders_Actions_List.size() +25 ));
 
 
                     }

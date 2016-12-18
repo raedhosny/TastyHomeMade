@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
 
 
     <Button
@@ -16,7 +19,7 @@
 
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="5dp"
-        android:height="111px"
+        android:height="37.00dp"
         android:background="@drawable/button"
         android:text="حفظ"
 
@@ -77,7 +80,7 @@
                         android:id="@+id/txtAddFoodName"
                         style="@style/myedittext"
                         android:layout_width="match_parent"
-                        android:layout_height="88px"
+                        android:layout_height="37.00dp"
                         android:layout_weight="0.25"
 
                         android:background="@drawable/textbox_enabled"
@@ -134,7 +137,7 @@
                         android:id="@+id/txtAddFoodDescription"
                         style="@style/myedittext"
                         android:layout_width="match_parent"
-                        android:layout_height="250px"
+                        android:layout_height="83.33dp"
                         android:layout_alignBaseline="@id/lblAddDescription"
 
                         android:layout_weight="0.25"
@@ -166,8 +169,8 @@
                         <EditText
                             android:id="@+id/txtAddFoodOrderPrice"
                             style="@style/myedittext"
-                            android:layout_width="250px"
-                            android:layout_height="88px"
+                            android:layout_width="83.33dp"
+                            android:layout_height="37.00dp"
 
 
                             android:background="@drawable/textbox_enabled"
@@ -215,7 +218,7 @@
                             <Button
                                 android:id="@+id/btnAddFoodCameraPhoto"
                                 android:layout_width="wrap_content"
-                                android:layout_height="81px"
+                                android:layout_height="37.00dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/button"
@@ -224,7 +227,7 @@
                             <Button
                                 android:id="@+id/btnAddFoodFromStoragePhoto"
                                 android:layout_width="wrap_content"
-                                android:layout_height="81px"
+                                android:layout_height="37.00dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/button"
@@ -248,7 +251,7 @@
                         <ImageView
                             android:id="@+id/imgAddFoodPhoto"
                             android:layout_width="match_parent"
-                            android:layout_height="290px"
+                            android:layout_height="96.67dp"
                             android:layout_below="@id/LinearAddFoodlblImage"
                             android:layout_margin="5dp"
                             android:layout_weight="0.25"
@@ -396,7 +399,7 @@
                                 android:id="@+id/txtAddGradient"
                                 style="@style/myedittext"
                                 android:layout_width="match_parent"
-                                android:layout_height="88px"
+                                android:layout_height="37.00dp"
                                 android:layout_weight="0.25"
                                 android:background="@drawable/textbox_enabled"
 
@@ -427,8 +430,8 @@
                                 <EditText
                                     android:id="@+id/txtAddGradientPrice"
                                     style="@style/myedittext"
-                                    android:layout_width="250px"
-                                    android:layout_height="88px"
+                                    android:layout_width="83.33dp"
+                                    android:layout_height="37.00dp"
                                     android:background="@drawable/textbox_enabled"
                                     android:gravity="center"
                                     />
@@ -440,6 +443,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="10dp"
+
                             >
 
                             <TextView
@@ -454,12 +458,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.25"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+
+                                >
 
                                 <Button
                                     android:id="@+id/btnAddGradientCamera"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="81px"
+                                    android:layout_height="37.00dp"
                                     android:layout_margin="5dp"
                                     android:layout_weight="1"
                                     android:background="@drawable/button"
@@ -468,7 +474,7 @@
                                 <Button
                                     android:id="@+id/btnAddGradientFromStorage"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="81px"
+                                    android:layout_height="37.00dp"
                                     android:layout_margin="5dp"
                                     android:layout_weight="1"
                                     android:background="@drawable/button"
@@ -481,6 +487,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="10dp"
+
                             >
 
                             <LinearLayout
@@ -494,7 +501,7 @@
                             <ImageView
                                 android:id="@+id/imgGradientPhoto"
                                 android:layout_width="match_parent"
-                                android:layout_height="290px"
+                                android:layout_height="96.67dp"
 
                                 android:layout_weight="0.25"
                                 android:src="@drawable/border" />
@@ -516,7 +523,7 @@
                             <Button
                                 android:id="@+id/btnAddGradientAdd"
                                 android:layout_width="match_parent"
-                                android:layout_height="81px"
+                                android:layout_height="37.00dp"
                                 android:layout_weight="0.25"
                                 android:background="@drawable/button"
                                 android:text="أضف" />
@@ -537,7 +544,7 @@
                             <ListView
                                 android:id="@+id/lvAddFoodGradient"
                                 android:layout_width="match_parent"
-                                android:layout_height="290px"
+                                android:layout_height="96.67dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_weight="0.25"
                                 />

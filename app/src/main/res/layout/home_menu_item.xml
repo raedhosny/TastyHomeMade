@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="777px"
+        android:layout_height="259dp"
         android:background="@drawable/border"
         android:orientation="vertical"
         android:padding="5dp">
@@ -22,7 +22,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="375px"
+                android:layout_height="150dp"
                 android:id="@+id/ImageHomeMenuItem"
                 ></ImageView>
         </LinearLayout>
@@ -31,10 +31,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#CCe5e5e5"
-            android:layout_marginLeft="5px"
-            android:layout_marginRight="5px"
+            android:layout_marginLeft="1.67dp"
+            android:layout_marginRight="1.67dp"
             android:layout_marginBottom="5dp"
             android:id="@+id/txtHomeMenuItemLinear2"
+            android:gravity="center_vertical"
             android:layout_alignBottom="@id/txtHomeMenuItemLinear1">
 
 
@@ -60,8 +61,8 @@
 
                 <ImageView
                     android:id="@+id/txtHomeMenuItemDeliverable"
-                    android:layout_width="85px"
-                    android:layout_height="85px"
+                    android:layout_width="28.33dp"
+                    android:layout_height="28.33dp"
                     android:src="@drawable/deliverable"
                     />
 
@@ -118,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textAlignment="viewEnd"
 
 

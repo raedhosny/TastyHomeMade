@@ -4,20 +4,20 @@
     android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="91px"
+        android:layout_height="30.33dp"
         android:layout_weight="1"
         android:background="@drawable/textbox_enabled_style"
         />
 
     <ImageView
-        android:layout_width="112px"
-        android:layout_height="91px"
+        android:layout_width="37.33dp"
+        android:layout_height="30.33dp"
         android:src="@drawable/button_decrease"
         android:layout_alignParentLeft="true"
         />
 
     <ImageView
-        android:layout_width="112px"
+        android:layout_width="37.33dp"
         android:layout_height="91px"
         android:src="@drawable/button_increase"
         android:layout_alignParentRight="true"

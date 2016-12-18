@@ -25,7 +25,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="375px"
+                android:layout_height="125.00dp"
                 android:id="@+id/ImageFood"
                 ></ImageView>
         </LinearLayout>
@@ -61,8 +61,8 @@
 
             <ImageView
                 android:id="@+id/ImageDeliverable"
-                android:layout_width="85px"
-                android:layout_height="85px"
+                android:layout_width="28.33dp"
+                android:layout_height="28.33dp"
                 android:src="@drawable/deliverable"
                 />
         </LinearLayout>
@@ -73,7 +73,7 @@
                 android:id="@+id/lblPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="3 ريال"
+                android:text="0 ريال"
                 android:textColor="#000"
                 android:layout_weight="0.4"
                 android:textAlignment="center"

@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
 
     <RelativeLayout
         android:id="@+id/Relative_RegisterSave"
@@ -17,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:height="111px"
+            android:height="37.00dp"
             android:background="@drawable/button"
             android:text="حفظ"
 
@@ -40,15 +43,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_gravity="center_vertical"
             android:orientation="horizontal"
-            android:gravity="center"
+
             >
 
             <TextView
                 android:id="@+id/lblRegisterUserName"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
                 android:layout_weight="0.75"
                 android:text="إسم المستخدم"
                 android:textColor="#000"
@@ -58,7 +61,7 @@
                 android:id="@+id/txtRegisterUserName"
                 style="@style/myedittext"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
 
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
@@ -78,7 +81,7 @@
             <TextView
                 android:id="@+id/lblRegisterEmail"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
 
                 android:layout_weight="0.75"
 
@@ -90,7 +93,7 @@
                 android:id="@+id/txtRegisterEmail"
                 style="@style/myedittext"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
 
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
@@ -111,7 +114,7 @@
             <TextView
                 android:id="@+id/lbRegisterPassword"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
 
                 android:layout_weight="0.75"
                 android:paddingTop="9dp"
@@ -123,7 +126,7 @@
                 android:id="@+id/txtRegisterPassword"
                 style="@style/myedittext"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
                 android:ems="10"
@@ -142,7 +145,7 @@
             <TextView
                 android:id="@+id/lblRegisterConfirmPassword"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
 
                 android:layout_weight="0.75"
                 android:text="تاكيد كلمة السر"
@@ -153,7 +156,7 @@
                 android:id="@+id/txtRegisterConfirmPassword"
                 style="@style/myedittext"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="37.00dp"
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
                 android:paddingTop="0dp"

@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,7 +14,7 @@
         android:layout_margin="10dp"
 
         android:orientation="vertical"
-        android:padding="5px">
+        android:padding="1.67dp">
 
         <Button
             android:id="@+id/btnSave"
@@ -20,7 +23,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:height="111px"
+                android:height="37.00dp"
             android:background="@drawable/button"
             android:text="حفظ"
             android:layout_marginBottom="10dp"
@@ -51,7 +54,7 @@
                 <TextView
                     android:id="@+id/lblProfileEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="البريد الالكتورني"
@@ -61,7 +64,7 @@
                 <EditText
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.25"
                     android:background="@drawable/textbox_disabled"
                     android:enabled="false"
@@ -80,7 +83,7 @@
                 <TextView
                     android:id="@+id/lblProfileUserName"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_alignParentStart="true"
                     android:layout_weight="0.75"
                     android:gravity="center_vertical"
@@ -90,7 +93,7 @@
                 <EditText
                     android:id="@+id/txtUserName"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.25"
                     android:background="@drawable/textbox_disabled"
                     android:enabled="false"
@@ -108,7 +111,7 @@
                 <TextView
                     android:id="@+id/lblProfilePassword"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_below="@id/lblProfileUserName"
                     android:layout_weight="0.75"
                     android:gravity="center_vertical"
@@ -118,7 +121,7 @@
                 <EditText
                     android:id="@+id/txtPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.25"
                     android:background="@drawable/textbox_enabled"
                     style="@style/myedittext"
@@ -137,7 +140,7 @@
                 <TextView
                     android:id="@+id/lblProfilePasswordConfirm"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="تاكيد كلمة السر"
@@ -146,7 +149,7 @@
                 <EditText
                     android:id="@+id/txtPasswordConfirm"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.25"
                     android:background="@drawable/textbox_enabled"
                     style="@style/myedittext"
@@ -164,7 +167,7 @@
                 <TextView
                     android:id="@+id/lblProfileCity"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.75"
                     android:gravity="center_vertical"
                     android:text="المدينه"
@@ -213,7 +216,7 @@
                 <TextView
                     android:id="@+id/lblRegisterType"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.75"
                     android:text="نوع التسجيل"
                     android:textColor="#000"
@@ -223,7 +226,7 @@
                 <EditText
                     android:id="@+id/txtRegisterType"
                     android:layout_width="match_parent"
-                    android:layout_height="88px"
+                    android:layout_height="37.00dp"
                     android:layout_weight="0.25"
                     android:background="@drawable/textbox_disabled"
                     android:enabled="false"

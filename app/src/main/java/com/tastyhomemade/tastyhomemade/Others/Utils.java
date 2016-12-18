@@ -3,14 +3,17 @@ package com.tastyhomemade.tastyhomemade.Others;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -186,8 +189,15 @@ public class Utils {
         return sArrayTemp;
     }
 
-    public static String GetGoogleMapUrl(double p_Latitude, double p_Longitude) {
-        return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=13&size=300x200&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
+    public static String GetGoogleMapUrl(Context p_context,double p_Latitude, double p_Longitude) {
+        WindowManager wm = (WindowManager) p_context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=13&size="+(width-60) +"x"+((height/2)-30)+"&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
     }
 
     public static String GetGoogleMapAddress(double p_Latitude, double p_Longitude, int p_iLanguageId) {

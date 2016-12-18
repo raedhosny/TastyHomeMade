@@ -285,7 +285,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
 
                 webview_CurrentLocation_Tab1.setWebViewClient(new WebViewClient());
                 webview_CurrentLocation_Tab1.getSettings().setJavaScriptEnabled(true);
-                webview_CurrentLocation_Tab1.loadUrl(Utils.GetGoogleMapUrl(ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()));
+                webview_CurrentLocation_Tab1.loadUrl(Utils.GetGoogleMapUrl(getActivity(),ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()));
                 Utils.GoogleMapClass ObjGoogleMapClass = new Utils().new GoogleMapClass(getContext());
                 try {
                     String sAddress = ObjGoogleMapClass.execute(ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()).get();
@@ -329,7 +329,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
 
                     webview_CurrentLocation_Tab1.setWebViewClient(new WebViewClient());
                     webview_CurrentLocation_Tab1.getSettings().setJavaScriptEnabled(true);
-                    webview_CurrentLocation_Tab1.loadUrl(Utils.GetGoogleMapUrl(ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()));
+                    webview_CurrentLocation_Tab1.loadUrl(Utils.GetGoogleMapUrl(getActivity(),ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()));
                     Utils.GoogleMapClass ObjGoogleMapClass = new Utils().new GoogleMapClass(getContext());
                     try {
                         ObjGoogleMapClass.execute(ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude());
@@ -380,7 +380,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
 
                 webview_CurrentLocation_Tab2.setWebViewClient(new WebViewClient());
                 webview_CurrentLocation_Tab2.getSettings().setJavaScriptEnabled(true);
-                webview_CurrentLocation_Tab2.loadUrl(Utils.GetGoogleMapUrl(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()));
+                webview_CurrentLocation_Tab2.loadUrl(Utils.GetGoogleMapUrl(getActivity(),ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()));
 
                 Utils.GoogleMapClass ObjGoogleMapClass = new Utils().new GoogleMapClass(getContext());
                 try {
@@ -543,7 +543,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                                 public void run() {
                                     webview_CurrentLocation_Tab2.setWebViewClient(new WebViewClient());
                                     webview_CurrentLocation_Tab2.getSettings().setJavaScriptEnabled(true);
-                                    webview_CurrentLocation_Tab2.loadUrl(Utils.GetGoogleMapUrl(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()));
+                                    webview_CurrentLocation_Tab2.loadUrl(Utils.GetGoogleMapUrl(getActivity(),ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()));
                                 }
                             });
 

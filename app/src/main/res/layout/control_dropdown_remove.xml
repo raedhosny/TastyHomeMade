@@ -7,8 +7,8 @@
    >
 
     <ImageView
-        android:layout_width="102px"
-        android:layout_height="88px"
+        android:layout_width="34.00dp"
+        android:layout_height="37.00dp"
         android:layout_alignParentLeft="true"
         android:background="@drawable/button_remove"
         android:id="@+id/imgDropDownRemove"
@@ -16,7 +16,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="37.00dp"
         android:background="@drawable/spinner"
 
         />
@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/txtDropDownItem"
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="37.00dp"
         android:background="@null"
         android:textColor="#000"
         android:gravity="center"

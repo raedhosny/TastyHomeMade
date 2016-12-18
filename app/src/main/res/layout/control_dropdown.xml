@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
    >
 
     <ImageView
-        android:layout_width="102px"
-        android:layout_height="88px"
+        android:layout_width="34.00dp"
+        android:layout_height="37.00dp"
         android:layout_alignParentLeft="true"
         android:background="@drawable/dropdown" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="37.00dp"
         android:background="@drawable/spinner"
 
         />
@@ -20,7 +20,7 @@
     <Spinner
         android:id="@+id/ddlSpinner"
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="37.00dp"
         android:background="@null"
         android:spinnerMode="dialog"
         android:theme="@android:style/Theme.Holo.Light"

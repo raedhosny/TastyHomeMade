@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="111px"
+        android:layout_height="wrap_content"
         android:background="@drawable/button"
         android:layout_alignParentBottom="true"
         android:text="التالي"
@@ -71,7 +74,7 @@
                     <EditText
                         android:id="@+id/txtNumberOfOrders"
                         android:layout_width="match_parent"
-                        android:layout_height="88px"
+                        android:layout_height="37.00dp"
                         android:layout_weight="0.9"
                         android:background="@drawable/textbox_enabled"
                         android:gravity="center"
@@ -127,18 +130,18 @@
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="219px"
+                        android:layout_height="73.00dp"
                         android:background="@drawable/textbox_enabled"
                         android:layout_marginTop="10dp"
                         android:id="@+id/txtAdditionalGradients"
-                        android:gravity="top"
+                        android:gravity="center"
                         style="@style/myedittext"
                         />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="السعر الكلي 6 ريال"
+                        android:text="السعر الكلي 0 ريال"
                         android:textColor="#000"
                         android:textSize="20dp"
                         android:gravity="center"

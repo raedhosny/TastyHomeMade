@@ -32,7 +32,7 @@
                 <ImageView
                     android:id="@+id/ImageFood"
                     android:layout_width="match_parent"
-                    android:layout_height="375px"></ImageView>
+                    android:layout_height="125.00dp"></ImageView>
             </LinearLayout>
 
             <RelativeLayout
@@ -40,9 +40,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/Linear1"
-                android:layout_marginBottom="2px"
-                android:layout_marginLeft="2px"
-                android:layout_marginRight="2px"
+                android:layout_marginBottom="0.67dp"
+                android:layout_marginLeft="0.67dp"
+                android:layout_marginRight="0.67dp"
                 android:background="#CCe5e5e5"
 
                 >
@@ -64,8 +64,8 @@
 
                 <ImageView
                     android:id="@+id/ImageDeliverable"
-                    android:layout_width="85px"
-                    android:layout_height="85px"
+                    android:layout_width="28.33dp"
+                    android:layout_height="28.33dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/deliverable" />
 
@@ -77,16 +77,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/Linear1"
-                android:layout_marginBottom="2px"
-                android:layout_marginLeft="2px"
-                android:layout_marginRight="2px"
+                android:layout_marginBottom="0.67dp"
+                android:layout_marginLeft="0.67dp"
+                android:layout_marginRight="0.67dp"
                 android:background="#CCe5e5e5"
                 android:padding="1dp">
 
                 <Button
                     android:id="@+id/btnReportDelay"
                     android:layout_width="wrap_content"
-                    android:layout_height="70px"
+                    android:layout_height="23.33dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:background="@drawable/button_style2"
@@ -124,7 +124,7 @@
                     android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
                     android:textAlignment="viewEnd"
                     android:textColor="#000"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
 
 
             </LinearLayout>

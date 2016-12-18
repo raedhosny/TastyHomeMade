@@ -12,11 +12,14 @@
     android:background="@drawable/background"
     android:layoutDirection="locale"
     android:orientation="vertical"
-    android:padding="0dp">
+    android:padding="0dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75px"
+        android:layout_height="25.00dp"
         android:background="@drawable/top_bar_1">
 
         <TextView
@@ -27,13 +30,15 @@
             android:text="الأكلات والمشروبات"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="14sp"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="64px"
+        android:layout_height="30.00dp"
         android:background="@drawable/top_bar_2"
         android:orientation="horizontal">
 
@@ -57,8 +62,9 @@
                 android:layout_marginRight="10dp"
                 android:text="أهلا"
                 android:textColor="#000000"
-                android:textSize="5pt"
-                android:textStyle="bold" />
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:id="@+id/textView" />
 
             <TextView
                 android:id="@+id/lblMainUserName"
@@ -69,41 +75,46 @@
                 android:text="زائر"
                 android:textColor="#000000"
                 android:textDirection="anyRtl"
-                android:textSize="5pt"
+                android:textSize="13sp"
 
                 />
 
             <Button
                 android:id="@+id/btnMainRegister"
                 android:layout_width="60dp"
-                android:layout_height="20dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/button"
                 android:padding="0dp"
-                android:text="تسجيل" />
+                android:text="تسجيل"
+                android:textSize="15sp"/>
 
 
             <Button
                 android:id="@+id/btnMainLogin"
                 android:layout_width="60dp"
-                android:layout_height="20dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/button"
                 android:padding="0dp"
-                android:text="دخول" />
+                android:text="دخول"
+                android:textSize="15sp"
+
+                />
 
 
             <Button
                 android:id="@+id/btnMainLogout"
                 android:layout_width="60dp"
-                android:layout_height="20dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/button"
                 android:padding="0dp"
                 android:text="خروج"
+                android:textSize="15sp"
 
                 />
 
@@ -127,7 +138,7 @@
                 android:text="اليوم 19 أكتوبر 2016"
                 android:textAlignment="viewEnd"
                 android:textColor="#000000"
-                android:textSize="5pt" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 
@@ -136,35 +147,34 @@
     <LinearLayout
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="92px"
+        android:layout_height="50dp"
         android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:background="@drawable/top_bar_3"
         android:orientation="horizontal"
         android:padding="5dp">
 
         <Button
             android:id="@+id/btnMainForm"
-            android:layout_width="67px"
-            android:layout_height="62px"
-
-            android:layout_weight="0.05"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/mainform_btn" />
 
         <EditText
             android:id="@+id/txtSearch"
             style="@style/myedittext"
             android:layout_width="match_parent"
-            android:layout_height="60px"
+            android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="0.90"
+            android:layout_weight="1"
             android:background="@drawable/search_text" />
 
         <Button
             android:id="@+id/btnSearch"
-            android:layout_width="75px"
-            android:layout_height="60px"
-            android:layout_weight="0.05"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
             android:background="@drawable/search_btn" />
 
 
@@ -186,7 +196,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="562px"
+            android:layout_width="187.33dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
@@ -197,7 +207,7 @@
 
             <ListView
                 android:id="@+id/lvMainMenu"
-                android:layout_width="562px"
+                android:layout_width="187.33dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
 
@@ -210,7 +220,7 @@
 
             <ListView
                 android:id="@+id/lvCategories"
-                android:layout_width="562px"
+                android:layout_width="187.33dp"
                 android:layout_height="match_parent"
                 android:background="#e5e5e5"
 

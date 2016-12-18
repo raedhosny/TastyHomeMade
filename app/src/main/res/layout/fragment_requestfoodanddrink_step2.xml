@@ -3,19 +3,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
 
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
     <Button
         android:id="@+id/btnConfirmOrder"
         android:layout_width="match_parent"
-        android:layout_height="115px"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/button"
         android:text="تأكيد الطلب"
-        android:textStyle="bold">
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
 
     </Button>
 
@@ -119,7 +122,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="400dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/border_style4"
                             android:padding="5dp">
@@ -127,7 +130,7 @@
                             <WebView
                                 android:id="@+id/webview_CurrentLocation_Tab1"
                                 android:layout_width="match_parent"
-                                android:layout_height="482px"
+                                android:layout_height="match_parent"
                                 android:background="@drawable/border_style3"></WebView>
 
                         </LinearLayout>
@@ -164,8 +167,8 @@
 
 
                                 android:id="@+id/btnCurrentLocation"
-                                android:layout_width="181px"
-                                android:layout_height="50px"
+                                android:layout_width="60.33dp"
+                                android:layout_height="16.67dp"
                                 android:background="@drawable/settings_on" />
 
                             <TextView
@@ -187,9 +190,8 @@
 
 
                                 android:id="@+id/btnotherlocation"
-                                android:layout_width="181px"
-                                android:layout_height="50px"
-
+                                android:layout_width="60.33dp"
+                                android:layout_height="16.67dp"
                                 android:background="@drawable/settings_off" />
 
                             <TextView
@@ -211,7 +213,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="400dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/border_style4"
                                 android:padding="5dp">
@@ -219,7 +221,7 @@
                                 <WebView
                                     android:id="@+id/webview_CurrentLocation_Tab2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="482px"
+                                    android:layout_height="match_parent"
                                     android:background="@drawable/border_style3"></WebView>
 
                             </LinearLayout>
@@ -291,7 +293,7 @@
                                 <EditText
                                     android:id="@+id/txtDistrict"
                                     android:layout_width="match_parent"
-                                    android:layout_height="88px"
+                                    android:layout_height="37.00dp"
                                     android:layout_weight="0.25"
 
                                     style="@style/myedittext"
@@ -324,7 +326,7 @@
 
                                     android:layout_weight="0.25"
                                     style="@style/myedittext"
-                                    android:layout_height="88px"
+                                    android:layout_height="37.00dp"
                                     android:background="@drawable/textbox_enabled"
                                     >
 
@@ -354,7 +356,7 @@
 
                                     android:layout_weight="0.25"
                                     style="@style/myedittext"
-                                    android:layout_height="88px"
+                                    android:layout_height="37.00dp"
                                     android:background="@drawable/textbox_enabled"
                                     >
 
@@ -381,7 +383,7 @@
 
                                     android:layout_weight="0.25"
                                     style="@style/myedittext"
-                                    android:layout_height="88px"
+                                    android:layout_height="37.00dp"
                                     android:background="@drawable/textbox_enabled"
                                     >
 
@@ -413,7 +415,7 @@
 
                                     android:layout_weight="0.25"
                                     style="@style/myedittext"
-                                    android:layout_height="88px"
+                                    android:layout_height="37.00dp"
                                     android:background="@drawable/textbox_enabled"
                                     >
 
@@ -513,6 +515,8 @@
 
         </LinearLayout>
     </ScrollView>
+
+
 
 
 </RelativeLayout>
