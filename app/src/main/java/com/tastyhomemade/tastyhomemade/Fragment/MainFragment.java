@@ -16,6 +16,7 @@ import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,10 @@ public class MainFragment extends Fragment {
 
     private void FillData(int p_iCategoryId) {
 
+
         final int iCategoryId = p_iCategoryId;
+
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {

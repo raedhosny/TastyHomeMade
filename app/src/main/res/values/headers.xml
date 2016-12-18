@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="FoodsAndDrinks">Foods and Drinks
+</string>
+
+    <string name="Register">Register New User
+</string>
+     <string name="Login">Login
+</string>
+
+    <string name="Profile">My Profile
+</string>
+      <string name="Settings">Settings
+</string>
+
+      <string name="MyFoodsAndDrinks">مأكولاتي ومشروباتي
+</string>
+
+     <string name="CustomerOrders">Customer Orders
+</string>
+
+     <string name="OrdersFollowup">Orders Followup
+</string>
+   <string name="AddFoodsAndDrinks">
+        Add Foods And Drinks
+    </string>
+    <string name="MyChoices">
+        My Choices
+    </string>
+     <string name="MostlyRequested">
+Mostly Requested
+    </string>
+         <string name="RequestFoodsorDrinks">
+             Request Foods or Drinks
+    </string>
+    <string name="NearestFoodsAndDrinks">
+        Nearest Foods And Drinks
+    </string>
+
+
+</resources>

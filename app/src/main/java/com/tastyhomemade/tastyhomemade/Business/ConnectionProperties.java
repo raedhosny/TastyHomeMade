@@ -5,16 +5,16 @@ package com.tastyhomemade.tastyhomemade.Business;
  */
 
 public class ConnectionProperties {
-    public String IP = "192.168.15.128";
-    public String UserName = "sa";
-    public String Password = "help";
+    public String IP = "sql5013.smarterasp.net";
+    public String UserName = "DB_A1543F_tastyhomemade_admin";
+    public String Password = "tested12";
     public String Port = "1433";
 
     public ConnectionProperties()
     {
-        IP = "192.168.15.128";
-        UserName = "sa";
-        Password = "help";
+        IP = "sql5013.smarterasp.net";
+        UserName = "DB_A1543F_tastyhomemade_admin";
+        Password = "tested12";
         Port = "1433";
     }
 }

@@ -5,6 +5,9 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,14 +24,17 @@ import android.widget.Toast;
 import com.tastyhomemade.tastyhomemade.Business.Cities;
 import com.tastyhomemade.tastyhomemade.Business.CitiesDB;
 import com.tastyhomemade.tastyhomemade.Business.DB;
+import com.tastyhomemade.tastyhomemade.Business.OnTaskCompleted;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypes;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
+import com.tastyhomemade.tastyhomemade.Services.GPSTrackerBackground;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +46,7 @@ import java.util.Objects;
  * Created by raed on 11/22/2016.
  */
 
-public class RegisterFragment extends Fragment implements View.OnClickListener{
+public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     EditText txtRegisterEmail;
     EditText txtRegisterUserName;
@@ -51,11 +57,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     Spinner ddlRepresentive;
     Button btnRegisterSave;
     Button btnRegisterGPS;
-    List<Cities> ObjCitesList ;
+    List<Cities> ObjCitesList;
     List<RegisterTypes> ObjRegisterTypesList;
-    double iCurrentLatitude = -1,iCurrentLongtitude= -1;
+    double iCurrentLatitude = -1, iCurrentLongtitude = -1;
     Settings ObjSettings;
     int GPS_SETTINGS_REQUEST_CODE = 3;
+
 
     @Nullable
     @Override
@@ -82,15 +89,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (view.getParent() == ddlRegisterType)
-                {
-                    LinearLayout  lblRegisterRepresentative_Linear1 = (LinearLayout)getActivity().findViewById(R.id.lblRegisterRepresentative_Linear1);
-                    if (ddlRegisterType.getSelectedItemPosition() == 1)
-                    {
+                if (view.getParent() == ddlRegisterType) {
+                    LinearLayout lblRegisterRepresentative_Linear1 = (LinearLayout) getActivity().findViewById(R.id.lblRegisterRepresentative_Linear1);
+                    if (ddlRegisterType.getSelectedItemPosition() == 1) {
                         lblRegisterRepresentative_Linear1.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
+                    } else {
                         lblRegisterRepresentative_Linear1.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -120,19 +123,17 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         t.start();
 
 
-
     }
 
 
-        public void onClick(View v) {
+    public void onClick(View v) {
 
         if (v == btnRegisterSave) {
 
 
-
             // Validate Email
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtRegisterEmail.getText()).matches() == false) {
-                Toast.makeText(getContext(), Utils.GetResourceName (getContext(), R.string.Error_InvalidEmailAddress,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_InvalidEmailAddress, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -140,45 +141,40 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             String sPassword = txtRegisterPassword.getText().toString().trim();
             String sConfirmPassword = txtRegisterConfirmPassword.getText().toString().trim();
 
-            if (sPassword.length() == 0)
-            {
-                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PasswordCanNotBeZeroCharacters,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
+            if (sPassword.length() == 0) {
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PasswordCanNotBeZeroCharacters, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (!sPassword.equals(sConfirmPassword)) {
-                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PasswordDoesNotMatch,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PasswordDoesNotMatch, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             //Validate City
-            if (iCurrentLatitude == -1 || iCurrentLongtitude == -1)
-            {
-                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PleaseSelectCity,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
+            if (iCurrentLatitude == -1 || iCurrentLongtitude == -1) {
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PleaseSelectCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
 
             //Validate Register Type
-            if (ddlRegisterType.getSelectedItemPosition() == 0)
-            {
-                Toast.makeText(getContext(), Utils.GetResourceName (getContext(),R.string.Error_PleaseSelectCity,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
+            if (ddlRegisterType.getSelectedItemPosition() == 0) {
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PleaseSelectCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             //Validate Have Representative
-            if (ddlRegisterType.getSelectedItemPosition() == 1 && ddlRepresentive.getSelectedItemPosition() == 0)
-            {
-                Toast.makeText(getContext(), Utils.GetResourceName(getContext(),R.string.Error_PleaseSelectRepresentative,new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+            if (ddlRegisterType.getSelectedItemPosition() == 1 && ddlRepresentive.getSelectedItemPosition() == 0) {
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PleaseSelectRepresentative, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
             }
 
 
             // get City id
 
-            Cities ObjCityTemp = new Cities() ;
-            for  (Cities ObjCity : ObjCitesList)
-            {
+            Cities ObjCityTemp = new Cities();
+            for (Cities ObjCity : ObjCitesList) {
                 if (ObjCity.getName().equals(ddlRegisterCity.getSelectedItem())) {
                     ObjCityTemp = ObjCity;
                     break;
@@ -189,8 +185,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
             // get Register Type id
             RegisterTypes ObjRegisterTypesTemp = new RegisterTypes();
-            for  (RegisterTypes ObjRegisterTypes : ObjRegisterTypesList)
-            {
+            for (RegisterTypes ObjRegisterTypes : ObjRegisterTypesList) {
                 if (ObjRegisterTypes.getName().equals(ddlRegisterType.getSelectedItem())) {
                     ObjRegisterTypesTemp = ObjRegisterTypes;
                     break;
@@ -201,15 +196,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
             boolean IsHaveDelivary = false;
 
-            if (ddlRepresentive.getSelectedItemPosition()==1)
+            if (ddlRepresentive.getSelectedItemPosition() == 1)
                 IsHaveDelivary = true;
-            else if (ddlRepresentive.getSelectedItemPosition()==2)
+            else if (ddlRepresentive.getSelectedItemPosition() == 2)
                 IsHaveDelivary = false;
-            final boolean IsHaveDelivaryResult  = IsHaveDelivary;
+            final boolean IsHaveDelivaryResult = IsHaveDelivary;
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    User ObjUser= new User();
+                    User ObjUser = new User();
                     ObjUser.setId(-1);
                     ObjUser.setName("");
                     ObjUser.setUsername(txtRegisterUserName.getText().toString());
@@ -224,15 +219,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     ObjUser.setBuilding("Nothing");
                     ObjUser.setApartment("Nothing");
                     ObjUser.setActive(false);
-                    ObjUser.setActivationCode(java.util.UUID.randomUUID().toString().replace("-",""));
+                    ObjUser.setActivationCode(java.util.UUID.randomUUID().toString().replace("-", ""));
                     ObjUser.setHaveDelivary(IsHaveDelivaryResult);
 
                     int iResult = new UserDB().InsertUpdate(ObjUser);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.DataSavedSuccessfuly,new Settings(getContext()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                            new Utils().ShowActivity(getContext(),null,"Main","-1");
+                            Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                            new Utils().ShowActivity(getContext(), null, "Main", "-1");
                         }
                     });
 
@@ -240,11 +235,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             });
             t.start();
 
-        }
-        else if (v == btnRegisterGPS)
-        {
+        } else if (v == btnRegisterGPS) {
+
             try {
-                GPSTracker ObjGPSTracker = new GPSTracker(this);
+                OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
+                    @Override
+                    public void OnTaskCompleted(List<Double> Results) {
+                        if (Results.size() > 0) {
+                            iCurrentLatitude = Results.get(0);
+                            iCurrentLongtitude = Results.get(1);
+                        }
+                    }
+                };
+
+                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this,ObjOnTaskCompleted);
+                ObjGPSTrackerBackground.execute();
+                GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
+
                 if (ObjGPSTracker.getCanGetLocation()) {
                     Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
                     String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
@@ -257,31 +264,72 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     }
 
                     if (iSelectedIndex == 0) {
+
+
                         Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+
                         iCurrentLatitude = -1;
                         iCurrentLongtitude = -1;
                     } else {
+
+
                         Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.SuccessfullyGotGPSLocation, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+
                         iCurrentLatitude = ObjGPSTracker.getLatitude();
                         iCurrentLongtitude = ObjGPSTracker.getlongtitude();
-                        ddlRegisterCity.setSelection(iSelectedIndex);
+                        final int iSelectedIndexFinal = iSelectedIndex;
+
+
+                        ddlRegisterCity.setSelection(iSelectedIndexFinal);
+
+
                     }
                 } else {
+
+
                     ObjGPSTracker.ShowSettingsAlert();
+
+
                 }
+
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
         }
+
+
+
     }
+
+
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GPS_SETTINGS_REQUEST_CODE) {
+
+            final Fragment ObjFragment = this;
             try {
-                GPSTracker ObjGPSTracker = new GPSTracker(this);
+
+                OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
+                    @Override
+                    public void OnTaskCompleted(List<Double> Results) {
+                        if (Results.size() > 0) {
+                            iCurrentLatitude = Results.get(0);
+                            iCurrentLongtitude = Results.get(1);
+                        }
+                    }
+                };
+
+                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this,ObjOnTaskCompleted);
+                ObjGPSTrackerBackground.execute();
+                GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
+
                 if (ObjGPSTracker.getCanGetLocation()) {
                     Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
                     String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
@@ -309,65 +357,66 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
 
+
+        }
     }
 
 
-    private List<Cities> FillCities() {
+        private List<Cities> FillCities () {
 
-        Settings ObjSettings = new Settings(getActivity());
-        List<String> ObjStringsList = new ArrayList<String>();
-
-
-        List<Cities> ObjCitiesList = new CitiesDB().SelectAll(ObjSettings .getCurrentLanguageId());
-        for (Cities ObjTemp : ObjCitiesList) {
-            ObjStringsList.add(ObjTemp.getName());
-        }
+            Settings ObjSettings = new Settings(getActivity());
+            List<String> ObjStringsList = new ArrayList<String>();
 
 
-        final ArrayAdapter<String> CitiesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ddlRegisterCity.setAdapter(CitiesAdapter);
-                ddlRegisterCity.setEnabled(false);
+            List<Cities> ObjCitiesList = new CitiesDB().SelectAll(ObjSettings.getCurrentLanguageId());
+            for (Cities ObjTemp : ObjCitiesList) {
+                ObjStringsList.add(ObjTemp.getName());
             }
-        });
-        return ObjCitiesList;
-    }
 
-    private List<RegisterTypes> FillRegisterTypes() {
 
-        Settings ObjSettings = new Settings(getActivity());
-        List<String> ObjStringsList = new ArrayList<String>();
-        List<RegisterTypes> ObjRegisterTypesList = new RegisterTypesDB().SelectAll(ObjSettings .getCurrentLanguageId());
-        for (RegisterTypes ObjTemp : ObjRegisterTypesList) {
-            ObjStringsList.add(ObjTemp.getName());
+            final ArrayAdapter<String> CitiesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ddlRegisterCity.setAdapter(CitiesAdapter);
+                    ddlRegisterCity.setEnabled(false);
+                }
+            });
+            return ObjCitiesList;
         }
 
+        private List<RegisterTypes> FillRegisterTypes () {
 
-        final ArrayAdapter<String> RegisterTypesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ddlRegisterType.setAdapter(RegisterTypesAdapter);
+            Settings ObjSettings = new Settings(getActivity());
+            List<String> ObjStringsList = new ArrayList<String>();
+            List<RegisterTypes> ObjRegisterTypesList = new RegisterTypesDB().SelectAll(ObjSettings.getCurrentLanguageId());
+            for (RegisterTypes ObjTemp : ObjRegisterTypesList) {
+                ObjStringsList.add(ObjTemp.getName());
             }
-        });
-        return ObjRegisterTypesList;
 
-    }
+
+            final ArrayAdapter<String> RegisterTypesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjStringsList.toArray(), ObjStringsList.size(), String[].class));
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ddlRegisterType.setAdapter(RegisterTypesAdapter);
+                }
+            });
+            return ObjRegisterTypesList;
+
+        }
 
     private void FillHaveRepresentive() {
 
 
-        final ArrayAdapter<String> ObjHaveRepresentiveAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, Utils.GetResourceArrayName(getContext(),R.array.myboolean,new Settings(getContext()).getCurrentLanguageId()));
+        final ArrayAdapter<String> ObjHaveRepresentiveAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Utils.GetResourceArrayName(getContext(), R.array.myboolean, new Settings(getContext()).getCurrentLanguageId()));
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ddlRepresentive.setAdapter(ObjHaveRepresentiveAdapter );
+                ddlRepresentive.setAdapter(ObjHaveRepresentiveAdapter);
             }
         });
 

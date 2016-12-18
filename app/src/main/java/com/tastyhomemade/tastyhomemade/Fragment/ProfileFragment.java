@@ -17,14 +17,17 @@ import android.widget.Toast;
 
 import com.tastyhomemade.tastyhomemade.Business.Cities;
 import com.tastyhomemade.tastyhomemade.Business.CitiesDB;
+import com.tastyhomemade.tastyhomemade.Business.OnTaskCompleted;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypes;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
+import com.tastyhomemade.tastyhomemade.Services.GPSTrackerBackground;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,7 +114,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             public void run() {
                                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
 
-                                new Utils().ShowActivity(getContext(), null, "Main","-1");
+                                new Utils().ShowActivity(getContext(), null, "Main", "-1");
                             }
                         });
 
@@ -122,8 +125,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
         } else if (v == btnRegisterGPS) {
+
+            final WaitDialog ObjWaitDialog = new WaitDialog(getActivity());
+
+
             try {
-                GPSTracker ObjGPSTracker = new GPSTracker(this);
+                OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
+                    @Override
+                    public void OnTaskCompleted(List<Double> Results) {
+                        if (Results.size() > 0) {
+                            iCurrentLatitude = Results.get(0);
+                            iCurrentLongtitude = Results.get(1);
+                        }
+                    }
+                };
+
+                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this,ObjOnTaskCompleted);
+                ObjGPSTrackerBackground.execute();
+                GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
                 if (ObjGPSTracker.getCanGetLocation()) {
                     Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
                     String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
@@ -151,6 +170,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+
+
         }
     }
 
@@ -158,8 +180,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GPS_SETTINGS_REQUEST_CODE) {
+
             try {
-                GPSTracker ObjGPSTracker = new GPSTracker(this);
+                OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
+                    @Override
+                    public void OnTaskCompleted(List<Double> Results) {
+                        if (Results.size() > 0) {
+                            iCurrentLatitude = Results.get(0);
+                            iCurrentLongtitude = Results.get(1);
+                        }
+                    }
+                };
+
+                GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this,ObjOnTaskCompleted);
+                ObjGPSTrackerBackground.execute();
+                GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
+
                 if (ObjGPSTracker.getCanGetLocation()) {
                     Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext());
                     String sCurrentCity = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
@@ -187,6 +223,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+
         }
 
     }

@@ -24,9 +24,9 @@ public class RegisterTypesDB {
 
             String sAll = "";
             if (p_iLanguageId == 1)
-                sAll = "--الكل--";
+                sAll = "--اختر--";
             else if (p_iLanguageId == 2)
-                sAll = "--All--";
+                sAll = "--Select--";
 
             ObjRegisterTypesList.add(0, new RegisterTypes(-1, p_iLanguageId, sAll));
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tastyhomemade.tastyhomemade.Business.MainMenuItem;
 import com.tastyhomemade.tastyhomemade.Fragment.*;
@@ -30,6 +31,7 @@ import com.tastyhomemade.tastyhomemade.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -41,17 +43,21 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 
 public class Utils {
+
+
     public Utils() {
 
     }
 
     public void ShowActivity(Context p_context, List<MainMenuItem> p_ItemsList, String sSelectedItem, String... args) {
         FragmentManager Manager = ((AppCompatActivity) p_context).getSupportFragmentManager();
+        TextView lblHeader  = (TextView)((AppCompatActivity) p_context).findViewById(R.id.lblHeader);
 
         Manager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction Transaction = Manager.beginTransaction();
 
         if (sSelectedItem == "Main") {
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.FoodsAndDrinks,new Settings(p_context).getCurrentLanguageId()));
             MainFragment ObjMainFragment = new MainFragment();
             Bundle ObjBundle = new Bundle();
             ObjBundle.putInt("CategoryId", Integer.parseInt(args[0]));
@@ -59,12 +65,16 @@ public class Utils {
             Transaction.replace(R.id.main_content, ObjMainFragment);
             Transaction.commit();
         } else if (sSelectedItem == "Register") {
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.Register,new Settings(p_context).getCurrentLanguageId()));
             Transaction.replace(R.id.main_content, new RegisterFragment());
             Transaction.commit();
         } else if (sSelectedItem == "Login") {
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.Login,new Settings(p_context).getCurrentLanguageId()));
             Transaction.replace(R.id.main_content, new LoginFragment());
             Transaction.commit();
         } else if (sSelectedItem == "RequestForm") {
+
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.RequestFoodsorDrinks,new Settings(p_context).getCurrentLanguageId()));
             RequestFoodStep1Fragment ObjRequestFoodStep1Fragment = new RequestFoodStep1Fragment();
             Bundle ObjBundle = new Bundle();
             ObjBundle.putInt("FoodId", Integer.parseInt(args[0]));
@@ -72,6 +82,15 @@ public class Utils {
             Transaction.replace(R.id.main_content, ObjRequestFoodStep1Fragment);
             Transaction.commit();
         } else if (sSelectedItem == "RequestFormStep2") {
+            final Context contextfinal = p_context;
+            final TextView lblHeaderFinal = lblHeader;
+            ((AppCompatActivity) p_context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lblHeaderFinal.setText(Utils.GetResourceName(contextfinal,R.string.RequestFoodsorDrinks,new Settings(contextfinal).getCurrentLanguageId()));
+                }
+            });
+
             RequestFoodStep2Fragment ObjRequestFoodStep2Fragment = new RequestFoodStep2Fragment();
             Bundle ObjBundle = new Bundle();
             ObjBundle.putInt("OrderId", Integer.parseInt(args[0]));
@@ -80,6 +99,7 @@ public class Utils {
             Transaction.commit();
         }
         else if (sSelectedItem.equals(p_ItemsList.get(0).getName())) { // Profile
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.Profile,new Settings(p_context).getCurrentLanguageId()));
             Bundle ObjBundle = new Bundle();
             ObjBundle.putInt("UserId", new Settings(p_context).getUserId());
             ProfileFragment ObjProfileFragment = new ProfileFragment();
@@ -88,10 +108,12 @@ public class Utils {
 
             Transaction.commit();
         } else if (sSelectedItem.equals(p_ItemsList.get(1).getName())) { // Settings
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.Settings,new Settings(p_context).getCurrentLanguageId()));
             Transaction.replace(R.id.main_content, new SettingsFragment());
             Transaction.commit();
         }
         else if (sSelectedItem.equals(p_ItemsList.get(4).getName())) {  // Orders Follow Up
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.OrdersFollowup,new Settings(p_context).getCurrentLanguageId()));
             OrdersFollowUpFragment ObjOrdersFollowUpFragment = new OrdersFollowUpFragment();
             Bundle ObjBundle = new Bundle();
             ObjBundle.putInt("UserId", new Settings(p_context).getUserId());
@@ -100,6 +122,7 @@ public class Utils {
             Transaction.commit();
         }
         else if (sSelectedItem.equals(p_ItemsList.get(6).getName())) {  // My Choices
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.MyChoices,new Settings(p_context).getCurrentLanguageId()));
             MyChoicesFragment ObjMyChoicesFragment= new MyChoicesFragment();
             Transaction.replace(R.id.main_content, ObjMyChoicesFragment);
             Transaction.commit();
@@ -107,6 +130,7 @@ public class Utils {
 
         else if (sSelectedItem.equals(p_ItemsList.get(5).getName()))  // Add Foods and Drinks // Add Food And Drinks
         {
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.AddFoodsAndDrinks,new Settings(p_context).getCurrentLanguageId()));
             Transaction.replace(R.id.main_content, new AddFoodsAndDrinksFragment());
             Transaction.commit();
 
@@ -129,7 +153,6 @@ public class Utils {
         p_Context.getResources().updateConfiguration(ObjConfiguration, p_Context.getResources().getDisplayMetrics());
 
     }
-
 
     public static String GetResourceName(Context p_Context, int p_iResourceName, int p_iLanguage) {
         Configuration ObjConfiguration = p_Context.getResources().getConfiguration();
@@ -217,8 +240,26 @@ public class Utils {
             Document ObjDoc = ObjBuilder.parse(new URL(sObjTemp).openStream());
 
             ObjDoc.getDocumentElement().normalize();
+            NodeList ObjNodeList = ObjDoc.getElementsByTagName("result");
 
-            NodeList ObjNodeList = ObjDoc.getElementsByTagName("address_component");
+            Node ObjNodeToSearch = null;
+            int iItemFoundLocation =0;
+            int iCurrentNode =0;
+            for (int i=0;i<ObjNodeList.getLength();i++)
+            {
+                if (iItemFoundLocation == 2) {
+                    iCurrentNode = i - 1;
+                    break;
+                }
+                if (ObjNodeList.item(i).getNodeType() == Node.ELEMENT_NODE)
+                {
+                    iItemFoundLocation ++;
+                }
+            }
+            ObjNodeToSearch = ObjNodeList.item(iCurrentNode);
+
+
+            ObjNodeList = ((Element)ObjNodeToSearch).getElementsByTagName("address_component");
 
             String sCity ="";
             List<Node> ObjNodeListTemp = new ArrayList<Node>();
@@ -247,7 +288,6 @@ public class Utils {
         }
         return "";
     }
-
 
     public class GoogleMapClass extends AsyncTask<Double, String, String> {
         Settings ObjSettings;

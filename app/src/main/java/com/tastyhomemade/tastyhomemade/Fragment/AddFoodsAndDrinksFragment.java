@@ -1,6 +1,7 @@
 package com.tastyhomemade.tastyhomemade.Fragment;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -140,6 +141,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
     public void onClick(View view) {
         if (view == btnAddFoodCameraPhoto) {
             Intent IntentFoodCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            IntentFoodCamera.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             startActivityForResult(IntentFoodCamera, CAMERA_RESULT);
         }
         if (view == btnAddFoodFromStoragePhoto) {

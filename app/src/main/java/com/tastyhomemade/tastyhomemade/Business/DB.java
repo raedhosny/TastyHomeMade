@@ -16,7 +16,8 @@ public class DB {
         try {
             ConnectionProperties MyProperties =  new ConnectionProperties();
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            java.sql.Connection myConnection = DriverManager.getConnection("jdbc:jtds:sqlserver://"+ MyProperties.IP+":"+ MyProperties.Port+"/TastyHomemade;user=" + MyProperties.UserName + ";password=" + MyProperties.Password);
+            java.sql.Connection myConnection = DriverManager.getConnection("jdbc:jtds:sqlserver://"+ MyProperties.IP+":"+ MyProperties.Port+"/DB_A1543F_tastyhomemade;user=" + MyProperties.UserName + ";password=" + MyProperties.Password);
+
             return myConnection;
         }
         catch (Exception ex)

@@ -25,8 +25,10 @@ import com.tastyhomemade.tastyhomemade.Others.Utils;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout Linear_SideMenu;
     Settings ObjSettings;
     List<Categories> ObjCategoriesList;
+    TextView lblHeader;
+    TextView lblDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMainLogout = (Button) this.findViewById(R.id.btnMainLogout);
         btnMainLogout.setOnClickListener(this);
         Linear_SideMenu = (LinearLayout) findViewById(R.id.Linear_SideMenu);
+        lblHeader = (TextView) findViewById(R.id.lblHeader);
+        lblDate = (TextView) findViewById (R.id.lblDate);
         ObjSettings = new Settings(this);
 
         LoadMainInfo();
@@ -133,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             AllSideMenuItemsList.add(new MainMenuItem(iId, sName));
 
             for (String sUserType : UserTypesList) {
-                if (sUserType.equals(new Settings(this).getUserType())) {
+                if (sUserType.equals(new Settings(this).getUserType()) || sUserType.equals("All")) {
                     ItemsListFiltered.add(iId + "," + sName);
                 }
             }
@@ -179,6 +186,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void LoadMainInfo() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        Calendar ObjCalendar = null;
+        if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
+            ObjCalendar = Calendar.getInstance(new Locale("ar"));
+        else
+            ObjCalendar = Calendar.getInstance(new Locale("en"));
+        lblDate.setText(sdf.format(ObjCalendar.getTime()));
         FillSideMenu();
         Settings ObjSettings = new Settings(this);
         if (ObjSettings.getUserId() != -1) {

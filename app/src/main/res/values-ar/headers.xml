@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<string name="FoodsAndDrinks">
+    المأكولات والمشروبات
+</string>
+    <string name="Register">تسجيل جديد
+</string>
+      <string name="Login">الدخول
+</string>
+    <string name="Profile">بياناتي الشخصيه
+</string>
+
+        <string name="Settings">الإعدادات
+</string>
+     <string name="MyFoodsAndDrinks">مأكولاتي ومشروباتي
+</string>
+
+     <string name="CustomerOrders">طلبات العملاء
+</string>
+
+     <string name="OrdersFollowup">تتبع مأكولاتي ومشروباتي
+</string>
+ <string name="AddFoodsAndDrinks">
+        اضف مأكولاتي ومشروباتي
+    </string>
+
+  <string name="MyChoices">
+        اختياراتي
+    </string>
+
+       <string name="MostlyRequested">
+الأكثر طلبا
+    </string>
+     <string name="RequestFoodsorDrinks">
+            طلب مأكولات او مشروبات
+    </string>
+    <string name="NearestFoodsAndDrinks">
+        الاكلات والمشروبات الأقرب لي
+    </string>
+
+</resources>

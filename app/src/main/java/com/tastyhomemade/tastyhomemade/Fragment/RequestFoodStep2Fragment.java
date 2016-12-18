@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -31,14 +33,17 @@ import com.tastyhomemade.tastyhomemade.Business.Cities;
 import com.tastyhomemade.tastyhomemade.Business.CitiesDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
+import com.tastyhomemade.tastyhomemade.Business.OnTaskCompleted;
 import com.tastyhomemade.tastyhomemade.Business.Orders;
 import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
+import com.tastyhomemade.tastyhomemade.Services.GPSTrackerBackground;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +51,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 
 import static android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS;
 
@@ -93,7 +99,8 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
     EditText txtDistrict, txtStreet, txtBuilding, txtAppartment, txtOtherDetails;
 
     int GPS_SETTINGS_REQUEST_CODE = 3;
-
+    double iCurrentLatitude;
+    double iCurrentLongtitude;
 
 
     @Nullable
@@ -160,7 +167,6 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
 
         SelectedTab = 1;
         SelectedInnerTab = 1;
-
 
         FillCalender();
         FillTimer();
@@ -339,6 +345,10 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
             SelectedTab = 1;
 
         } else if (v == Include_Tab_ReceiveAddress) {
+
+            //Location ObjLocation = ObjGPSTracker.GetLocation();
+
+
             Linear_Tab1.setVisibility(View.GONE);
             Linear_Tab2.setVisibility(View.VISIBLE);
 
@@ -350,28 +360,50 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
             ((ImageView) Include_Tab_ReceiveAddress.findViewById(R.id.imgTabCenter)).setBackground(new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.tab_enabled_center)));
             ((ImageView) Include_Tab_ReceiveAddress.findViewById(R.id.imgTabRight)).setImageResource(R.drawable.tab_enabled_right);
 
-            GPSTracker ObjGPSTracker = new GPSTracker(this);
-           //Location ObjLocation = ObjGPSTracker.GetLocation();
+            OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
+                @Override
+                public void OnTaskCompleted(List<Double> Results) {
+                    if (Results.size() > 0) {
+                        iCurrentLatitude = Results.get(0);
+                        iCurrentLongtitude = Results.get(1);
+                    }
+                }
+            };
+
+            GPSTrackerBackground ObjGPSTrackerBackground = new GPSTrackerBackground(this, ObjOnTaskCompleted);
+            ObjGPSTrackerBackground.execute();
+            GPSTracker ObjGPSTracker = ObjGPSTrackerBackground.getGPSTracker();
+
+
             if (ObjGPSTracker.getCanGetLocation()) {
+
                 webview_CurrentLocation_Tab2.setWebViewClient(new WebViewClient());
                 webview_CurrentLocation_Tab2.getSettings().setJavaScriptEnabled(true);
-
                 webview_CurrentLocation_Tab2.loadUrl(Utils.GetGoogleMapUrl(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()));
+
                 Utils.GoogleMapClass ObjGoogleMapClass = new Utils().new GoogleMapClass(getContext());
                 try {
-                    String sAddress = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
+                    final String sAddress = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
 
-                    lblAddressClient.setText(sAddress);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblAddressClient.setText(sAddress);
+                        }
+                    });
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
             } else {
                 ObjGPSTracker.StopUsingGPS();
+
                 ObjGPSTracker.ShowSettingsAlert();
             }
-
             SelectedTab = 2;
+
+
         } else if (v == btnConfirmOrder) {
             Thread t = new Thread(new Runnable() {
                 @Override
@@ -387,12 +419,12 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                         ObjOrder.setCompleteOrder(true);
                         new OrdersDB().InsertUpdate(ObjOrder);
 
-                        new OrdersDB().InsertUpdate(ObjOrder);
+
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.OrderHasBeenSubmitted,ObjSettings.getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                                new Utils().ShowActivity(getContext(),null,"Main","-1");
+                                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.OrderHasBeenSubmitted, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                new Utils().ShowActivity(getContext(), null, "Main", "-1");
                             }
                         });
                     } else if (SelectedTab == 2) // if client request to receive order at his current location
@@ -412,8 +444,8 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.OrderHasBeenSubmitted,ObjSettings.getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                                    new Utils().ShowActivity(getContext(),null,"Main","-1");
+                                    Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.OrderHasBeenSubmitted, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                    new Utils().ShowActivity(getContext(), null, "Main", "-1");
                                 }
                             });
 
@@ -457,8 +489,8 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.OrderHasBeenSubmitted,ObjSettings.getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                                    new Utils().ShowActivity(getContext(),null,"Main","-1");
+                                    Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.OrderHasBeenSubmitted, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                    new Utils().ShowActivity(getContext(), null, "Main", "-1");
                                 }
                             });
 
@@ -495,30 +527,57 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
         if (requestCode == GPS_SETTINGS_REQUEST_CODE) {
             try {
 
-                GPSTracker  ObjGPSTracker= new GPSTracker(this);
+                final GPSTracker ObjGPSTracker = new GPSTracker(this);
+                final WaitDialog ObjWaitDialog = new WaitDialog(getActivity());
 
-                if (ObjGPSTracker.getCanGetLocation()) {
-                    webview_CurrentLocation_Tab2.setWebViewClient(new WebViewClient());
-                    webview_CurrentLocation_Tab2.getSettings().setJavaScriptEnabled(true);
+                ObjWaitDialog.ShowDialog();
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    webview_CurrentLocation_Tab2.loadUrl(Utils.GetGoogleMapUrl(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()));
-                    Utils.GoogleMapClass ObjGoogleMapClass = new Utils().new GoogleMapClass(getContext());
-                    try {
-                        String sAddress = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
 
-                        lblAddressClient.setText(sAddress);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                        if (ObjGPSTracker.getCanGetLocation()) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webview_CurrentLocation_Tab2.setWebViewClient(new WebViewClient());
+                                    webview_CurrentLocation_Tab2.getSettings().setJavaScriptEnabled(true);
+                                    webview_CurrentLocation_Tab2.loadUrl(Utils.GetGoogleMapUrl(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()));
+                                }
+                            });
+
+                            Utils.GoogleMapClass ObjGoogleMapClass = new Utils().new GoogleMapClass(getContext());
+                            try {
+                                final String sAddress = ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude()).get();
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        lblAddressClient.setText(sAddress);
+                                    }
+                                });
+
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+
+                        } else {
+                            ObjGPSTracker.StopUsingGPS();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ObjGPSTracker.ShowSettingsAlert();
+                                }
+                            });
+
+
+                        }
+                        ObjWaitDialog.HideDialog();
                     }
+                });
 
-                } else {
-                    ObjGPSTracker.StopUsingGPS();
-                    ObjGPSTracker.ShowSettingsAlert();
-
-                }
-            }
-            catch (Exception ex)
-            {
+                t.start();
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }

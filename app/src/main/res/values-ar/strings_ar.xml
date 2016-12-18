@@ -9,6 +9,7 @@
         <item>6,أضف مأكولات أو مشروبات,FoodMaker</item>
         <item>7,إختياراتي,Customer</item>
         <item>8,الأكثرا طلبا,All</item>
+        <item>9,الاقرب لي,Customer</item>
     </string-array>
 
 
@@ -150,5 +151,7 @@
         <string name="price">
         السعر
     </string>
-
+ <string name="PleaseWait">
+        برجاء الانتظار
+    </string>
 </resources>

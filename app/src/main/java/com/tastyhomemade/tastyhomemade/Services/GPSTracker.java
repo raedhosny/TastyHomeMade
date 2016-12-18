@@ -44,8 +44,8 @@ public class GPSTracker extends Service implements LocationListener {
     Context context;
     Fragment fragment;
     boolean GotNewLocation = false;
-    static final long MIN_TIME_BW_UPDATES = 1000 * 60;
-    static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 Meters
+    static final long MIN_TIME_BW_UPDATES = 0;
+    static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 Meters
     Settings ObjSettings;
     int GPS_SETTINGS_REQUEST_CODE= 3;
 
@@ -56,6 +56,12 @@ public class GPSTracker extends Service implements LocationListener {
         GetLocation();
 
 
+    }
+
+    public GPSTracker(Context p_context) {
+        context = p_context;
+        ObjSettings = new Settings(context);
+        GetLocation();
     }
 
     public Location GetLocation() {
@@ -81,20 +87,22 @@ public class GPSTracker extends Service implements LocationListener {
 
                 if (IsNetworkEnabled) {
 
-                    //ObjLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    ObjLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-                    try {
-                        Thread.sleep(5000);
-                    }
-                    catch (Exception ex)
-                    {
-                        ex.printStackTrace();
-                    }
+                    ObjLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//                    ObjLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+//                    try {
+//                        Thread.sleep(5000);
+//                    }
+//                    catch (Exception ex)
+//                    {
+//                        ex.printStackTrace();
+//                    }
                     if (ObjLocationManager != null) {
                         objCurrentLocation = ObjLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (objCurrentLocation != null ) {
                             latitude = objCurrentLocation.getLatitude();
                             longtitude = objCurrentLocation.getLongitude();
+                            GotNewLocation = true;
+
                         }
                     }
                 }
@@ -102,19 +110,20 @@ public class GPSTracker extends Service implements LocationListener {
                 if (IsGPSEnabled) {
                     if (objCurrentLocation == null) {
                         ObjLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        try {
-                            Thread.sleep(5000);
-                        }
-                        catch (Exception ex)
-                        {
-                            ex.printStackTrace();
-                        }
+//                        try {
+//                            Thread.sleep(5000);
+//                        }
+//                        catch (Exception ex)
+//                        {
+//                            ex.printStackTrace();
+//                        }
                         if (ObjLocationManager != null) {
                             objCurrentLocation = ObjLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                             if (objCurrentLocation != null ) {
 
                                 latitude = objCurrentLocation.getLatitude();
                                 longtitude = objCurrentLocation.getLongitude();
+                                GotNewLocation = true;
                             }
                         }
                     }

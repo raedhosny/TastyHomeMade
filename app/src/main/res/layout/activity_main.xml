@@ -20,7 +20,7 @@
         android:background="@drawable/top_bar_1">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/lblHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -120,7 +120,7 @@
 
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/lblDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

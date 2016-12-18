@@ -124,13 +124,12 @@
                 style="@style/myedittext"
                 android:layout_width="match_parent"
                 android:layout_height="88px"
-
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
-
                 android:ems="10"
+                android:paddingTop="0dp"
 
-                android:paddingTop="0dp" />
+                android:inputType="textPassword"/>
 
         </LinearLayout>
 
@@ -157,7 +156,9 @@
                 android:layout_height="88px"
                 android:layout_weight="0.25"
                 android:background="@drawable/textbox_enabled"
-                android:paddingTop="0dp" />
+                android:paddingTop="0dp"
+                android:inputType="textPassword"
+                />
 
         </LinearLayout>
 
