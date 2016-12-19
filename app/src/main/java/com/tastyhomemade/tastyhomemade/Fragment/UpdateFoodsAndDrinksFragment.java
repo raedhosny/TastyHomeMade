@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -14,7 +12,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +29,6 @@ import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods_Additions;
 import com.tastyhomemade.tastyhomemade.Business.Foods_AdditionsDB;
-import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
@@ -40,8 +36,11 @@ import com.tastyhomemade.tastyhomemade.R;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -50,7 +49,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by Raed on 11/28/2016.
  */
 
-public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickListener {
+public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnClickListener {
 
     List<Categories> ObjCategoriesList = new ArrayList<Categories>();
     private int CAMERA_RESULT = 1;
@@ -79,9 +78,11 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
     Spinner ddlRequestTimeToHours;
     Spinner ddlRequestTimeToDayNight;
     Spinner ddlShowToCustomer;
+    Spinner ddlAddCategory;
     ListView lvAddFoodGradient;
     List<Foods_Additions> Obj_Foods_Additions_List;
-
+    int iCurrentFoodId;
+    Settings ObjSettings;
 
 
     @Nullable
@@ -116,25 +117,33 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
         btnAddFoodSave.setOnClickListener(this);
         ddlShowToCustomer = (Spinner) view.findViewById(R.id.Include_ddlShowToCustomer).findViewById(R.id.ddlSpinner);
 
-        ddlRequestTimeFromMinutes = (Spinner)view.findViewById(R.id.Include_RequestFromTime).findViewById(R.id.Include_Spinner_Minutes)
-                                    .findViewById(R.id.Spinner_Item);
-        ddlRequestTimeFromHours = (Spinner)view.findViewById(R.id.Include_RequestFromTime).findViewById(R.id.Include_Spinner_Hours)
+        ddlRequestTimeFromMinutes = (Spinner) view.findViewById(R.id.Include_RequestFromTime).findViewById(R.id.Include_Spinner_Minutes)
                 .findViewById(R.id.Spinner_Item);
-        dllRequestTimeFromDayNight = (Spinner)view.findViewById(R.id.Include_RequestFromTime).findViewById(R.id.Include_Spinner_DayNight)
+        ddlRequestTimeFromHours = (Spinner) view.findViewById(R.id.Include_RequestFromTime).findViewById(R.id.Include_Spinner_Hours)
                 .findViewById(R.id.Spinner_Item);
-
-        ddlRequestTimeToMinutes = (Spinner)view.findViewById(R.id.Include_RequestTimeTo).findViewById(R.id.Include_Spinner_Minutes)
-                .findViewById(R.id.Spinner_Item);
-        ddlRequestTimeToHours = (Spinner)view.findViewById(R.id.Include_RequestTimeTo).findViewById(R.id.Include_Spinner_Hours)
-                .findViewById(R.id.Spinner_Item);
-        ddlRequestTimeToDayNight = (Spinner)view.findViewById(R.id.Include_RequestTimeTo).findViewById(R.id.Include_Spinner_DayNight)
+        dllRequestTimeFromDayNight = (Spinner) view.findViewById(R.id.Include_RequestFromTime).findViewById(R.id.Include_Spinner_DayNight)
                 .findViewById(R.id.Spinner_Item);
 
-        lvAddFoodGradient = (ListView)view.findViewById(R.id.lvAddFoodGradient);
+        ddlRequestTimeToMinutes = (Spinner) view.findViewById(R.id.Include_RequestTimeTo).findViewById(R.id.Include_Spinner_Minutes)
+                .findViewById(R.id.Spinner_Item);
+        ddlRequestTimeToHours = (Spinner) view.findViewById(R.id.Include_RequestTimeTo).findViewById(R.id.Include_Spinner_Hours)
+                .findViewById(R.id.Spinner_Item);
+        ddlRequestTimeToDayNight = (Spinner) view.findViewById(R.id.Include_RequestTimeTo).findViewById(R.id.Include_Spinner_DayNight)
+                .findViewById(R.id.Spinner_Item);
+        ddlAddCategory = (Spinner) Include_ddlAddCategory.findViewById(R.id.ddlSpinner);
+
+        lvAddFoodGradient = (ListView) view.findViewById(R.id.lvAddFoodGradient);
 
         Obj_Foods_Additions_List = new ArrayList<Foods_Additions>();
 
+        ObjSettings = new Settings(getContext());
+
         FillDropDowns();
+
+        Bundle ObjBundle = getArguments();
+        iCurrentFoodId = ObjBundle.getInt("FoodId", -1);
+        FillData(iCurrentFoodId);
+
     }
 
     @Override
@@ -166,7 +175,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                     ObjAddition.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
                     ObjAddition.setName(txtAddGradient.getText().toString().trim());
                     ObjAddition.setPrice(Float.parseFloat(txtAddGradientPrice.getText().toString().trim()));
-                   // imgGradientPhoto.setDrawingCacheEnabled(true);
+                    // imgGradientPhoto.setDrawingCacheEnabled(true);
                     //imgGradientPhoto.buildDrawingCache(true);
                     //Bitmap ObjBitmapTemp = Bitmap.createBitmap(imgGradientPhoto.getDrawingCache());
                     //imgGradientPhoto.setDrawingCacheEnabled(false);
@@ -174,15 +183,14 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                     //ObjBitmapTemp.compress(Bitmap.CompressFormat.PNG,100,ObjArrayTemp);
                     //ObjAddition.setPhoto(Base64.encode(ObjArrayTemp.toByteArray(),Base64.DEFAULT));
                     int iAdditionId = new AdditionsDB().InsertUpdate(ObjAddition);
-                    Foods_Additions ObjFoods_Additions = new Foods_Additions(-1,-1,iAdditionId);
+                    Foods_Additions ObjFoods_Additions = new Foods_Additions(-1, -1, iAdditionId);
                     Obj_Foods_Additions_List.add(ObjFoods_Additions);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            GradientAdapter ObjAdapter = new GradientAdapter(getActivity(),Obj_Foods_Additions_List);
+                            GradientAdapter ObjAdapter = new GradientAdapter(getActivity(), Obj_Foods_Additions_List);
 
                             lvAddFoodGradient.setAdapter(ObjAdapter);
-
 
 
                         }
@@ -203,7 +211,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                 return;
             }
 
-            Spinner ddlAddCategory = (Spinner) Include_ddlAddCategory.findViewById(R.id.ddlSpinner);
+            final Spinner ddlAddCategory = (Spinner) Include_ddlAddCategory.findViewById(R.id.ddlSpinner);
             if (ddlAddCategory.getSelectedItemPosition() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseSelectFoodCategory, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
@@ -216,11 +224,11 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
 
             imgAddFoodPhoto.setDrawingCacheEnabled(true);
             imgAddFoodPhoto.buildDrawingCache(true);
-            Bitmap  ObjBitmapTemp = Bitmap.createBitmap(imgAddFoodPhoto.getDrawingCache());
+            final Bitmap ObjBitmapTemp = Bitmap.createBitmap(imgAddFoodPhoto.getDrawingCache());
             imgAddFoodPhoto.setDrawingCacheEnabled(false);
 
 
-            if (ObjBitmapTemp  == null) {
+            if (ObjBitmapTemp == null) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseAddPhotoForFood, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
             }
@@ -232,61 +240,60 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             }
 
 
-            if (txtAddGradient.getText().toString().trim().length() == 0)
-            {
+            if (txtAddGradient.getText().toString().trim().length() == 0) {
 
             }
 
-             //Insert New Food
-            final Foods ObjFood = new Foods();
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+            //Insert New Food
+            final Foods ObjFood = new FoodsDB().Select(iCurrentFoodId,ObjSettings.getCurrentLanguageId());
             ObjFood.setCategoryId(ObjCategoriesList.get(ddlAddCategory.getSelectedItemPosition()).getId());
             ObjFood.setUserId(new Settings(getActivity()).getUserId());
             ObjFood.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
             int iRequestTimeFromMinutes = Integer.parseInt(ddlRequestTimeFromMinutes.getSelectedItem().toString());
             int iRequestTimeFromHours = Integer.parseInt(ddlRequestTimeFromHours.getSelectedItem().toString());
-            if (dllRequestTimeFromDayNight.getSelectedItem().toString() .equals("مساءا")
+            if (dllRequestTimeFromDayNight.getSelectedItem().toString().equals("مساءا")
                     ||
-                    dllRequestTimeFromDayNight.getSelectedItem().toString() .equals("PM")
+                    dllRequestTimeFromDayNight.getSelectedItem().toString().equals("PM")
                     )
-            iRequestTimeFromHours = iRequestTimeFromHours + 12 ;
-            ObjFood.setRequestTimeFrom(new Time(iRequestTimeFromHours,iRequestTimeFromMinutes,0));
+                iRequestTimeFromHours = (iRequestTimeFromHours + 12);
+            ObjFood.setRequestTimeFrom(new Time(iRequestTimeFromHours, iRequestTimeFromMinutes, 0));
 
             int iRequestTimeToMinutes = Integer.parseInt(ddlRequestTimeToMinutes.getSelectedItem().toString());
             int iRequestTimeToHours = Integer.parseInt(ddlRequestTimeToHours.getSelectedItem().toString());
-            if (ddlRequestTimeToDayNight.getSelectedItem().toString() .equals("مساءا")
+            if (ddlRequestTimeToDayNight.getSelectedItem().toString().equals("مساءا")
                     ||
-                    ddlRequestTimeToDayNight.getSelectedItem().toString() .equals("PM")
+                    ddlRequestTimeToDayNight.getSelectedItem().toString().equals("PM")
                     )
-                iRequestTimeToHours = iRequestTimeToHours + 12;
-            ObjFood.setRequestTimeTo(new Time(iRequestTimeToHours,iRequestTimeToMinutes,0));
+                iRequestTimeToHours = (iRequestTimeToHours + 12) ;
+            ObjFood.setRequestTimeTo(new Time(iRequestTimeToHours, iRequestTimeToMinutes, 0));
             //Bitmap ObjBitmapTemp = ((BitmapDrawable)imgAddFoodPhoto.getDrawable()).getBitmap();
             ByteArrayOutputStream ObjByteArrayTemp = new ByteArrayOutputStream();
-            ObjBitmapTemp.compress(Bitmap.CompressFormat.JPEG,100,ObjByteArrayTemp );
-            ObjFood.setPhoto(Base64.encodeToString(ObjByteArrayTemp.toByteArray(),Base64.DEFAULT) );
-            ObjFood.setPrice(Float.parseFloat(txtAddFoodOrderPrice.getText().toString()) );
+            ObjBitmapTemp.compress(Bitmap.CompressFormat.JPEG, 100, ObjByteArrayTemp);
+            ObjFood.setPhoto(Base64.encodeToString(ObjByteArrayTemp.toByteArray(), Base64.DEFAULT));
+            ObjFood.setPrice(Float.parseFloat(txtAddFoodOrderPrice.getText().toString()));
             ObjFood.setName(txtAddFoodName.getText().toString().trim());
             ObjFood.setDescription(txtAddFoodDescription.getText().toString().trim());
-            boolean bIsVisible =  false;
+            boolean bIsVisible = false;
             if (ddlShowToCustomer.getSelectedItemPosition() == 1)
                 bIsVisible = true;
             else if (ddlShowToCustomer.getSelectedItemPosition() == 2)
                 bIsVisible = false;
-            ObjFood.setVisible(bIsVisible );
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
+            ObjFood.setVisible(bIsVisible);
+
                     final Foods ObjFoodTemp = ObjFood;
                     int iFoodId = new FoodsDB().InsertUpdate(ObjFoodTemp);
-                    for (Foods_Additions Obj_Foods_Additions : Obj_Foods_Additions_List)
-                    {
+                    for (Foods_Additions Obj_Foods_Additions : Obj_Foods_Additions_List) {
                         Obj_Foods_Additions.setFoodId(iFoodId);
                         new Foods_AdditionsDB().InsertUpdate(Obj_Foods_Additions);
                     }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.DataSavedSuccessfuly,new Settings(getActivity()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                            new Utils().ShowActivity(getContext(),null,"Main","-1");
+                            Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, new Settings(getActivity()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                            new Utils().ShowActivity(getContext(), null, "Main", "-1");
                         }
                     });
                 }
@@ -294,11 +301,9 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             t.start();
 
 
-
         }
 
     }
-
 
 
     @Override
@@ -348,7 +353,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
         }
 
         final ArrayAdapter<String> CategoriesAdaptor = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Arrays.copyOf(ObjCategoreisListTemp2.toArray(), ObjCategoreisListTemp2.size(), String[].class));
-        final Spinner ddlAddCategory = (Spinner) Include_ddlAddCategory.findViewById(R.id.ddlSpinner);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -389,10 +394,184 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
         ddlRequestTimeToHours.setAdapter(ObjAdapterHours_To);
         ddlRequestTimeToDayNight.setAdapter(ObjAdapterDayNight_To);
 
-        final ArrayAdapter<String> ObjAdapterYesNo = new ArrayAdapter<String>(getContext(),R.layout.spinner_item,Utils.GetResourceArrayName(getContext(),R.array.myboolean,new Settings(getActivity()).getCurrentLanguageId()));
+        final ArrayAdapter<String> ObjAdapterYesNo = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Utils.GetResourceArrayName(getContext(), R.array.myboolean, new Settings(getActivity()).getCurrentLanguageId()));
         ddlShowToCustomer.setAdapter(ObjAdapterYesNo);
     }
 
+    private void FillData(final int p_iFoodId) {
+        Thread t = new Thread((new Runnable() {
+            @Override
+            public void run() {
+                final Foods ObjFood = new FoodsDB().Select(p_iFoodId, ObjSettings.getCurrentLanguageId());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                txtAddFoodName.setText(ObjFood.getName());
+                txtAddFoodDescription.setText(ObjFood.getDescription());
+                txtAddFoodOrderPrice.setText(String.valueOf(ObjFood.getPrice()));
+                    }
+                });
+
+                int iSelectionId = -1;
+                for (int i = 0; i < ObjCategoriesList.size(); i++) {
+                    if (ObjCategoriesList.get(i).getId() == ObjFood.getCategoryId()) {
+                        iSelectionId = i;
+                        break;
+                    }
+
+                }
+
+               final int iSelectionIdFinal = iSelectionId;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                ddlAddCategory.setSelection(iSelectionIdFinal);
+                    }
+                });
+                byte[] Photo = Base64.decode(ObjFood.getPhoto(), Base64.DEFAULT);
+               final Bitmap ObjFoodImage = BitmapFactory.decodeByteArray(Photo, 0, Photo.length);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                imgAddFoodPhoto.setImageBitmap(ObjFoodImage);
+                    }
+                });
+
+                SimpleDateFormat ObjSimpleDateFormat = new SimpleDateFormat("mm");
+                int iRequestFromMinutes = Integer.parseInt(ObjSimpleDateFormat.format(ObjFood.getRequestTimeFrom()));
+                ObjSimpleDateFormat = new SimpleDateFormat("h");
+                int iRequestFromHours = Integer.parseInt(ObjSimpleDateFormat.format(ObjFood.getRequestTimeFrom()));
+                ObjSimpleDateFormat = new SimpleDateFormat("a");
+                String sRequestFromDayLight = ObjSimpleDateFormat.format(ObjFood.getRequestTimeFrom());
+
+                ObjSimpleDateFormat = new SimpleDateFormat("mm");
+                int iRequestToMinutes = Integer.parseInt(ObjSimpleDateFormat.format(ObjFood.getRequestTimeTo()));
+                ObjSimpleDateFormat = new SimpleDateFormat("h");
+                int iRequestToHours = Integer.parseInt(ObjSimpleDateFormat.format(ObjFood.getRequestTimeTo()));
+                String sRequestToDayLight = ObjSimpleDateFormat.format(ObjFood.getRequestTimeTo());
+
+                // Set Request Time From Minutes
+                for (int i = 0; i < ddlRequestTimeFromMinutes.getCount(); i++) {
+                    if (Integer.parseInt(ddlRequestTimeFromMinutes.getItemAtPosition(i).toString()) == iRequestFromMinutes) {
+                        final int ii = i;
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+
+                                ddlRequestTimeFromMinutes.setSelection(ii);
+                            }
+                        });
+                    }
+                }
+
+                // Set Request Time From Hours
+                for (int i = 0; i < ddlRequestTimeFromHours.getCount(); i++) {
+                    if (Integer.parseInt(ddlRequestTimeFromHours.getItemAtPosition(i).toString()) == iRequestFromHours) {
+                        final int ii = i;
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ddlRequestTimeFromHours.setSelection(ii);
+                            }
+                        });
+                    }
+                }
+
+                // Set Request Time From DayNight
+                if (sRequestFromDayLight.toLowerCase() == "am")
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dllRequestTimeFromDayNight.setSelection(0);
+                        }
+                    });
+                else
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dllRequestTimeFromDayNight.setSelection(1);
+                        }
+                    });
+
+
+                // Set Request Time To Minutes
+                for (int i = 0; i < ddlRequestTimeToMinutes.getCount(); i++) {
+                    if (Integer.parseInt(ddlRequestTimeToMinutes.getItemAtPosition(i).toString()) == iRequestToMinutes) {
+
+                        final int ii = i;
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ddlRequestTimeToMinutes.setSelection(ii);
+                            }
+                        });
+
+                    }
+                }
+
+
+                // Set Request Time To Hours
+                for (int i = 0; i < ddlRequestTimeToHours.getCount(); i++) {
+                    if (Integer.parseInt(ddlRequestTimeToHours.getItemAtPosition(i).toString()) == iRequestToHours) {
+                        final int ii = i;
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ddlRequestTimeToHours.setSelection(ii);
+                            }
+                        });
+                    }
+                }
+
+                // Set Request Time To DayNight
+                if (sRequestToDayLight.toLowerCase() == "am")
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ddlRequestTimeToDayNight.setSelection(0);
+                        }
+                    });
+                else
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dllRequestTimeFromDayNight.setSelection(1);
+                        }
+                    });
+
+                if (ObjFood.isVisible())
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ddlShowToCustomer.setSelection(1); // Yes
+                        }
+                    });
+                else
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ddlShowToCustomer.setSelection(2); // No
+                        }
+                    });
+
+                Obj_Foods_Additions_List = new Foods_AdditionsDB().SelectByFoodId(iCurrentFoodId);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GradientAdapter ObjAdapter = new GradientAdapter(getActivity(), Obj_Foods_Additions_List);
+
+                        lvAddFoodGradient.setAdapter(ObjAdapter);
+                    }
+                });
+
+            }
+        }));
+        t.start();
+    }
 
 }
 

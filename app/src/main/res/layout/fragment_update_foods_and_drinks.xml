@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+
+    <Button
+        android:id="@+id/btnAddFoodSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:height="37.00dp"
+        android:background="@drawable/button"
+        android:text="حفظ"
+
+        />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@id/btnAddFoodSave"
+        android:layout_marginBottom="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="بيانات الوجبه"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAddFoodName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:text="الإسم"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/txtAddFoodName"
+                        style="@style/myedittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="37.00dp"
+                        android:layout_weight="0.25"
+
+                        android:background="@drawable/textbox_enabled"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAddFoodCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lblAddFoodName"
+                        android:layout_weight="0.75"
+                        android:text="الفئه"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25">
+
+                        <include
+                            android:id="@+id/Include_ddlAddCategory"
+                            layout="@layout/control_dropdown"
+
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAddDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="0.75"
+                        android:text="الوصف"
+                        android:textColor="#000" />
+
+                    <EditText
+                        android:id="@+id/txtAddFoodDescription"
+                        style="@style/myedittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="83.33dp"
+                        android:layout_alignBaseline="@id/lblAddDescription"
+
+                        android:layout_weight="0.25"
+                        android:background="@drawable/textbox_enabled"
+                        android:gravity="top|right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAddPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:text="السعر"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="0.25"
+                        >
+                        <EditText
+                            android:id="@+id/txtAddFoodOrderPrice"
+                            style="@style/myedittext"
+                            android:layout_width="83.33dp"
+                            android:layout_height="37.00dp"
+
+
+                            android:background="@drawable/textbox_enabled"
+                            android:gravity="center"
+
+                            />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lblImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblAddPrice"
+
+                            android:layout_weight="0.75"
+                            android:text="إلتقاط صوره"
+                            android:textColor="#000" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearAddFoodlblImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/lblImage"
+                            android:layout_toLeftOf="@id/lblImage"
+                            android:layout_weight="0.25"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnAddFoodCameraPhoto"
+                                android:layout_width="wrap_content"
+                                android:layout_height="37.00dp"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/button"
+                                android:text="بالكاميره" />
+
+                            <Button
+                                android:id="@+id/btnAddFoodFromStoragePhoto"
+                                android:layout_width="wrap_content"
+                                android:layout_height="37.00dp"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/button"
+                                android:text="من ذاكرة الهاتف" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.75" />
+
+                        <ImageView
+                            android:id="@+id/imgAddFoodPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="96.67dp"
+                            android:layout_below="@id/LinearAddFoodlblImage"
+                            android:layout_margin="5dp"
+                            android:layout_weight="0.25"
+                            android:src="@drawable/border" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAddFoodRequestTimeFrom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lblImage"
+                        android:layout_weight="0.75"
+
+                        android:text="وقت الطلب من"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25">
+
+                        <include
+                            android:id="@+id/Include_RequestFromTime"
+                            layout="@layout/control_time"></include>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAddFoodRequestTimeTo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lblAddFoodRequestTimeFrom"
+                        android:layout_weight="0.75"
+                        android:text="وقت الطلب الي"
+                        android:textColor="#000" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25">
+
+                        <include
+                            android:id="@+id/Include_RequestTimeTo"
+                            layout="@layout/control_time"></include>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblShowToClient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:text="اظهار للعميل"
+                        android:textColor="#000"
+
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25">
+
+                        <include
+                            android:id="@+id/Include_ddlShowToCustomer"
+                            layout="@layout/control_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </include>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+
+                android:background="@drawable/border"
+                android:layoutDirection="rtl"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="الإضافات"
+                        android:textColor="#000"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            >
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75"
+                                android:text="الإسم"
+                                android:textColor="#000" />
+
+                            <EditText
+                                android:id="@+id/txtAddGradient"
+                                style="@style/myedittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="37.00dp"
+                                android:layout_weight="0.25"
+                                android:background="@drawable/textbox_enabled"
+
+
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75"
+                                android:text="السعر"
+                                android:textColor="#000" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.25">
+
+                                <EditText
+                                    android:id="@+id/txtAddGradientPrice"
+                                    style="@style/myedittext"
+                                    android:layout_width="83.33dp"
+                                    android:layout_height="37.00dp"
+                                    android:background="@drawable/textbox_enabled"
+                                    android:gravity="center"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+                            >
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75"
+                                android:text="إلتقاط صوره"
+                                android:textColor="#000" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.25"
+                                android:orientation="horizontal"
+
+                                >
+
+                                <Button
+                                    android:id="@+id/btnAddGradientCamera"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="37.00dp"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/button"
+                                    android:text="بالكاميره"
+                                    android:visibility="gone"
+                                    />
+
+                                <Button
+                                    android:id="@+id/btnAddGradientFromStorage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="37.00dp"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/button"
+                                    android:text="من ذاكرة الهاتف"
+                                    android:visibility="gone"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75">
+
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/imgGradientPhoto"
+                                android:layout_width="match_parent"
+                                android:layout_height="96.67dp"
+
+                                android:layout_weight="0.25"
+                                android:src="@drawable/border" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75"></LinearLayout>
+
+                            <Button
+                                android:id="@+id/btnAddGradientAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="37.00dp"
+                                android:layout_weight="0.25"
+                                android:background="@drawable/button"
+                                android:text="أضف" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.75"></LinearLayout>
+
+                            <ListView
+                                android:id="@+id/lvAddFoodGradient"
+                                android:layout_width="match_parent"
+                                android:layout_height="96.67dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="0.25"
+                                />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -104,6 +104,24 @@ public class Utils {
             Transaction.replace(R.id.main_content, ObjRequestFoodStep2Fragment);
             Transaction.commit();
         }
+        else if (sSelectedItem == "UpdateFoodsandDrinks") { // Update Foods and Drinks
+            final Context contextfinal = p_context;
+            final TextView lblHeaderFinal = lblHeader;
+            ((AppCompatActivity) p_context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lblHeaderFinal.setText(Utils.GetResourceName(contextfinal,R.string.UpdateFoodsAndDrinks,new Settings(contextfinal).getCurrentLanguageId()));
+                }
+            });
+
+            UpdateFoodsAndDrinksFragment ObjUpdateFoodsandDrinksFragment = new UpdateFoodsAndDrinksFragment();
+            Bundle ObjBundle = new Bundle();
+            ObjBundle.putInt("FoodId", Integer.parseInt(args[0]));
+            ObjUpdateFoodsandDrinksFragment .setArguments(ObjBundle);
+            Transaction.replace(R.id.main_content, ObjUpdateFoodsandDrinksFragment );
+            Transaction.commit();
+        }
+
         else if (sSelectedItem.equals(p_ItemsList.get(0).getName())) { // Profile
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.Profile,new Settings(p_context).getCurrentLanguageId()));
             Bundle ObjBundle = new Bundle();

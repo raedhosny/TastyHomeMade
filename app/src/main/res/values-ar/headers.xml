@@ -24,6 +24,9 @@
  <string name="AddFoodsAndDrinks">
         اضف مأكولاتي ومشروباتي
     </string>
+    <string name="UpdateFoodsAndDrinks">
+        تعديل المأكولات والمشروبات
+    </string>
 
   <string name="MyChoices">
         اختياراتي

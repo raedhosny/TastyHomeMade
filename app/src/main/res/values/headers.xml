@@ -24,6 +24,10 @@
    <string name="AddFoodsAndDrinks">
         Add Foods And Drinks
     </string>
+     <string name="UpdateFoodsAndDrinks">
+        Update Foods And Drinks
+    </string>
+
     <string name="MyChoices">
         My Choices
     </string>

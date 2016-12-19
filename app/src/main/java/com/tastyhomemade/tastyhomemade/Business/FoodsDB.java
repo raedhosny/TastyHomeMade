@@ -115,6 +115,7 @@ public class FoodsDB {
                 ObjFood.setLanguageId(ObjResultSet.getInt(11));
                 ObjFood.setName(ObjResultSet.getString(12));
                 ObjFood.setDescription(ObjResultSet.getString(13));
+                ObjFood.setVisible(ObjResultSet.getBoolean("IsVisible"));
                 return ObjFood;
             }
             return new Foods();
@@ -295,7 +296,7 @@ public class FoodsDB {
             {
                 Foods ObjFood = new Foods();
 
-                ObjFood.setId(ObjResultSet.getInt("Id"));
+                ObjFood.setId(ObjResultSet.getInt("FoodId"));
                 ObjFood.setCategoryId(ObjResultSet.getInt("CategoryId"));
                 ObjFood.setUserId(ObjResultSet.getInt("UserId"));
                 ObjFood.setRequestTimeFrom(ObjResultSet.getTime("RequestTimeFrom"));

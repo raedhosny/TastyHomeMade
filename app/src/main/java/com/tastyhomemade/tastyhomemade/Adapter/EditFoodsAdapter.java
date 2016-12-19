@@ -116,7 +116,7 @@ public class EditFoodsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-          // new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
+          new Utils().ShowActivity(context, null, "UpdateFoodsandDrinks", String.valueOf(ObjFoodsList.get(position).getId()));
 
             }
         });
