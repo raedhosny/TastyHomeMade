@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.tastyhomemade.tastyhomemade.Business.MainMenuItem;
 import com.tastyhomemade.tastyhomemade.Business.OnGetCity;
+import com.tastyhomemade.tastyhomemade.Business.OnGetDistance;
 import com.tastyhomemade.tastyhomemade.Fragment.*;
 
 import java.io.BufferedReader;
@@ -117,6 +118,12 @@ public class Utils {
             Transaction.replace(R.id.main_content, new SettingsFragment());
             Transaction.commit();
         }
+        else if (sSelectedItem.equals(p_ItemsList.get(2).getName())) { // Settings
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.Settings,new Settings(p_context).getCurrentLanguageId()));
+            Transaction.replace(R.id.main_content, new ListOfFoodsandDrinksFragment());
+            Transaction.commit();
+        }
+
         else if (sSelectedItem.equals(p_ItemsList.get(4).getName())) {  // Orders Follow Up
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.OrdersFollowup,new Settings(p_context).getCurrentLanguageId()));
             OrdersFollowUpFragment ObjOrdersFollowUpFragment = new OrdersFollowUpFragment();
@@ -144,6 +151,13 @@ public class Utils {
         {
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.MostlyRequested,new Settings(p_context).getCurrentLanguageId()));
             Transaction.replace(R.id.main_content, new MostlyRequestedFragment());
+            Transaction.commit();
+        }
+
+        else if (sSelectedItem.equals(p_ItemsList.get(8).getName()))  // Mostly Requested Item
+        {
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.NearestFoodsAndDrinks,new Settings(p_context).getCurrentLanguageId()));
+            Transaction.replace(R.id.main_content, new NearestFoodsFragment());
             Transaction.commit();
         }
 
@@ -308,6 +322,56 @@ public class Utils {
         return "";
     }
 
+    public static String GetGoogleMapDistance(double p_SourceLatitude, double p_SourceLongitude, double p_DestinationLatitude, double p_DistanceLongitude,Settings p_ObjSettings) {
+        String sObjTemp = "https://maps.googleapis.com/maps/api/directions/json?origin=" + p_SourceLatitude +"," +p_SourceLongitude +"&destination=" + p_DestinationLatitude + "," +p_DistanceLongitude;
+
+        try {
+            URL ObjUrl = new URL(sObjTemp);
+            HttpURLConnection ObjUrlCon = (HttpURLConnection) ObjUrl.openConnection();
+            ObjUrlCon.setRequestMethod("GET");
+            ObjUrlCon.setRequestProperty("User-Agent", "Mozilla/5.0");
+            ObjUrlCon.getResponseCode();
+            BufferedReader ObjReader = new BufferedReader(new InputStreamReader(ObjUrlCon.getInputStream()));
+            StringBuffer ObjStringBuffer = new StringBuffer();
+            String sTemp = "";
+            while ((sTemp = ObjReader.readLine()) != null) {
+                ObjStringBuffer.append(sTemp);
+            }
+            ObjReader.close();
+
+            sObjTemp = ObjStringBuffer.toString();
+
+            JSONObject ObjJSONObject = new JSONObject(sObjTemp);
+            JSONArray ObjArray = ObjJSONObject.getJSONArray("routes");
+            for (int i = 0; i < ObjArray.length(); i++) {
+                if (ObjArray.getJSONObject(i).get("legs") != null) {
+                     JSONArray ObjArrayTemp = (JSONArray) ObjArray.getJSONObject(i).get("legs");
+
+                   for (int j=0; j< ObjArrayTemp.length();j++)
+                   {
+                       Iterator<String> ObjKeysList = ObjArrayTemp.getJSONObject(j).keys();
+                       while (ObjKeysList.hasNext()) {
+                           String sResult = ObjKeysList.next();
+                           if (sResult.equals("distance")) {
+
+                               sResult = ((JSONObject)ObjArrayTemp.getJSONObject(j).get("distance")).getString("value");
+                               return sResult;
+                           }
+                       }
+                   }
+
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (p_ObjSettings.getCurrentLanguageId() == 1)
+            return "غير معروف";
+        else
+            return "Unknown";
+    }
+
     public class GoogleMapClass extends AsyncTask<Double, String, String> {
         Settings ObjSettings;
         String sAddress;
@@ -365,6 +429,40 @@ public class Utils {
         protected void onPostExecute(String s) {
             //super.onPostExecute(s);
             ObjOnGetCity.GetCity(s);
+
+        }
+    }
+
+    public class GoogleMapClassDistance extends AsyncTask<Double, String, String> {
+
+        Settings ObjSettings= null;
+        OnGetDistance ObjOnGetDistance;
+        String sResult = "";
+
+
+
+        public GoogleMapClassDistance(OnGetDistance p_ObjOnGetDistance,Settings p_ObjSettings) {
+
+            ObjOnGetDistance = p_ObjOnGetDistance;
+            ObjSettings = p_ObjSettings;
+        }
+
+        @Override
+        protected String doInBackground(Double... params) {
+
+            sResult = Utils.GetGoogleMapDistance(params[0], params[1], params[2], params[3],ObjSettings);
+            return sResult;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //super.onPostExecute(s);
+            ObjOnGetDistance.GetDistance(s);
 
         }
     }

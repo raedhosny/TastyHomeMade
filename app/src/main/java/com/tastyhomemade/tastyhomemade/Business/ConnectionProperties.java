@@ -10,7 +10,7 @@ public class ConnectionProperties {
 //    public static String Password = "tested12";
 //    public static String Port = "1433";
 
-    public static String IP = "192.168.1.6";
+    public static String IP = "192.168.15.128";
     public static String UserName = "sa";
     public static String Password = "help";
     public static String Port = "1433";

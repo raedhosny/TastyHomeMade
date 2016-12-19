@@ -22,6 +22,17 @@ public class Foods {
     private boolean IsVisible;
     private int NumberOfRequestsCount;
 
+    public String getDistance() {
+        return Distance;
+    }
+
+    public void setDistance(String distance) {
+        Distance = distance;
+    }
+
+    private String Distance;
+
+
     public Foods(int id, int languageId, String name, String description, int categoryId, int userId, java.sql.Time requestTimeFrom, java.sql.Time requestTimeTo, String photo, float price,boolean IsVisible) {
         Id = id;
         LanguageId = languageId;
@@ -35,6 +46,7 @@ public class Foods {
         Price = price;
         this.IsVisible = IsVisible;
         NumberOfRequestsCount = 0;
+        Distance = "";
 
     }
 

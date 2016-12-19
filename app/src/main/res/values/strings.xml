@@ -169,6 +169,10 @@
         Number Of Requests
     </string>
 
+    <string name="AboutMeters">
+        AboutXMeters
+    </string>
+
 
 
 </resources>

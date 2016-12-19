@@ -443,7 +443,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="10dp"
-
+                            android:visibility="gone"
                             >
 
                             <TextView
@@ -469,7 +469,9 @@
                                     android:layout_margin="5dp"
                                     android:layout_weight="1"
                                     android:background="@drawable/button"
-                                    android:text="بالكاميره" />
+                                    android:text="بالكاميره"
+                                    android:visibility="gone"
+                                    />
 
                                 <Button
                                     android:id="@+id/btnAddGradientFromStorage"
@@ -478,7 +480,9 @@
                                     android:layout_margin="5dp"
                                     android:layout_weight="1"
                                     android:background="@drawable/button"
-                                    android:text="من ذاكرة الهاتف" />
+                                    android:text="من ذاكرة الهاتف"
+                                    android:visibility="gone"
+                                    />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -487,6 +491,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="10dp"
+                            android:visibility="gone"
 
                             >
 

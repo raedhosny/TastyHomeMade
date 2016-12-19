@@ -22,15 +22,15 @@ public class AdditionsDB {
                             "   @Id=?\n" +
                             "  ,@LanguageId=?\n" +
                             "  ,@Name=?\n" +
-                            "  ,@Price=?\n" +
-                            "  ,@Photo=?\n"
+                            "  ,@Price=?\n"
+                            //+"  ,@Photo=?\n"
 
             );
             stmt.setInt(1,p_ObjAdditions.getId());
             stmt.setInt(2,p_ObjAdditions.getLanguageId());
             stmt.setString(3,p_ObjAdditions.getName());
             stmt.setFloat(4,p_ObjAdditions.getPrice());
-            stmt.setString(5,Base64.encodeToString(p_ObjAdditions.getPhoto(),Base64.DEFAULT));
+            //stmt.setString(5,Base64.encodeToString(p_ObjAdditions.getPhoto(),Base64.DEFAULT));
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
@@ -85,7 +85,7 @@ public class AdditionsDB {
                 ObjAddition.setId(ObjResultSet.getInt("Id"));
                 ObjAddition.setLanguageId(ObjResultSet.getInt("LanguageId"));
                 ObjAddition.setName(ObjResultSet.getString("Name"));
-                ObjAddition.setPhoto(Base64.decode(ObjResultSet.getString("Photo"),Base64.DEFAULT));
+                //ObjAddition.setPhoto(Base64.decode(ObjResultSet.getString("Photo"),Base64.DEFAULT));
                 ObjAddition.setPrice(ObjResultSet.getFloat("Price"));
                 return ObjAddition;
 

@@ -158,4 +158,8 @@
         عدد مرات الطلب
     </string>
 
+    <string name="AboutMeters">
+        علي بعد X متر
+    </string>
+
 </resources>
