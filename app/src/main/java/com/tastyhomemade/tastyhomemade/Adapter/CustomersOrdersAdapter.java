@@ -4,6 +4,7 @@ package com.tastyhomemade.tastyhomemade.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.tastyhomemade.tastyhomemade.R;
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,7 +71,9 @@ public class CustomersOrdersAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
+
+
         View v = View.inflate(context, R.layout.customerorder_listview_item, null);
         final RatingBar ctlRating = (RatingBar) v.findViewById(R.id.ctlRating);
         final ImageView ImageItem = (ImageView) v.findViewById(R.id.ImageItem);
@@ -90,6 +94,88 @@ public class CustomersOrdersAdapter extends BaseAdapter {
         final Button btnSendOrder = (Button) v.findViewById(R.id.btnSendOrder);
         final Button btnOrderReceived = (Button) v.findViewById(R.id.btnOrderReceived);
         final Button btnOrderRejected = (Button) v.findViewById(R.id.btnOrderRejected);
+
+        btnSendOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int iOrderId = ObjOrdersList.get(position).getId();
+                int iActionId = 2;
+                Orders_Actions ObjOrderAction = new Orders_Actions();
+                ObjOrderAction.setOrderId(iOrderId);
+                ObjOrderAction.setActionId(iActionId);
+                Calendar ObjCalendar = Calendar.getInstance();
+                ObjOrderAction.setActionDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
+                new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                notifyDataSetChanged();
+
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnSendOrder.setEnabled(false);
+                        btnSendOrder.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                        btnOrderReceived.setEnabled(true);
+                        btnOrderReceived.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_enabled)));
+                        btnOrderRejected.setEnabled(true);
+                        btnOrderRejected.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_enabled)));
+                    }
+                });
+            }
+        });
+
+        btnOrderReceived.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int iOrderId = ObjOrdersList.get(position).getId();
+                int iActionId = 3;
+                Orders_Actions ObjOrderAction = new Orders_Actions();
+                ObjOrderAction.setOrderId(iOrderId);
+                ObjOrderAction.setActionId(iActionId);
+                Calendar ObjCalendar = Calendar.getInstance();
+                ObjOrderAction.setActionDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
+                new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                notifyDataSetChanged();
+
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnSendOrder.setEnabled(false);
+                        btnSendOrder.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                        btnOrderReceived.setEnabled(true);
+                        btnOrderReceived.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                        btnOrderRejected.setEnabled(true);
+                        btnOrderRejected.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                    }
+                });
+            }
+        });
+
+        btnOrderRejected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int iOrderId = ObjOrdersList.get(position).getId();
+                int iActionId = 4;
+                Orders_Actions ObjOrderAction = new Orders_Actions();
+                ObjOrderAction.setOrderId(iOrderId);
+                ObjOrderAction.setActionId(iActionId);
+                Calendar ObjCalendar = Calendar.getInstance();
+                ObjOrderAction.setActionDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
+                new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                notifyDataSetChanged();
+
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnSendOrder.setEnabled(false);
+                        btnSendOrder.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                        btnOrderReceived.setEnabled(true);
+                        btnOrderReceived.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                        btnOrderRejected.setEnabled(true);
+                        btnOrderRejected.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                    }
+                });
+            }
+        });
+
 
         /// Do Rating
         //////////////////////////
@@ -123,7 +209,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                 ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        lblNumberOfOrders.setText(ObjOrdersList.get(position).getNumberOfOrders());
+                        lblNumberOfOrders.setText(String.valueOf(ObjOrdersList.get(position).getNumberOfOrders()));
                     }
                 });
 
@@ -157,9 +243,67 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     }
                 });
 
+                // Setting Delivery Date and Time
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnSendOrder.setEnabled(true);
+                        btnSendOrder.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_enabled)));
+                        btnOrderReceived.setEnabled(false);
+                        btnOrderReceived.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                        btnOrderRejected.setEnabled(false);
+                        btnOrderRejected.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                    }
+                });
+
+
                 List<Orders_Actions> ObjOrdersActionsList = new Orders_ActionsDB().SelectByOrderId(ObjOrdersList.get(0).getId());
 
                 for (int i = 0; i < ObjOrdersActionsList.size(); i++) {
+                    if (ObjOrdersActionsList.get(i).getActionId() == 1) { // Order Request by customer
+                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btnSendOrder.setEnabled(false);
+                                btnSendOrder.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                                btnOrderReceived.setEnabled(true);
+                                btnOrderReceived.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_enabled)));
+                                btnOrderRejected.setEnabled(true);
+                                btnOrderRejected.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_enabled)));
+                            }
+                        });
+                    }
+
+                    if (ObjOrdersActionsList.get(i).getActionId() == 2) { // Order sent by foodmaker
+                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btnSendOrder.setEnabled(false);
+                                btnSendOrder.setEnabled(false);
+                                btnSendOrder.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                                btnOrderReceived.setEnabled(true);
+                                btnOrderReceived.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_enabled)));
+                                btnOrderRejected.setEnabled(true);
+                                btnOrderRejected.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_enabled)));
+                            }
+                        });
+                    }
+
+                    if (ObjOrdersActionsList.get(i).getActionId() == 3 || ObjOrdersActionsList.get(i).getActionId() == 4) {
+                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btnSendOrder.setEnabled(false);
+                                btnSendOrder.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                                btnOrderReceived.setEnabled(false);
+                                btnOrderReceived.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                                btnOrderRejected.setEnabled(false);
+                                btnOrderRejected.setBackground(new BitmapDrawable(new BitmapFactory().decodeResource(context.getResources(), R.drawable.button_style3_disabled)));
+                            }
+                        });
+                    }
+
+
                     if (ObjOrdersActionsList.get(i).getActionId() == 3) {
                         if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
                             sfd = new SimpleDateFormat("dd MMMM yyyy", new Locale("ar"));
@@ -187,6 +331,8 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                                 lblDeliveryTime.setText(sfd.format(ObjOrderAction.getActionDate()));
                             }
                         });
+
+
                         break;
                     }
                 }
@@ -210,9 +356,9 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                 });
 
                 // Address
-                if (ObjFoodMakerUser.isHaveDelivary()) {
+                if (ObjOrdersList.get(position).isShippingToClient()) {
 
-                    String sAddress;
+                    final String sAddress;
 
                     Cities ObjCity = new CitiesDB().Select(ObjOrdersList.get(position).getShippingCountryId(), ObjSettings.getCurrentLanguageId());
 
@@ -229,16 +375,42 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                                         ObjOrdersList.get(position).getShippingApartment() +
                                         "\n" +
                                         ObjOrdersList.get(position).getShippingOtherDetails();
+                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                lblAddress.setText(sAddress);
+                                webview_Address.setVisibility(View.GONE);
+                            }
+                        });
 
-                        webview_Address.setVisibility(View.GONE);
                     } else {
                         sAddress = ObjOrdersList.get(position).getOrderAddress();
-                        webview_Address.loadUrl(Utils.GetGoogleMapUrl(getActivity(),ObjUser.getCurrentLocation_Latitude(), ObjUser.getCurrentLocation_Longitude()));
+                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                lblAddress.setText(sAddress);
+                                webview_Address.loadUrl(Utils.GetGoogleMapUrl((AppCompatActivity) context, ObjOrdersList.get(position).getShipping_Latitude(), ObjOrdersList.get(position).getShipping_Longitude()));
+                            }
+                        });
 
                     }
 
 
+                } else {
+
+                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblAddress.setText(Utils.GetResourceName(context, R.string.ClientComeToGetHisOrderByHimSelf, ObjSettings.getCurrentLanguageId()));
+                            webview_Address.setVisibility(View.GONE);
+                            btnSendOrder.setVisibility(View.GONE);
+                            btnOrderReceived.setVisibility(View.GONE);
+                            btnOrderRejected.setVisibility(View.GONE);
+                        }
+                    });
+
                 }
+
 
             }
         });
@@ -246,26 +418,26 @@ public class CustomersOrdersAdapter extends BaseAdapter {
         t.start();
 
 
-        btnSendOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        btnOrderReceived.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        btnOrderRejected.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        btnSendOrder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        btnOrderReceived.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        btnOrderRejected.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
         return v;

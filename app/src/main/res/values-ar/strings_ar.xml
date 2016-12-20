@@ -162,4 +162,8 @@
         علي بعد X متر
     </string>
 
+        <string name="ClientComeToGetHisOrderByHimSelf">
+بناءا علي طلب العميل يأتي العميل لاستلام طلبه بنفسه
+    </string>
+
 </resources>

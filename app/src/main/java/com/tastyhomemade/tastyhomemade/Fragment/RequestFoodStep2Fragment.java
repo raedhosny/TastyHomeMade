@@ -36,6 +36,8 @@ import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Business.OnTaskCompleted;
 import com.tastyhomemade.tastyhomemade.Business.Orders;
 import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
+import com.tastyhomemade.tastyhomemade.Business.Orders_Actions;
+import com.tastyhomemade.tastyhomemade.Business.Orders_ActionsDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
@@ -413,13 +415,21 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                         Bundle ObjBundle = getArguments();
                         int iOrderId = ObjBundle.getInt("OrderId");
                         Orders ObjOrder = new OrdersDB().Select(iOrderId);
-//                        Foods ObjFood = new FoodsDB().Select(ObjOrder.getFood_Id(), ObjSettings.getCurrentLanguageId());
-//                        User ObjUser = new UserDB().Select(ObjFood.getUserId());
+                       Foods ObjFood = new FoodsDB().Select(ObjOrder.getFood_Id(), ObjSettings.getCurrentLanguageId());
+                       User ObjUser = new UserDB().Select(ObjFood.getUserId());
                         ObjOrder.setOrderAddress(lblAddress.getText().toString());
+                        ObjOrder.setShipping_Latitude(ObjUser.getCurrentLocation_Latitude());
+                        ObjOrder.setShipping_Longitude(ObjUser.getCurrentLocation_Longitude());
                         ObjOrder.setShippingToClient(false);
                         ObjOrder.setCompleteOrder(true);
                         new OrdersDB().InsertUpdate(ObjOrder);
 
+                        Orders_Actions ObjOrderAction = new Orders_Actions();
+                        ObjOrderAction.setActionId(1);
+                        ObjOrderAction.setOrderId(iOrderId);
+                        Calendar ObjCalendar = Calendar.getInstance();
+                        ObjOrderAction.setActionDate (new java.sql.Date (ObjCalendar.getTimeInMillis()));
+                        new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
 
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -437,11 +447,20 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
 //                        Foods ObjFood = new FoodsDB().Select(ObjOrder.getFood_Id(), ObjSettings.getCurrentLanguageId());
 //                        User ObjUser = new UserDB().Select(ObjFood.getUserId());
                             ObjOrder.setOrderAddress(lblAddressClient.getText().toString());
+                            ObjOrder.setShipping_Latitude(iCurrentLatitude);
+                            ObjOrder.setShipping_Longitude(iCurrentLongtitude);
                             ObjOrder.setShippingToClient(true);
                             ObjOrder.setCompleteOrder(true);
                             new OrdersDB().InsertUpdate(ObjOrder);
 
-                            new OrdersDB().InsertUpdate(ObjOrder);
+                            Orders_Actions ObjOrderAction = new Orders_Actions();
+                            ObjOrderAction.setActionId(1);
+                            ObjOrderAction.setOrderId(iOrderId);
+                            Calendar ObjCalendar = Calendar.getInstance();
+                            ObjOrderAction.setActionDate (new java.sql.Date (ObjCalendar.getTimeInMillis()));
+                            new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+
+
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -484,9 +503,17 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                             else
                                 ObjCalendar.set(Calendar.HOUR, Integer.parseInt(ddlHours.getSelectedItem().toString()));
 
-                            ObjOrder.setShippingDeliveryDate(new java.sql.Date(ObjCalendar.get(Calendar.YEAR), ObjCalendar.get(Calendar.MONTH), ObjCalendar.get(Calendar.DAY_OF_MONTH)));
+                            ObjOrder.setShippingDeliveryDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
                             ObjOrder.setCompleteOrder(true);
                             new OrdersDB().InsertUpdate(ObjOrder);
+
+                            Orders_Actions ObjOrderAction = new Orders_Actions();
+                            ObjOrderAction.setActionId(1);
+                            ObjOrderAction.setOrderId(iOrderId);
+                            ObjCalendar = Calendar.getInstance();
+                            ObjOrderAction.setActionDate (new java.sql.Date (ObjCalendar.getTimeInMillis()));
+                            new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

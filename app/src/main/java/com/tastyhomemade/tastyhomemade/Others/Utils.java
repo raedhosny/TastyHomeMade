@@ -142,6 +142,14 @@ public class Utils {
             Transaction.commit();
         }
 
+        else if (sSelectedItem.equals(p_ItemsList.get(3).getName())) {  // Customers Orders
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.CustomerOrders,new Settings(p_context).getCurrentLanguageId()));
+            CustomersOrdersFragment ObjCustomersOrdersFragment = new CustomersOrdersFragment();
+            Transaction.replace(R.id.main_content, ObjCustomersOrdersFragment);
+            Transaction.commit();
+        }
+
+
         else if (sSelectedItem.equals(p_ItemsList.get(4).getName())) {  // Orders Follow Up
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.OrdersFollowup,new Settings(p_context).getCurrentLanguageId()));
             OrdersFollowUpFragment ObjOrdersFollowUpFragment = new OrdersFollowUpFragment();
@@ -172,7 +180,7 @@ public class Utils {
             Transaction.commit();
         }
 
-        else if (sSelectedItem.equals(p_ItemsList.get(8).getName()))  // Mostly Requested Item
+        else if (sSelectedItem.equals(p_ItemsList.get(8).getName()))  // Nearest Foods And Drinks
         {
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.NearestFoodsAndDrinks,new Settings(p_context).getCurrentLanguageId()));
             Transaction.replace(R.id.main_content, new NearestFoodsFragment());

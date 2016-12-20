@@ -173,6 +173,10 @@
         AboutXMeters
     </string>
 
+    <string name="ClientComeToGetHisOrderByHimSelf">
+        As the clinet requested, he come to get his order by himSelf
+    </string>
+
 
 
 </resources>

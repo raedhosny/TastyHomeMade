@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.tastyhomemade.tastyhomemade.Adapter.CustomersOrdersAdapter;
 import com.tastyhomemade.tastyhomemade.Business.Orders;
 import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
@@ -21,30 +23,39 @@ import java.util.List;
 public class CustomersOrdersFragment extends Fragment {
 
     Settings ObjSettings;
+    ListView lvCustomersOrders;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_customersorders,null);
+        return inflater.inflate(R.layout.fragment_customersorders, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ObjSettings = new Settings(getContext());
-
+        lvCustomersOrders = (ListView) view.findViewById(R.id.lvCustomersOrders);
         FillData();
 
     }
 
-    private void FillData ()
-    {
+    private void FillData() {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Orders>  ObjOrdersList = new OrdersDB().SelectByFoodMakerId(ObjSettings.getUserId());
+                List<Orders> ObjOrdersList = new OrdersDB().SelectByFoodMakerId(ObjSettings.getUserId());
+                final CustomersOrdersAdapter ObjCustomerOrdersAdapter = new CustomersOrdersAdapter(ObjOrdersList, getActivity());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lvCustomersOrders.setAdapter(ObjCustomerOrdersAdapter);
+                    }
+                });
 
             }
         });
+        t.start();
 
 
     }

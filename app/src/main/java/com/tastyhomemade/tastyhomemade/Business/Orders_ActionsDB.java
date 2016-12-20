@@ -27,7 +27,7 @@ public class Orders_ActionsDB {
             stmt.setInt(1,p_Orders_Actions.getId());
             stmt.setInt(2,p_Orders_Actions.getOrderId());
             stmt.setInt(3,p_Orders_Actions.getActionId());
-            stmt.setInt(4,p_Orders_Actions.getActionId());
+            stmt.setDate(4,p_Orders_Actions.getActionDate());
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
