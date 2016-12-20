@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/Linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_style2">
+
+            <ImageView
+                android:id="@+id/ImageItem"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"></ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/Linear1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="1.67dp"
+            android:layout_marginRight="1.67dp"
+            android:background="#CCe5e5e5"
+            android:gravity="center_vertical">
+
+
+            <RatingBar
+                android:id="@+id/ctlRating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:numStars="5"
+                android:rating="0" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Linear3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linear2"
+            android:layout_marginTop="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblFoodName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="أكل او مشروب 1"
+                android:textAlignment="viewStart"
+                android:textColor="#000"
+                android:textDirection="locale"
+                android:textSize="12sp"
+
+
+                android:textStyle="bold">
+                أكل او مشروب 1
+            </TextView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Linear4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linear3"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/border_style5_topright"
+                    android:gravity="center"
+                    android:text="عدد الطلبات"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:background="#a7a7a7"></View>
+
+                <TextView
+                    android:id="@+id/lblNumberOfOrders"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/border_style5_topleft"
+                    android:text="test" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a7a7a7"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="#414242"
+                    android:gravity="center"
+                    android:text="تاريخ الطلب"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:background="#a7a7a7"></View>
+
+                <TextView
+                    android:id="@+id/lblRequestDate"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#fff"
+                    android:text="test" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a7a7a7"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="#414242"
+                    android:gravity="center"
+                    android:text="توقيت الطلب"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:background="#a7a7a7"></View>
+
+                <TextView
+                    android:id="@+id/lblRequestTime"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#fff"
+                    android:text="test" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a7a7a7"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="#414242"
+                    android:gravity="center"
+                    android:text="تاريخ الاستلام"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:background="#a7a7a7"></View>
+
+                <TextView
+                    android:id="@+id/lblDeliveryDate"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#fff"
+                    android:text="test" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a7a7a7"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="#414242"
+                    android:gravity="center"
+                    android:text="توقيت الاستلام"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:background="#a7a7a7"></View>
+
+                <TextView
+                    android:id="@+id/lblDeliveryTime"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#fff"
+                    android:text="test" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a7a7a7"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="#414242"
+                    android:gravity="center"
+                    android:text="الإسم"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:background="#a7a7a7"></View>
+
+                <TextView
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#fff"
+                    android:text="test"
+                    android:id="@+id/lblCustomerName"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a7a7a7"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="#414242"
+                    android:gravity="center"
+                    android:text="الجوال"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:background="#a7a7a7"></View>
+
+                <TextView
+                    android:id="@+id/lblMobile"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#fff"
+                    android:text="test" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#a7a7a7"></View>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="#414242"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+
+                        android:gravity="top|center"
+                        android:paddingTop="10dp"
+                        android:text="العنوان"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_style5_bottomleft"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_style5_bottomleft"
+                    android:gravity="top"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="address"
+                        android:textColor="#000"
+                        android:id="@+id/lblAddress"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border_style4"
+                        android:padding="5dp">
+
+                        <WebView
+                            android:id="@+id/webview_Address"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/border_style3"></WebView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:gravity="center"
+                        >
+
+                        <Button
+                            android:id="@+id/btnSendOrder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="إرسال الطلب"
+                            android:background="@drawable/button_style3_enabled"
+
+                            />
+
+                        <Button
+                            android:id="@+id/btnOrderReceived"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="تم الاستلام"
+                            android:textColor="#929292"
+                            android:background="@drawable/button_style3_disabled"
+                            />
+
+                        <Button
+                            android:id="@+id/btnOrderRejected"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="إبلاغ عن عميل"
+                            android:textColor="#929292"
+                            android:background="@drawable/button_style3_disabled"
+                            />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>

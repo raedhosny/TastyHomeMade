@@ -68,4 +68,47 @@ public class CitiesDB {
 
 
     }
+
+
+    public Cities Select (int p_iId, int p_iLanguageId)
+    {
+        java.sql.Connection ObjConnection = null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement("EXECUTE SP_Cities_SelectAll @Id=?,@LanguageId=?");
+            stmt.setInt(1,p_iLanguageId);
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+            Cities  ObjCity = new Cities();
+
+            if (ObjResultSet.next())
+            {
+                ObjCity.setId(ObjResultSet.getInt("Cityid"));
+                ObjCity.setLanguageId(ObjResultSet.getInt("LanguageId"));
+                ObjCity.setName(ObjResultSet.getString("Name"));
+            }
+
+
+            return ObjCity;
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        return new Cities();
+
+
+    }
 }
