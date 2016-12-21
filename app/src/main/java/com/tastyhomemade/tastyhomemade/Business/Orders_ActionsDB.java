@@ -27,7 +27,7 @@ public class Orders_ActionsDB {
             stmt.setInt(1,p_Orders_Actions.getId());
             stmt.setInt(2,p_Orders_Actions.getOrderId());
             stmt.setInt(3,p_Orders_Actions.getActionId());
-            stmt.setDate(4,p_Orders_Actions.getActionDate());
+            stmt.setTimestamp(4,p_Orders_Actions.getActionDate());
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
@@ -88,7 +88,7 @@ public class Orders_ActionsDB {
                 Obj_Orders_Actions.setId(ObjResultSet.getInt("Id"));
                 Obj_Orders_Actions.setOrderId(ObjResultSet.getInt("OrderId"));
                 Obj_Orders_Actions.setActionId(ObjResultSet.getInt("ActionId"));
-                Obj_Orders_Actions.setActionDate(ObjResultSet.getDate("ActionDate"));
+                Obj_Orders_Actions.setActionDate(ObjResultSet.getTimestamp("ActionDate"));
                 Obj_Orders_Actions_List.add(Obj_Orders_Actions);
 
             }

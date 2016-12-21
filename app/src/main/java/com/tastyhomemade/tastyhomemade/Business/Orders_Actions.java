@@ -1,6 +1,7 @@
 package com.tastyhomemade.tastyhomemade.Business;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by Raed on 12/12/2016.
@@ -10,12 +11,12 @@ public class Orders_Actions {
     int Id;
     int OrderId;
     int ActionId;
-    Date ActionDate;
+    Timestamp ActionDate;
 
     public Orders_Actions() {
     }
 
-    public Orders_Actions(int id, int orderId, int actionId, Date actionDate) {
+    public Orders_Actions(int id, int orderId, int actionId, Timestamp actionDate) {
         Id = id;
         OrderId = orderId;
         ActionId = actionId;
@@ -46,11 +47,11 @@ public class Orders_Actions {
         ActionId = actionId;
     }
 
-    public Date getActionDate() {
+    public Timestamp getActionDate() {
         return ActionDate;
     }
 
-    public void setActionDate(Date actionDate) {
+    public void setActionDate(Timestamp actionDate) {
         ActionDate = actionDate;
     }
 }

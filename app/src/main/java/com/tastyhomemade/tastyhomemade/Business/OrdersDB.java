@@ -45,7 +45,7 @@ public class OrdersDB {
             stmt.setInt(1,p_ObjOrder.getId());
             stmt.setInt(2,p_ObjOrder.getFood_Id());
             stmt.setInt(3,p_ObjOrder.getUser_Id());
-            stmt.setDate(4,p_ObjOrder.getRequestDate());
+            stmt.setTimestamp(4,p_ObjOrder.getRequestDate());
             stmt.setBoolean(5,p_ObjOrder.isShippingToClient());
             stmt.setDouble(6,p_ObjOrder.getShipping_Longitude());
             stmt.setDouble(7,p_ObjOrder.getShipping_Latitude());
@@ -55,7 +55,7 @@ public class OrdersDB {
             stmt.setString(11,p_ObjOrder.getShippingBuilding());
             stmt.setString(12,p_ObjOrder.getShippingApartment());
             stmt.setString(13,p_ObjOrder.getShippingOtherDetails());
-            stmt.setDate(14,p_ObjOrder.getShippingDeliveryDate());
+            stmt.setTimestamp(14,p_ObjOrder.getShippingDeliveryDate());
             stmt.setInt(15,p_ObjOrder.getNumberOfOrders());
             stmt.setString(16,p_ObjOrder.getOrderAddress());
             stmt.setBoolean(17,p_ObjOrder.isCompleteOrder());
@@ -112,7 +112,7 @@ public class OrdersDB {
                 ObjOrder.setId(ObjResultSet.getInt(1));
                 ObjOrder.setFood_Id(ObjResultSet.getInt(2));
                 ObjOrder.setUser_Id(ObjResultSet.getInt(3));
-                ObjOrder.setRequestDate(ObjResultSet.getDate(4));
+                ObjOrder.setRequestDate(ObjResultSet.getTimestamp(4));
                 ObjOrder.setShippingToClient(ObjResultSet.getBoolean(5));
                 ObjOrder.setShipping_Longitude(ObjResultSet.getDouble(6));
                 ObjOrder.setShipping_Latitude(ObjResultSet.getDouble(7));
@@ -122,7 +122,7 @@ public class OrdersDB {
                 ObjOrder.setShippingBuilding(ObjResultSet.getString(11));
                 ObjOrder.setShippingApartment(ObjResultSet.getString(12));
                 ObjOrder.setShippingOtherDetails(ObjResultSet.getString(13));
-                ObjOrder.setShippingDeliveryDate(ObjResultSet.getDate(14));
+                ObjOrder.setShippingDeliveryDate(ObjResultSet.getTimestamp(14));
                 ObjOrder.setNumberOfOrders(ObjResultSet.getInt(15));
                 ObjOrder.setOrderAddress(ObjResultSet.getString(16));
                 ObjOrder.setCompleteOrder(ObjResultSet.getBoolean(17));
@@ -167,7 +167,7 @@ public class OrdersDB {
                 ObjOrder.setId(ObjResultSet.getInt(1));
                 ObjOrder.setFood_Id(ObjResultSet.getInt(2));
                 ObjOrder.setUser_Id(ObjResultSet.getInt(3));
-                ObjOrder.setRequestDate(ObjResultSet.getDate(4));
+                ObjOrder.setRequestDate(ObjResultSet.getTimestamp(4));
                 ObjOrder.setShippingToClient(ObjResultSet.getBoolean(5));
                 ObjOrder.setShipping_Longitude(ObjResultSet.getDouble(6));
                 ObjOrder.setShipping_Latitude(ObjResultSet.getDouble(7));
@@ -177,7 +177,7 @@ public class OrdersDB {
                 ObjOrder.setShippingBuilding(ObjResultSet.getString(11));
                 ObjOrder.setShippingApartment(ObjResultSet.getString(12));
                 ObjOrder.setShippingOtherDetails(ObjResultSet.getString(13));
-                ObjOrder.setShippingDeliveryDate(ObjResultSet.getDate(14));
+                ObjOrder.setShippingDeliveryDate(ObjResultSet.getTimestamp(14));
                 ObjOrder.setNumberOfOrders(ObjResultSet.getInt(15));
                 ObjOrder.setOrderAddress(ObjResultSet.getString(16));
                 ObjOrder.setCompleteOrder(ObjResultSet.getBoolean(17));
@@ -222,7 +222,7 @@ public class OrdersDB {
                 ObjOrder.setId(ObjResultSet.getInt(1));
                 ObjOrder.setFood_Id(ObjResultSet.getInt(2));
                 ObjOrder.setUser_Id(ObjResultSet.getInt(3));
-                ObjOrder.setRequestDate(ObjResultSet.getDate(4));
+                ObjOrder.setRequestDate(ObjResultSet.getTimestamp(4));
                 ObjOrder.setShippingToClient(ObjResultSet.getBoolean(5));
                 ObjOrder.setShipping_Longitude(ObjResultSet.getDouble(6));
                 ObjOrder.setShipping_Latitude(ObjResultSet.getDouble(7));
@@ -232,7 +232,7 @@ public class OrdersDB {
                 ObjOrder.setShippingBuilding(ObjResultSet.getString(11));
                 ObjOrder.setShippingApartment(ObjResultSet.getString(12));
                 ObjOrder.setShippingOtherDetails(ObjResultSet.getString(13));
-                ObjOrder.setShippingDeliveryDate(ObjResultSet.getDate(14));
+                ObjOrder.setShippingDeliveryDate(ObjResultSet.getTimestamp(14));
                 ObjOrder.setNumberOfOrders(ObjResultSet.getInt(15));
                 ObjOrder.setOrderAddress(ObjResultSet.getString(16));
                 ObjOrder.setCompleteOrder(ObjResultSet.getBoolean(17));

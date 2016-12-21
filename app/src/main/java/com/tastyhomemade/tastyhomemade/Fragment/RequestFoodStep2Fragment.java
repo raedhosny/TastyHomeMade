@@ -428,7 +428,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                         ObjOrderAction.setActionId(1);
                         ObjOrderAction.setOrderId(iOrderId);
                         Calendar ObjCalendar = Calendar.getInstance();
-                        ObjOrderAction.setActionDate (new java.sql.Date (ObjCalendar.getTimeInMillis()));
+                        ObjOrderAction.setActionDate (new java.sql.Timestamp (ObjCalendar.getTimeInMillis()));
                         new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
 
                         getActivity().runOnUiThread(new Runnable() {
@@ -457,7 +457,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                             ObjOrderAction.setActionId(1);
                             ObjOrderAction.setOrderId(iOrderId);
                             Calendar ObjCalendar = Calendar.getInstance();
-                            ObjOrderAction.setActionDate (new java.sql.Date (ObjCalendar.getTimeInMillis()));
+                            ObjOrderAction.setActionDate (new java.sql.Timestamp (ObjCalendar.getTimeInMillis()));
                             new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
 
 
@@ -503,7 +503,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                             else
                                 ObjCalendar.set(Calendar.HOUR, Integer.parseInt(ddlHours.getSelectedItem().toString()));
 
-                            ObjOrder.setShippingDeliveryDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
+                            ObjOrder.setShippingDeliveryDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
                             ObjOrder.setCompleteOrder(true);
                             new OrdersDB().InsertUpdate(ObjOrder);
 
@@ -511,7 +511,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                             ObjOrderAction.setActionId(1);
                             ObjOrderAction.setOrderId(iOrderId);
                             ObjCalendar = Calendar.getInstance();
-                            ObjOrderAction.setActionDate (new java.sql.Date (ObjCalendar.getTimeInMillis()));
+                            ObjOrderAction.setActionDate (new java.sql.Timestamp (ObjCalendar.getTimeInMillis()));
                             new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
 
                             getActivity().runOnUiThread(new Runnable() {

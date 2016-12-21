@@ -1,6 +1,8 @@
 package com.tastyhomemade.tastyhomemade.Business;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  * Created by Raed on 12/6/2016.
@@ -10,7 +12,7 @@ public class Orders {
     int Id;
     int Food_Id;
     int User_Id;
-    Date RequestDate;
+    Timestamp RequestDate;
     boolean IsShippingToClient;
     double Shipping_Longitude;
     double Shipping_Latitude;
@@ -20,7 +22,7 @@ public class Orders {
     String ShippingBuilding;
     String ShippingApartment;
     String ShippingOtherDetails;
-    Date ShippingDeliveryDate;
+    Timestamp ShippingDeliveryDate;
     int NumberOfOrders;
     String OrderAddress;
     boolean IsCompleteOrder;
@@ -37,7 +39,7 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(int id, int food_Id, int user_Id, Date requestDate, boolean isShippingToClient, double shipping_Longitude, double shipping_Latitude, int shippingCountryId, String shippingDistrict, String shippingStreet, String shippingBuilding, String shippingApartment, String shippingOtherDetails, Date shippingDeliveryDate, int NumberOfOrders, String OrderAddress, boolean IsCompleteOrder, boolean IsReportDelayed) {
+    public Orders(int id, int food_Id, int user_Id, Timestamp requestDate, boolean isShippingToClient, double shipping_Longitude, double shipping_Latitude, int shippingCountryId, String shippingDistrict, String shippingStreet, String shippingBuilding, String shippingApartment, String shippingOtherDetails, Timestamp shippingDeliveryDate, int numberOfOrders, String orderAddress, boolean isCompleteOrder, boolean isReportDelayed) {
         Id = id;
         Food_Id = food_Id;
         User_Id = user_Id;
@@ -52,10 +54,10 @@ public class Orders {
         ShippingApartment = shippingApartment;
         ShippingOtherDetails = shippingOtherDetails;
         ShippingDeliveryDate = shippingDeliveryDate;
-        NumberOfOrders = NumberOfOrders;
-        OrderAddress = OrderAddress;
-        IsCompleteOrder = IsCompleteOrder;
-        IsReportDelayed = IsReportDelayed;
+        NumberOfOrders = numberOfOrders;
+        OrderAddress = orderAddress;
+        IsCompleteOrder = isCompleteOrder;
+        IsReportDelayed = isReportDelayed;
     }
 
     public boolean isCompleteOrder() {
@@ -90,11 +92,11 @@ public class Orders {
         User_Id = user_Id;
     }
 
-    public Date getRequestDate() {
+    public Timestamp getRequestDate() {
         return RequestDate;
     }
 
-    public void setRequestDate(Date requestDate) {
+    public void setRequestDate(Timestamp requestDate) {
         RequestDate = requestDate;
     }
 
@@ -170,11 +172,11 @@ public class Orders {
         ShippingOtherDetails = shippingOtherDetails;
     }
 
-    public Date getShippingDeliveryDate() {
+    public Timestamp getShippingDeliveryDate() {
         return ShippingDeliveryDate;
     }
 
-    public void setShippingDeliveryDate(Date shippingDeliveryDate) {
+    public void setShippingDeliveryDate(Timestamp shippingDeliveryDate) {
         ShippingDeliveryDate = shippingDeliveryDate;
     }
 

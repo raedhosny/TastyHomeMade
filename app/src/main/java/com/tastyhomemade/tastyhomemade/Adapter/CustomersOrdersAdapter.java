@@ -116,7 +116,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                         ObjOrderAction.setOrderId(iOrderId);
                         ObjOrderAction.setActionId(iActionId);
                         Calendar ObjCalendar = Calendar.getInstance();
-                        ObjOrderAction.setActionDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
+                        ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
                         new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
 
                         ((AppCompatActivity) context).runOnUiThread(new Runnable() {
@@ -154,7 +154,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                         ObjOrderAction.setOrderId(iOrderId);
                         ObjOrderAction.setActionId(iActionId);
                         Calendar ObjCalendar = Calendar.getInstance();
-                        ObjOrderAction.setActionDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
+                        ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
                         new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
 
 
@@ -193,7 +193,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                         ObjOrderAction.setOrderId(iOrderId);
                         ObjOrderAction.setActionId(iActionId);
                         Calendar ObjCalendar = Calendar.getInstance();
-                        ObjOrderAction.setActionDate(new java.sql.Date(ObjCalendar.getTimeInMillis()));
+                        ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
                         new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
                         notifyDataSetChanged();
 
@@ -306,7 +306,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                 });
 
 
-                List<Orders_Actions> ObjOrdersActionsList = new Orders_ActionsDB().SelectByOrderId(ObjOrdersList.get(0).getId(),1);
+                List<Orders_Actions> ObjOrdersActionsList = new Orders_ActionsDB().SelectByOrderId(ObjOrdersList.get(position).getId(),1);
 
                 for (int i = 0; i < ObjOrdersActionsList.size(); i++) {
                     if (ObjOrdersActionsList.get(i).getActionId() == 1) { // Order Request by customer
