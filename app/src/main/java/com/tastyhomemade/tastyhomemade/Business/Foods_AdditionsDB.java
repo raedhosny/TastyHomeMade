@@ -112,4 +112,42 @@ public class Foods_AdditionsDB {
 
     }
 
+    public void Delete (int p_iFoodId,int p_iAdditionId)
+    {
+        java.sql.Connection ObjConnection= null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Foods_Additions_Delete\n" +
+                            "@FoodId=?" +
+                            ",@AdditionId=?"
+
+            );
+
+            stmt.setInt(1,p_iFoodId);
+            stmt.setInt(2,p_iAdditionId);
+
+            stmt.executeQuery();
+        }
+        catch (Exception ex)
+        {
+
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+
+    }
+
 }

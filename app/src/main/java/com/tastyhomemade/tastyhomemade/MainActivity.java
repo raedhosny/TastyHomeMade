@@ -209,7 +209,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        new Utils().ShowActivity(this, null, "Main", "-1");
+        if (ObjSettings.getUserType().equals(Settings.enumUserType.FoodMaker.toString()))
+            new Utils().ShowActivity(this, null, "MainForFoodMaker");
+        else
+            new Utils().ShowActivity(this, null, "Main", "-1");
+
+
     }
 
 

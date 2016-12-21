@@ -165,5 +165,23 @@
         <string name="ClientComeToGetHisOrderByHimSelf">
 بناءا علي طلب العميل يأتي العميل لاستلام طلبه بنفسه
     </string>
+    <string name="AreYouSure">
+        هل انت متاكد
+    </string>
+     <string name="Yes">
+        نعم
+    </string>
+    <string name="No">
+        لا
+    </string>
+    <string name="OrderHasSentToClient">
+        تم ارسال طلبك للعميل
+    </string>
+    <string name="OrderHasBeenReceived">
+        تم استلام الطلب من قبل العميل
+    </string>
+    <string name="OrderHasBeenRejected">
+        تم الابلاغ عن عدم استلام الطلب
+    </string>
 
 </resources>

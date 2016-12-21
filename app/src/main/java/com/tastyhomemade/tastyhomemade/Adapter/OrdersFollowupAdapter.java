@@ -179,7 +179,7 @@ public class OrdersFollowupAdapter extends BaseAdapter {
 
                 final ListView lvOrderActions = (ListView) vv.findViewById(R.id.lvOrderActions);
 
-                final List<Orders_Actions> Obj_Orders_Actions_List = new Orders_ActionsDB().SelectByOrderId(ObjOrder.getId());
+                final List<Orders_Actions> Obj_Orders_Actions_List = new Orders_ActionsDB().SelectByOrderId(ObjOrder.getId(),2);
 
                 final OrdersActionsAdapter ObjOrdersActionsAdapter = new OrdersActionsAdapter(context, Obj_Orders_Actions_List);
 

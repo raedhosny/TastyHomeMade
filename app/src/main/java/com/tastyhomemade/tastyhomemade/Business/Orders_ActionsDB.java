@@ -61,17 +61,19 @@ public class Orders_ActionsDB {
     }
 
 
-    public List<Orders_Actions> SelectByOrderId (int p_iOrderId)
+    public List<Orders_Actions> SelectByOrderId (int p_iOrderId,int p_iOrderBy)
     {
         try {
 
             java.sql.Connection ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Orders_Actions_SelectByOrderId\n" +
-                            "   @OrderId=?"
+                            "   @OrderId=?," +
+                            "   @Orderby=?"
 
             );
             stmt.setInt(1,p_iOrderId);
+            stmt.setInt(2,p_iOrderBy);
 
 
 

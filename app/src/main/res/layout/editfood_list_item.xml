@@ -38,18 +38,23 @@
             android:gravity="center_vertical"
             android:layout_alignBottom="@id/txtHomeMenuItemLinear1">
 
-
-            <RatingBar
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                >
+            <RatingBar
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtHomeMenuItemRating"
                 style="?android:attr/ratingBarStyleSmall"
                 android:numStars="5"
-                android:rating="4"
-                android:layout_weight="0.4"
+                android:rating="0"
+
                 android:layout_gravity="center"
 
                 />
+            </LinearLayout>
 
 
             <LinearLayout
@@ -75,7 +80,7 @@
                 android:layout_height="match_parent"
                 android:text="0 ريال"
                 android:textColor="#000"
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textSize="14sp"
@@ -137,19 +142,6 @@
             android:id="@+id/Linear4"
 
             >
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:id="@+id/BtnItemRequest"
-                android:text="طلب"
-                android:background="@drawable/button"
-                android:layout_weight="0.5"
-                />
-            <LinearLayout
-                android:layout_width="10dp"
-                android:layout_height="wrap_content"></LinearLayout>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,6 +151,20 @@
                 android:background="@drawable/button"
                 android:layout_weight="0.5"
                 />
+
+            <LinearLayout
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"></LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/BtnItemDelete"
+                android:text="حذف"
+                android:background="@drawable/button"
+                android:layout_weight="0.5"
+                />
+
 
         </LinearLayout>
 

@@ -171,7 +171,7 @@
                             style="@style/myedittext"
                             android:layout_width="83.33dp"
                             android:layout_height="37.00dp"
-
+                            android:inputType="number"
 
                             android:background="@drawable/textbox_enabled"
                             android:gravity="center"
@@ -434,6 +434,7 @@
                                     android:layout_height="37.00dp"
                                     android:background="@drawable/textbox_enabled"
                                     android:gravity="center"
+                                    android:inputType="number"
                                     />
                             </LinearLayout>
                         </LinearLayout>

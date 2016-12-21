@@ -122,6 +122,20 @@ public class Utils {
             Transaction.commit();
         }
 
+        else if (sSelectedItem == "MainForFoodMaker") { // Main For FoodMaker
+            final Context contextfinal = p_context;
+            final TextView lblHeaderFinal = lblHeader;
+            ((AppCompatActivity) p_context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lblHeaderFinal.setText(Utils.GetResourceName(contextfinal,R.string.MyFoodsAndDrinks,new Settings(contextfinal).getCurrentLanguageId()));
+                }
+            });
+
+            Transaction.replace(R.id.main_content, new ListOfFoodsandDrinksFragment());
+            Transaction.commit();
+        }
+
         else if (sSelectedItem.equals(p_ItemsList.get(0).getName())) { // Profile
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.Profile,new Settings(p_context).getCurrentLanguageId()));
             Bundle ObjBundle = new Bundle();
@@ -136,8 +150,8 @@ public class Utils {
             Transaction.replace(R.id.main_content, new SettingsFragment());
             Transaction.commit();
         }
-        else if (sSelectedItem.equals(p_ItemsList.get(2).getName())) { // Settings
-            lblHeader.setText(Utils.GetResourceName(p_context,R.string.Settings,new Settings(p_context).getCurrentLanguageId()));
+        else if (sSelectedItem.equals(p_ItemsList.get(2).getName())) { // List of Foods and Drinks
+            lblHeader.setText(Utils.GetResourceName(p_context,R.string.MyFoodsAndDrinks,new Settings(p_context).getCurrentLanguageId()));
             Transaction.replace(R.id.main_content, new ListOfFoodsandDrinksFragment());
             Transaction.commit();
         }

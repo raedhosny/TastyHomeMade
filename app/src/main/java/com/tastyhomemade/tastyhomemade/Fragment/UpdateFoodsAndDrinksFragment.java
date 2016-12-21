@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods_Additions;
 import com.tastyhomemade.tastyhomemade.Business.Foods_AdditionsDB;
+import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
@@ -171,6 +173,9 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    if (txtAddGradient.getText().toString().trim().equals("") || txtAddGradientPrice.getText().toString().trim().equals("") )
+                        return;
+
                     Additions ObjAddition = new Additions();
                     ObjAddition.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
                     ObjAddition.setName(txtAddGradient.getText().toString().trim());
@@ -189,8 +194,9 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                         @Override
                         public void run() {
                             GradientAdapter ObjAdapter = new GradientAdapter(getActivity(), Obj_Foods_Additions_List);
-
                             lvAddFoodGradient.setAdapter(ObjAdapter);
+                            txtAddGradient.setText("");
+                            txtAddGradientPrice.setText("");
 
 
                         }
@@ -292,8 +298,9 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+
                             Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, new Settings(getActivity()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                            new Utils().ShowActivity(getContext(), null, "Main", "-1");
+                            ((MainActivity)getActivity()).LoadMainInfo();
                         }
                     });
                 }

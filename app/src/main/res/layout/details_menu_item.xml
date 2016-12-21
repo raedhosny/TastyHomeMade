@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-   >
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,101 +20,96 @@
             android:id="@+id/Linear1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_style2"
-            >
+            android:background="@drawable/border_style2">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="125.00dp"
                 android:id="@+id/ImageFood"
-                ></ImageView>
+                android:layout_width="match_parent"
+                android:layout_height="125.00dp"></ImageView>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Linear2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#CCe5e5e5"
+            android:layout_alignBottom="@id/Linear1"
+            android:layout_marginBottom="2px"
             android:layout_marginLeft="2px"
             android:layout_marginRight="2px"
-            android:layout_marginBottom="2px"
-            android:id="@+id/Linear2"
-            android:layout_alignBottom="@id/Linear1">
+            android:background="#CCe5e5e5">
 
-            <RatingBar
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/FoodRating"
-                style="?android:attr/ratingBarStyleSmall"
-                android:numStars="5"
-                android:rating="4"
-                android:layout_weight="0.4"
-                android:layout_gravity="center"
+                android:layout_weight="0.3">
 
-                />
+                <RatingBar
+                    android:id="@+id/FoodRating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="5"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:gravity="center"
-            >
+                    android:rating="0"
 
-            <ImageView
-                android:id="@+id/ImageDeliverable"
-                android:layout_width="28.33dp"
-                android:layout_height="28.33dp"
-                android:src="@drawable/deliverable"
-                />
-        </LinearLayout>
+                    />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ImageDeliverable"
+                    android:layout_width="28.33dp"
+                    android:layout_height="28.33dp"
+                    android:src="@drawable/deliverable" />
+            </LinearLayout>
 
 
             <TextView
                 android:id="@+id/lblPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="0 ريال"
-                android:textColor="#000"
-                android:layout_weight="0.4"
-                android:textAlignment="center"
+                android:layout_weight="0.3"
                 android:gravity="center"
-                />
+                android:text="0 ريال"
+                android:textAlignment="center"
+                android:textColor="#000" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Linear3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/Linear1"
-            android:orientation="horizontal"
             android:layout_marginTop="5sp"
-            android:id="@+id/Linear3"
-            >
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/lblName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="أكل او مشروب 1"
+                android:textAlignment="viewStart"
                 android:textColor="#000"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:text="أكل او مشروب 1"
-                android:layout_weight="1"
-                android:textAlignment="viewStart"
-                android:id="@+id/lblName"
-                >
-                أكل او مشروب 1
-            </TextView>
+                android:textStyle="bold">
+                أكل او مشروب 1</TextView>
 
             <TextView
+                android:id="@+id/lblTimeFromTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
-                android:textSize="10sp"
                 android:layout_weight="1"
+                android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
                 android:textAlignment="viewEnd"
-                android:id="@+id/lblTimeFromTo"
-                />
-
+                android:textColor="#000"
+                android:textSize="10sp" />
 
 
         </LinearLayout>
@@ -125,21 +120,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/Linear3"
 
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
 
             >
 
             <TextView
+                android:id="@+id/lblDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|right"
-                android:id="@+id/lblDescription"
-                android:textColor="#000"
-                android:textAlignment="viewStart"
                 android:text="وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف "
-                />
+                android:textAlignment="viewStart"
+                android:textColor="#000" />
         </LinearLayout>
 
     </RelativeLayout>

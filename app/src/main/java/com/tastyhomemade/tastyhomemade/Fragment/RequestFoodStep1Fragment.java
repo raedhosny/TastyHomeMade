@@ -144,7 +144,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
                 Orders ObjOrder = new Orders(-1,
                         iFoodId,
                         new Settings(getContext()).getUserId(),
-                        new java.sql.Date(Calendar.getInstance().getTime().getYear(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getDay()),
+                        new java.sql.Date(Calendar.getInstance().getTimeInMillis()),
                         ObjFoodMakerUser.isHaveDelivary(),
                         -1,
                         -1,

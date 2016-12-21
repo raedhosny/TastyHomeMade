@@ -177,6 +177,22 @@
         As the clinet requested, he come to get his order by himSelf
     </string>
 
-
-
+    <string name="AreYouSure">
+        Are You Sure
+    </string>
+    <string name="Yes">
+        Yes
+    </string>
+    <string name="No">
+        No
+    </string>
+    <string name="OrderHasSentToClient">
+        Order has sent to client
+    </string>
+    <string name="OrderHasBeenReceived">
+        Order has been sent to client
+    </string>
+     <string name="OrderHasBeenRejected">
+        Order has been rejected by client
+    </string>
 </resources>

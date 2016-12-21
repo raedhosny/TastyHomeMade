@@ -162,6 +162,9 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    if (txtAddGradient.getText().toString().trim().equals("") || txtAddGradientPrice.getText().toString().trim().equals("") )
+                        return;
+
                     Additions ObjAddition = new Additions();
                     ObjAddition.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
                     ObjAddition.setName(txtAddGradient.getText().toString().trim());
@@ -182,11 +185,11 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                             GradientAdapter ObjAdapter = new GradientAdapter(getActivity(),Obj_Foods_Additions_List);
 
                             lvAddFoodGradient.setAdapter(ObjAdapter);
-
-
-
+                            txtAddGradient.setText("");
+                            txtAddGradientPrice.setText("");
                         }
                     });
+
 
 
                 }
@@ -286,7 +289,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                         @Override
                         public void run() {
                             Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.DataSavedSuccessfuly,new Settings(getActivity()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
-                            new Utils().ShowActivity(getContext(),null,"Main","-1");
+                            ((MainActivity)getActivity()).LoadMainInfo();
                         }
                     });
                 }

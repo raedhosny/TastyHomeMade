@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@drawable/border_style5_topleft"
-                    android:text="test" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -152,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="#fff"
-                    android:text="test" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -192,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="#fff"
-                    android:text="test" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -232,7 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="#fff"
-                    android:text="test" />
+                    android:text="-" />
 
             </LinearLayout>
 
@@ -272,7 +272,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="#fff"
-                    android:text="test" />
+                    android:text="-" />
 
             </LinearLayout>
 
@@ -311,7 +311,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="#fff"
-                    android:text="test"
+                    android:text=""
                     android:id="@+id/lblCustomerName"
                     />
 
@@ -331,7 +331,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:layout_width="100dp"
@@ -401,7 +403,10 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_style5_bottomleft"
                     android:gravity="top"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    >
 
                     <TextView
                         android:layout_width="match_parent"
@@ -433,6 +438,7 @@
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:gravity="center"
+                        android:layout_marginTop="10dp"
                         >
 
                         <Button
@@ -444,6 +450,9 @@
                             android:background="@drawable/button_style3_enabled"
 
                             />
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="1dp" />
 
                         <Button
                             android:id="@+id/btnOrderReceived"
@@ -454,6 +463,9 @@
                             android:textColor="#929292"
                             android:background="@drawable/button_style3_disabled"
                             />
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="1dp" />
 
                         <Button
                             android:id="@+id/btnOrderRejected"

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tastyhomemade.tastyhomemade.Business.Additions;
 import com.tastyhomemade.tastyhomemade.Business.AdditionsDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods_Additions;
+import com.tastyhomemade.tastyhomemade.Business.Foods_AdditionsDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.R;
 
@@ -61,8 +62,21 @@ public class GradientAdapter extends BaseAdapter {
         imgDropDownRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final int iFoodId = Obj_Foods_Additions_List.get(iPostition).getFoodId();
+                final int iAdditionId = Obj_Foods_Additions_List.get(iPostition).getAdditionId();
+
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Foods_AdditionsDB().Delete(iFoodId,iAdditionId);
+                    }
+                });
+                t.start();
                 Obj_Foods_Additions_List.remove(iPostition);
                 notifyDataSetChanged();
+
+
+
             }
         });
 

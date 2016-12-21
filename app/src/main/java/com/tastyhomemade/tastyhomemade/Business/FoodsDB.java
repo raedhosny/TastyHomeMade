@@ -395,4 +395,45 @@ public class FoodsDB {
 
     }
 
+
+    public void Delete (int p_iFoodId)
+    {
+        java.sql.Connection ObjConnection= null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Foods_Delete \n" +
+                            "   @Id=?"
+
+
+            );
+            stmt.setInt(1,p_iFoodId);
+
+            stmt.executeQuery();
+
+
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+
+
+    }
+
 }
