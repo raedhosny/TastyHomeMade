@@ -16,6 +16,7 @@ public class RegisterTypesDB {
         try {
             MyConnection = new DB().CreateConnection();
             PreparedStatement stmt = MyConnection.prepareStatement("EXECUTE SP_RegisterTypes_SelectAll @LanguageId=?");
+
             stmt.setInt(1, p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();
 

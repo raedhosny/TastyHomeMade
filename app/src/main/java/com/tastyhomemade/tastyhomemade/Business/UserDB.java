@@ -90,6 +90,7 @@ public class UserDB {
         try {
 
             myConnection = new DB().CreateConnection();
+            myConnection.createStatement();
             PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [SP_users_Login] \n" +
                     "   @Username=?\n" +
                     "  ,@Password=?\n");

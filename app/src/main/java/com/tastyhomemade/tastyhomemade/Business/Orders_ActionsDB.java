@@ -17,6 +17,7 @@ public class Orders_ActionsDB {
         try {
 
             ObjConnection = new DB().CreateConnection();
+            ObjConnection.createStatement();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Orders_Actions_InsertUpdate\n" +
                             "   @Id=?\n" +

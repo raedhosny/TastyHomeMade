@@ -202,6 +202,7 @@ public class OrdersDB {
         try {
 
             java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection.createStatement();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Orders_SelectByFoodMaker \n" +
                             "   @UserId=?"

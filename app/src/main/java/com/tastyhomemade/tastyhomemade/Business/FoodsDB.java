@@ -209,6 +209,7 @@ public class FoodsDB {
         try {
 
             ObjConnection = new DB().CreateConnection();
+            ObjConnection.createStatement();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_SearchByCustomer\n" +
                             "   @Name=?\n" +
@@ -274,6 +275,7 @@ public class FoodsDB {
         try {
 
             ObjConnection = new DB().CreateConnection();
+            ObjConnection.createStatement();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_SearchByFoodMaker\n" +
                             "   @Name=?\n" +
@@ -339,6 +341,7 @@ public class FoodsDB {
         try {
 
             ObjConnection = new DB().CreateConnection();
+            ObjConnection.createStatement();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_SelectByRequestCount\n" +
                             "   @LanguageId=?"
