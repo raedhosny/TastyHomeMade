@@ -47,6 +47,11 @@
 
                 >
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    >
                 <RatingBar
                     android:id="@+id/FoodRating"
                     style="?android:attr/ratingBarStyleSmall"
@@ -54,12 +59,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center"
-                    android:layout_weight="0.4"
+
                     android:numStars="5"
-                    android:rating="4"
+                    android:rating="0"
                     android:layout_centerInParent="true"
 
                     />
+                </LinearLayout>
 
 
                 <ImageView
@@ -109,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="أكل او مشروب 1"
+                    android:text="تحميل"
                     android:textAlignment="viewStart"
                     android:textColor="#000"
                     android:textSize="12sp"
@@ -121,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
+                    android:text="تحميل"
                     android:textAlignment="viewEnd"
                     android:textColor="#000"
                     android:textSize="11sp" />

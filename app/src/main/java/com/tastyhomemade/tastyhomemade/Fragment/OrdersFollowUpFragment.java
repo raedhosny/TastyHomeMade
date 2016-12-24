@@ -12,6 +12,7 @@ import com.tastyhomemade.tastyhomemade.Adapter.OrdersFollowupAdapter;
 import com.tastyhomemade.tastyhomemade.Business.Orders;
 import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class OrdersFollowUpFragment extends Fragment {
 
-
+    WaitDialog ObjWaitDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class OrdersFollowUpFragment extends Fragment {
         final ListView lvOrders = (ListView) view.findViewById(R.id.lvOrders);
         Bundle ObjBundle = getArguments();
         final int iUserId = ObjBundle.getInt("UserId");
+        ObjWaitDialog = new WaitDialog(getContext());
+        ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -47,6 +50,7 @@ public class OrdersFollowUpFragment extends Fragment {
 
                         lvOrders.setAdapter(ObjOrdersFollowUpAdapter);
                         Utils.setListViewHeightBasedOnChildren(lvOrders);
+                        ObjWaitDialog.HideDialog();
                     }
                 });
             }

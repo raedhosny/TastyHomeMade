@@ -64,6 +64,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     double iCurrentLatitude = -1, iCurrentLongtitude = -1;
     Settings ObjSettings;
     int GPS_SETTINGS_REQUEST_CODE = 3;
+    WaitDialog ObjWaitDialog;
 
 
     @Nullable
@@ -109,6 +110,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         });
 
         ObjSettings = new Settings(getContext());
+        ObjWaitDialog = new WaitDialog(getContext());
+        ObjWaitDialog.ShowDialog();
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -119,6 +122,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 ObjRegisterTypesList = FillRegisterTypes();
 
                 FillHaveRepresentive();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ObjWaitDialog.HideDialog();
+                    }
+                });
 
             }
         });
@@ -131,7 +141,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if (v == btnRegisterSave) {
-
+            ObjWaitDialog.ShowDialog();
 
             // Validate Email
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtRegisterEmail.getText()).matches() == false) {
@@ -230,6 +240,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         public void run() {
                             Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                             new Utils().ShowActivity(getContext(), null, "Main", "-1");
+                            ObjWaitDialog.HideDialog();
                         }
                     });
 
@@ -239,6 +250,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         } else if (v == btnRegisterGPS) {
 
+            ObjWaitDialog.ShowDialog();
             try {
                 OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
                     @Override
@@ -246,6 +258,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         if (Results.size() > 0) {
                             iCurrentLatitude = Results.get(0);
                             iCurrentLongtitude = Results.get(1);
+                            ObjWaitDialog.HideDialog();
                         }
                     }
                 };
@@ -326,7 +339,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GPS_SETTINGS_REQUEST_CODE) {
 
-
+            ObjWaitDialog.ShowDialog();
             try {
 
                 OnTaskCompleted ObjOnTaskCompleted = new OnTaskCompleted() {
@@ -336,6 +349,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             iCurrentLatitude = Results.get(0);
                             iCurrentLongtitude = Results.get(1);
                         }
+                        ObjWaitDialog.HideDialog();
                     }
                 };
 

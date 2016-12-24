@@ -19,6 +19,7 @@ import com.tastyhomemade.tastyhomemade.Business.CategoriesDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
     Settings ObjSettings;
     Button btnSearch;
     List<Categories> ObjCategoriesList;
+    WaitDialog ObjWaitDialog;
 
     @Nullable
     @Override
@@ -52,12 +54,15 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
         btnSearch = (Button) view.findViewById(R.id.btnSearch);
         ObjSettings = new Settings(getContext());
 
+        ObjWaitDialog = new WaitDialog(getContext());
+        ObjWaitDialog.ShowDialog();
         FillCategories();
         FillData(txtName.getText().toString(),-1);
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ObjWaitDialog.ShowDialog();
                 Categories ObjCategories = ObjCategoriesList.get(ddlCategories.getSelectedItemPosition());
                 FillData(txtName.getText().toString().trim(),ObjCategories.getId());
             }
@@ -111,6 +116,7 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
                                 }
                             }
                     );

@@ -77,7 +77,7 @@
                 android:id="@+id/txtHomeMenuItemPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="0 ريال"
+                android:text="تحميل"
                 android:textColor="#000"
                 android:layout_weight="0.3"
                 android:textAlignment="center"
@@ -108,7 +108,7 @@
                 android:textColor="#000"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:text="أكل او مشروب 1"
+                android:text="تحميل"
                android:textAlignment="viewStart"
                 android:textDirection="locale"
 
@@ -117,19 +117,6 @@
                 >
                 أكل او مشروب 1
             </TextView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
-                android:textSize="11sp"
-                android:textAlignment="viewEnd"
-
-
-                android:layout_weight="0.5"
-                android:id="@+id/lblHomeMenuItemTimeFromTo"
-                />
 
         </LinearLayout>
 
@@ -157,7 +144,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/lblHomeMenuItemDescription"
                 android:textColor="#000"
-                android:text="وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف "
+                android:text="تحميل"
                 android:textAlignment="viewStart"
                 android:textDirection="locale"
                 />
@@ -171,12 +158,26 @@
             android:layout_marginTop="1dp"
             >
             <TextView android:id="@+id/lblNumberOfRequests" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="عدد مرات الطلب 100" android:textColor="#000" android:textDirection="anyRtl"
+                android:text="تحميل" android:textColor="#000" android:textDirection="anyRtl"
 
                 >
             </TextView>
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="تحميل"
+            android:textSize="11sp"
+            android:textAlignment="viewEnd"
+
+
+            android:layout_weight="0.5"
+            android:id="@+id/lblHomeMenuItemTimeFromTo"
+            android:layout_alignTop="@+id/txtHomeMenuItemLinear3"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 </LinearLayout>

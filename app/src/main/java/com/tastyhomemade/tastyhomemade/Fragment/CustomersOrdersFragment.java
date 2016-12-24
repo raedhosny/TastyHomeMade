@@ -12,6 +12,7 @@ import com.tastyhomemade.tastyhomemade.Adapter.CustomersOrdersAdapter;
 import com.tastyhomemade.tastyhomemade.Business.Orders;
 import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class CustomersOrdersFragment extends Fragment {
 
     Settings ObjSettings;
     ListView lvCustomersOrders;
+    WaitDialog ObjWaitingDialog;
 
     @Nullable
     @Override
@@ -41,6 +43,9 @@ public class CustomersOrdersFragment extends Fragment {
     }
 
     private void FillData() {
+
+        ObjWaitingDialog= new WaitDialog(getContext());
+        ObjWaitingDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -50,6 +55,7 @@ public class CustomersOrdersFragment extends Fragment {
                     @Override
                     public void run() {
                         lvCustomersOrders.setAdapter(ObjCustomerOrdersAdapter);
+                        ObjWaitingDialog.HideDialog();
                     }
                 });
 

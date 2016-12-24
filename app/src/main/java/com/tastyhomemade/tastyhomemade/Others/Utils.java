@@ -243,15 +243,15 @@ public class Utils {
         return sArrayTemp;
     }
 
-    public static String GetGoogleMapUrl(Context p_context,double p_Latitude, double p_Longitude) {
-        WindowManager wm = (WindowManager) p_context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
+    public static String GetGoogleMapUrl(View p_CurrentView,double p_Latitude, double p_Longitude) {
+//        WindowManager wm = (WindowManager) p_context.getSystemService(Context.WINDOW_SERVICE);
+//        Display display = wm.getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+        int width = p_CurrentView.getWidth();
+        int height = p_CurrentView.getHeight();
 
-        return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=13&size="+(width-60) +"x"+((height/2)-30)+"&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
+        return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=11&size="+(width/3) +"x"+(height/3)+"&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
     }
 
     public static String GetGoogleMapAddress(double p_Latitude, double p_Longitude, int p_iLanguageId) {

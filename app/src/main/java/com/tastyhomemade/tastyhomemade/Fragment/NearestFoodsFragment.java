@@ -16,6 +16,7 @@ import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class NearestFoodsFragment extends Fragment {
     List<Foods> ObjFoodsList= null;
     int iTotalSize = 0;
     int iUpdatedSize = 0;
+    WaitDialog ObjWaitDialog;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class NearestFoodsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ObjWaitDialog= new WaitDialog(getContext());
         ObjSettings = new Settings(getContext());
 
         FillData();
@@ -50,7 +53,7 @@ public class NearestFoodsFragment extends Fragment {
 
     private void FillData() {
 
-
+        ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -128,6 +131,7 @@ public class NearestFoodsFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
                                 }
                             }
                     );

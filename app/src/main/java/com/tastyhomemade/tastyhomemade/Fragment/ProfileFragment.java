@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     ArrayAdapter<String> CitiesAdapter;
     double iCurrentLatitude = -1, iCurrentLongtitude = -1;
     int GPS_SETTINGS_REQUEST_CODE = 3;
+    WaitDialog ObjWaitDialog;
 
 
     @Override
@@ -76,6 +77,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         ObjSettings = new Settings(getContext());
 
+        ObjWaitDialog = new WaitDialog(getContext());
+        ObjWaitDialog.ShowDialog();
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -83,6 +87,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 FillCities();
                 FillData();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ObjWaitDialog.HideDialog();
+                    }
+                });
             }
         });
         t.start();
@@ -92,6 +102,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        ObjWaitDialog.ShowDialog();
         if (v == btnSave) {
             if (!txtPassword.getText().toString().equals(txtPasswordConfirm.getText().toString())) {
                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PasswordDoesNotMatch, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
@@ -116,6 +127,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
 
                                 new Utils().ShowActivity(getContext(), null, "Main", "-1");
+                                ObjWaitDialog.HideDialog();
                             }
                         });
 
@@ -127,7 +139,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         } else if (v == btnRegisterGPS) {
 
-            final WaitDialog ObjWaitDialog = new WaitDialog(getActivity());
+            ObjWaitDialog.ShowDialog();
 
 
             try {
@@ -138,6 +150,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             iCurrentLatitude = Results.get(0);
                             iCurrentLongtitude = Results.get(1);
                         }
+                        ObjWaitDialog.HideDialog();
                     }
                 };
 

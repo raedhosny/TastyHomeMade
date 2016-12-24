@@ -449,7 +449,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                             @Override
                             public void run() {
                                 lblAddress.setText(sAddress);
-                                webview_Address.loadUrl(Utils.GetGoogleMapUrl((AppCompatActivity) context, ObjOrdersList.get(position).getShipping_Latitude(), ObjOrdersList.get(position).getShipping_Longitude()));
+                                webview_Address.loadUrl(Utils.GetGoogleMapUrl(webview_Address, ObjOrdersList.get(position).getShipping_Latitude(), ObjOrdersList.get(position).getShipping_Longitude()));
                             }
                         });
 

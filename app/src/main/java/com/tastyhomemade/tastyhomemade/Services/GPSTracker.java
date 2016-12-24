@@ -66,6 +66,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     public Location GetLocation() {
         try {
+
             ObjLocationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
             IsGPSEnabled = ObjLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -88,6 +89,7 @@ public class GPSTracker extends Service implements LocationListener {
                 if (IsNetworkEnabled) {
 
                     ObjLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                    Thread.sleep(1000);
 //                    ObjLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 //                    try {
 //                        Thread.sleep(5000);
@@ -110,6 +112,7 @@ public class GPSTracker extends Service implements LocationListener {
                 if (IsGPSEnabled) {
                     if (objCurrentLocation == null) {
                         ObjLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                        Thread.sleep(1000);
 //                        try {
 //                            Thread.sleep(5000);
 //                        }

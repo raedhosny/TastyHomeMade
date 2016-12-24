@@ -23,6 +23,7 @@ public class WaitDialog {
         ObjSettings = new Settings(p_Context);
         MyDialog = new ProgressDialog(p_Context);
         MyDialog.setMessage(Utils.GetResourceName(p_Context, R.string.PleaseWait, ObjSettings.getCurrentLanguageId()));
+        MyDialog.setCancelable(false);
         //MyDialog.setIndeterminate(true);
 
     }

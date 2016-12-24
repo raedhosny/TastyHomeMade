@@ -14,6 +14,7 @@ import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
 
+    WaitDialog ObjWaitDialog = null;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,15 +41,17 @@ public class MainFragment extends Fragment {
 
         final int iCategoryId = getArguments().getInt("CategoryId");
 
+        ObjWaitDialog = new WaitDialog(getContext());
+
         FillData(iCategoryId);
 
     }
 
     private void FillData(int p_iCategoryId) {
 
+        ObjWaitDialog.ShowDialog();
 
         final int iCategoryId = p_iCategoryId;
-
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -62,6 +66,7 @@ public class MainFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
                                 }
                             }
                     );

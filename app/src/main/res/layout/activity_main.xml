@@ -81,7 +81,7 @@
 
             <Button
                 android:id="@+id/btnMainRegister"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="27dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
@@ -93,7 +93,7 @@
 
             <Button
                 android:id="@+id/btnMainLogin"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="27dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
@@ -107,7 +107,7 @@
 
             <Button
                 android:id="@+id/btnMainLogout"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="27dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"

@@ -35,6 +35,7 @@ import com.tastyhomemade.tastyhomemade.Business.Foods_AdditionsDB;
 import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.io.ByteArrayOutputStream;
@@ -81,6 +82,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
     Spinner ddlShowToCustomer;
     ListView lvAddFoodGradient;
     List<Foods_Additions> Obj_Foods_Additions_List;
+    WaitDialog ObjWaitDialog;
 
 
 
@@ -158,7 +160,8 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
 
         }
         if (view == btnAddGradientAdd) {
-
+            ObjWaitDialog = new WaitDialog(getContext());
+            ObjWaitDialog.ShowDialog();
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -187,6 +190,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                             lvAddFoodGradient.setAdapter(ObjAdapter);
                             txtAddGradient.setText("");
                             txtAddGradientPrice.setText("");
+                            ObjWaitDialog.HideDialog();
                         }
                     });
 
@@ -199,7 +203,8 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
 
         }
         if (view == btnAddFoodSave) {
-
+            ObjWaitDialog = new WaitDialog(getContext());
+            ObjWaitDialog.ShowDialog();
 
             if (txtAddFoodName.getText().toString().trim().length() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFoodName, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
@@ -290,6 +295,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                         public void run() {
                             Toast.makeText(getContext(),Utils.GetResourceName(getContext(),R.string.DataSavedSuccessfuly,new Settings(getActivity()).getCurrentLanguageId()),Toast.LENGTH_LONG).show();
                             ((MainActivity)getActivity()).LoadMainInfo();
+                            ObjWaitDialog.HideDialog();
                         }
                     });
                 }
@@ -367,11 +373,20 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
 
     private void FillDropDowns() {
 
-
+       ObjWaitDialog = new WaitDialog(getContext());
+        ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 ObjCategoriesList = FillCategories();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                ObjWaitDialog.HideDialog();
+                    }
+                });
             }
         });
         t.start();

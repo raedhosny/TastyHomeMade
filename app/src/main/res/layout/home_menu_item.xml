@@ -80,7 +80,7 @@
                 android:id="@+id/txtHomeMenuItemPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="0 ريال"
+                android:text="تحميل"
                 android:textColor="#000"
                 android:layout_weight="0.3"
                 android:textAlignment="center"
@@ -111,7 +111,7 @@
                 android:textColor="#000"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:text="أكل او مشروب 1"
+                android:text="تحميل"
                android:textAlignment="viewStart"
                 android:textDirection="locale"
 
@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:text="وقت الطلب من 2 مساءا الي 4 مساءا"
+                android:text="تحميل"
                 android:textSize="12sp"
                 android:textAlignment="viewEnd"
 
@@ -159,7 +159,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/lblHomeMenuItemDescription"
                 android:textColor="#000"
-                android:text="وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف وصف "
+                android:text="تحميل"
                 android:textAlignment="viewStart"
                 android:textDirection="locale"
                 />

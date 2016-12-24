@@ -35,6 +35,7 @@ import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.text.SimpleDateFormat;
@@ -64,6 +65,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     TextView lblTimeFromTo;
     TextView lblOrderCountPrice;
     List<Foods_Additions> ObjFoodsAdditionsList = new ArrayList<Foods_Additions>();
+    WaitDialog ObjWaitDialog;
 
 
     @Nullable
@@ -87,6 +89,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
         lblTotalPrice = (TextView) view.findViewById(R.id.lblTotalPrice);
         txtAdditionalGradients = (EditText) view.findViewById(R.id.txtAdditionalGradients);
         txtNumberOfOrders = (EditText) view.findViewById(R.id.txtNumberOfOrders);
+        ObjWaitDialog = new WaitDialog(getContext());
 
         /////////////////////////////////
         // On Number of orders changes //
@@ -120,6 +123,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
 
         Bundle ObjBundle = getArguments();
         iFoodId = ObjBundle.getInt("FoodId");
+        ObjWaitDialog.ShowDialog();
         FillData(iFoodId);
     }
 
@@ -206,7 +210,7 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
                     public void run() {
                         ImageFood.setImageBitmap(ObjBitmapTemp);
                         lblName.setText(ObjFood.getName());
-                        lblDescription.setText(ObjFood.getName());
+                        lblDescription.setText(ObjFood.getDescription());
                         if (ObjUser.isHaveDelivary())
                             ImageDeliverable.setVisibility(View.VISIBLE);
                         else
@@ -243,10 +247,12 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
                         ObjGradientsAdapter.setmOnDataChangedListener(new OnDataChangedListener() {
                             @Override
                             public void onDataChanged() {
+                                ObjWaitDialog.ShowDialog();
                                 CalculateTotalPrice();
 
                             }
                         });
+                        ObjWaitDialog.HideDialog();
                     }
                 });
 
@@ -297,7 +303,12 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
                     }
                 });
 
-
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ObjWaitDialog.HideDialog();
+                }
+            });
             }
         });
 

@@ -33,6 +33,7 @@ import com.tastyhomemade.tastyhomemade.Business.Foods_AdditionsDB;
 import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.io.ByteArrayOutputStream;
@@ -85,6 +86,7 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
     List<Foods_Additions> Obj_Foods_Additions_List;
     int iCurrentFoodId;
     Settings ObjSettings;
+    WaitDialog ObjWaitDialog;
 
 
     @Nullable
@@ -138,6 +140,8 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
 
         Obj_Foods_Additions_List = new ArrayList<Foods_Additions>();
 
+        ObjWaitDialog = new WaitDialog(getContext());
+        ObjWaitDialog.ShowDialog();
         ObjSettings = new Settings(getContext());
 
         FillDropDowns();
@@ -150,6 +154,8 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
 
     @Override
     public void onClick(View view) {
+
+
         if (view == btnAddFoodCameraPhoto) {
             Intent IntentFoodCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             IntentFoodCamera.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -169,6 +175,8 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
 
         }
         if (view == btnAddGradientAdd) {
+            ObjWaitDialog = new WaitDialog(getContext());
+            ObjWaitDialog.ShowDialog();
 
             Thread t = new Thread(new Runnable() {
                 @Override
@@ -197,7 +205,7 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                             lvAddFoodGradient.setAdapter(ObjAdapter);
                             txtAddGradient.setText("");
                             txtAddGradientPrice.setText("");
-
+                            ObjWaitDialog.HideDialog();
 
                         }
                     });
@@ -572,6 +580,7 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                         GradientAdapter ObjAdapter = new GradientAdapter(getActivity(), Obj_Foods_Additions_List);
 
                         lvAddFoodGradient.setAdapter(ObjAdapter);
+                        ObjWaitDialog.HideDialog();
                     }
                 });
 

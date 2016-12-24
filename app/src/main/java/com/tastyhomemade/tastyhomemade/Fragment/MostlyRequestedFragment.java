@@ -13,6 +13,7 @@ import com.tastyhomemade.tastyhomemade.Adapter.MostlyRequestedAdapter;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class MostlyRequestedFragment extends Fragment {
 
-
+    WaitDialog ObjWaitDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,7 +35,8 @@ public class MostlyRequestedFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        ObjWaitDialog = new WaitDialog(getContext());
+        ObjWaitDialog.ShowDialog();
         FillData();
 
     }
@@ -55,6 +57,7 @@ public class MostlyRequestedFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
                                 }
                             }
                     );
