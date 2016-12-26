@@ -23,6 +23,7 @@ import com.tastyhomemade.tastyhomemade.R;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -124,13 +125,18 @@ public class HomeFoodsAdapter extends BaseAdapter {
                     }
                 });
 
-                byte[] ObjPhotoBytes = Base64.decode(ObjFoodsList.get(position).getPhoto(), Base64.DEFAULT);
-                final Bitmap ObjBitmap = BitmapFactory.decodeByteArray(ObjPhotoBytes, 0, ObjPhotoBytes.length);
+
+                final Bitmap[] ObjBitmap = new Bitmap[1];
+                try {
+                    ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageHomeMenuItem.setImageBitmap(ObjBitmap);
+                        ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
                     }
                 });
 

@@ -37,6 +37,7 @@ import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -286,8 +287,13 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
             //Bitmap ObjBitmapTemp = ((BitmapDrawable)imgAddFoodPhoto.getDrawable()).getBitmap();
             ByteArrayOutputStream ObjByteArrayTemp = new ByteArrayOutputStream();
             ObjBitmapTemp.compress(Bitmap.CompressFormat.JPEG, 100, ObjByteArrayTemp);
-            ObjFood.setPhoto(Base64.encodeToString(ObjByteArrayTemp.toByteArray(), Base64.DEFAULT));
-            ObjFood.setPrice(Float.parseFloat(txtAddFoodOrderPrice.getText().toString()));
+                    try {
+                        ObjFood.setPhoto(Utils.SaveImage(ObjByteArrayTemp.toByteArray()));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    ObjFood.setPrice(Float.parseFloat(txtAddFoodOrderPrice.getText().toString()));
             ObjFood.setName(txtAddFoodName.getText().toString().trim());
             ObjFood.setDescription(txtAddFoodDescription.getText().toString().trim());
             boolean bIsVisible = false;
@@ -445,12 +451,15 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                 ddlAddCategory.setSelection(iSelectionIdFinal);
                     }
                 });
-                byte[] Photo = Base64.decode(ObjFood.getPhoto(), Base64.DEFAULT);
-               final Bitmap ObjFoodImage = BitmapFactory.decodeByteArray(Photo, 0, Photo.length);
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                imgAddFoodPhoto.setImageBitmap(ObjFoodImage);
+                        try {
+                            imgAddFoodPhoto.setImageBitmap(Utils.LoadImage(ObjFood.getPhoto()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 

@@ -1,6 +1,5 @@
 package com.tastyhomemade.tastyhomemade;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -10,9 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.tastyhomemade.tastyhomemade.Others.FileUploader;
-import com.tastyhomemade.tastyhomemade.Others.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,27 +45,27 @@ public class TestActivity extends AppCompatActivity {
         btnRetrieveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        FileUploader Obj = new FileUploader();
-                        try {
-                          final Bitmap ObjBitMap =  Obj.LoadImage(sLastFile);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-
-                            imgPreview.setImageBitmap(ObjBitMap );
-                                }
-                            });
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                t.start();
+//                Thread t = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        FileUploader Obj = new FileUploader();
+//                        try {
+//                          final Bitmap ObjBitMap =  Obj.LoadImage(sLastFile);
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//
+//
+//                            imgPreview.setImageBitmap(ObjBitMap );
+//                                }
+//                            });
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//                t.start();
             }
         });
 
@@ -90,21 +86,21 @@ public class TestActivity extends AppCompatActivity {
 
 
 //               (ObjImageArray);
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        try {
-                            FileUploader Obj = new FileUploader();
-                            sLastFile = Obj.SaveImage(ObjInputStream);
-                            Toast.makeText(getBaseContext(), sLastFile, Toast.LENGTH_LONG);
-                        } catch (Exception ex) {
-
-                        }
-                    }
-                });
-                t.start();
+//                Thread t = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//
+//                        try {
+//                            FileUploader Obj = new FileUploader();
+//                            sLastFile = Obj.SaveImage(ObjInputStream);
+//                            Toast.makeText(getBaseContext(), sLastFile, Toast.LENGTH_LONG);
+//                        } catch (Exception ex) {
+//
+//                        }
+//                    }
+//                });
+//                t.start();
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
