@@ -4,6 +4,7 @@ import android.util.Base64;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class OrdersDB {
 
             ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
-                    "EXECUTE [dbo].[SP_Orders_InsertUpdate] \n" +
+                    "EXECUTE SP_Orders_InsertUpdate \n" +
                             "   @Id=?\n" +
                             "  ,@Food_Id=?\n" +
                             "  ,@User_Id=?\n" +
@@ -42,6 +43,8 @@ public class OrdersDB {
                             );
 
 
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_ObjOrder.getId());
             stmt.setInt(2,p_ObjOrder.getFood_Id());
             stmt.setInt(3,p_ObjOrder.getUser_Id());
@@ -65,6 +68,7 @@ public class OrdersDB {
 
             if (ObjResultSet.next())
                 return ObjResultSet.getInt(1);
+                //return iResult;
             return -1;
 
 
@@ -89,16 +93,18 @@ public class OrdersDB {
 
     }
 
-    public Orders Select (int p_iId)
-    {
+    public Orders Select (int p_iId) {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Orders_Select \n" +
                             "   @Id=?"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId);
 
 
@@ -138,20 +144,31 @@ public class OrdersDB {
         {
             ex.printStackTrace();
         }
+        finally {
+            try {
+                ObjConnection.close();
+            }catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }
 
         return null;
     }
 
     public List<Orders> SelectByUserId (int p_iUserId)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Orders_SelectByUserId \n" +
                             "   @User_Id=?"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iUserId);
 
 
@@ -192,6 +209,15 @@ public class OrdersDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
 
         return new ArrayList<Orders>();
@@ -199,15 +225,18 @@ public class OrdersDB {
 
     public List<Orders> SelectByFoodMakerId (int p_iUserId)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             ObjConnection.createStatement();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Orders_SelectByFoodMaker \n" +
                             "   @UserId=?"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iUserId);
 
 
@@ -248,6 +277,15 @@ public class OrdersDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
 
         return new ArrayList<Orders>();

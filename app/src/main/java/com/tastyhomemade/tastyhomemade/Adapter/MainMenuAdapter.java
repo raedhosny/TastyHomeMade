@@ -14,6 +14,8 @@ import com.tastyhomemade.tastyhomemade.Fragment.SettingsFragment;
 import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ import java.util.List;
 public class MainMenuAdapter extends BaseAdapter{
 
     private Context context;
+    ArrayList LoadedRecords = new ArrayList();
 
 
 
@@ -53,6 +56,11 @@ public class MainMenuAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
+        if (Utils.IsDataLoadedBefore(i,LoadedRecords))
+            return view;
+        LoadedRecords.add(i);
+
         View v = View.inflate (context,R.layout.main_menu_item,null);
         TextView lblItem = (TextView) v.findViewById(R.id.lblItem);
         lblItem.setText(FilteredItemsList.get(i).getName());

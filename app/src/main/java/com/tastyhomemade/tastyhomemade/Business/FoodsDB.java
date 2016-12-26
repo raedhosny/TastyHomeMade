@@ -43,6 +43,8 @@ public class FoodsDB {
                     "   ,@IsVisible=?\n"
 
                     );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_ObjFoods.getId());
             stmt.setInt(2,p_ObjFoods.getLanguageId());
             stmt.setInt(3,p_ObjFoods.getCategoryId());
@@ -95,6 +97,9 @@ public class FoodsDB {
                             "  ,@LanguageId=?\n"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
+
             stmt.setInt(1,p_iId);
             stmt.setInt(2,p_iLanguageId);
 
@@ -154,6 +159,9 @@ public class FoodsDB {
                             "  ,@LanguageId=?"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
+
             stmt.setInt(1,p_iCategoryId);
             stmt.setInt(2,p_iLanguageId);
 
@@ -209,7 +217,7 @@ public class FoodsDB {
         try {
 
             ObjConnection = new DB().CreateConnection();
-            ObjConnection.createStatement();
+
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Foods_SearchByCustomer\n" +
                             "   @Name=?\n" +
@@ -217,6 +225,8 @@ public class FoodsDB {
                             "  ,@UserId=?\n"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setString(1,p_sName);
             stmt.setInt(2,p_iCategoryId);
             stmt.setInt(3,p_iUserId);
@@ -283,6 +293,8 @@ public class FoodsDB {
                             "  ,@UserId=?\n"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setString(1,p_sName);
             stmt.setInt(2,p_iCategoryId);
             stmt.setInt(3,p_iUserId);
@@ -347,6 +359,10 @@ public class FoodsDB {
                             "   @LanguageId=?"
 
             );
+
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
+
             stmt.setInt(1,p_iLanguageId);
 
 
@@ -411,6 +427,9 @@ public class FoodsDB {
 
 
             );
+            stmt.setEscapeProcessing(true);
+            stmt.setQueryTimeout(60);
+
             stmt.setInt(1,p_iFoodId);
 
             stmt.executeQuery();

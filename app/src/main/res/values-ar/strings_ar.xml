@@ -8,7 +8,7 @@
         <item>5,تتبع مأكولاتي أو مشروباتي,Customer</item>
         <item>6,أضف مأكولات أو مشروبات,FoodMaker</item>
         <item>7,إختياراتي,Customer</item>
-        <item>8,الأكثرا طلبا,All</item>
+        <item>8,الأكثرا طلبا,Customer</item>
         <item>9,الاقرب لي,Customer</item>
     </string-array>
 
@@ -152,7 +152,7 @@
         السعر
     </string>
  <string name="PleaseWait">
-        برجاء الانتظار
+        الرجاء الانتظار
     </string>
        <string name="numberofrequests">
         عدد مرات الطلب

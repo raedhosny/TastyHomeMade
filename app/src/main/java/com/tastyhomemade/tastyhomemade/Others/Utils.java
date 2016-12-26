@@ -43,33 +43,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-
 import com.tastyhomemade.tastyhomemade.R;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpPost;
-
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.ContentBody;
-import org.apache.http.entity.mime.content.InputStreamBody;
-
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 
 /**
  * Created by raed on 11/22/2016.
@@ -693,6 +676,21 @@ public class Utils {
         URL ImageUrl = new URL(ConnectionProperties.SiteUrl + "/Images/" + p_sImageName);
         Bitmap ObjBitmap = BitmapFactory.decodeStream(ImageUrl.openConnection().getInputStream());
         return ObjBitmap;
+    }
+
+    public static boolean IsDataLoadedBefore(int p_Key,ArrayList p_SearchList)
+    {
+        boolean IsFound = false;
+
+        for (int i=0;i<p_SearchList.size();i++)
+        {
+            if (String.valueOf(p_Key).equals(p_SearchList.get(i))) {
+                IsFound = true;
+                break;
+            }
+        }
+
+        return IsFound;
     }
 
 }

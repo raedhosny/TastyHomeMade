@@ -26,6 +26,8 @@ public class AdditionsDB {
                             //+"  ,@Photo=?\n"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_ObjAdditions.getId());
             stmt.setInt(2,p_ObjAdditions.getLanguageId());
             stmt.setString(3,p_ObjAdditions.getName());
@@ -74,6 +76,8 @@ public class AdditionsDB {
                             "  ,@LanguageId=?"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId);
             stmt.setInt(2,p_iLanguageId);
 

@@ -48,5 +48,8 @@
       <string name="Error_PasswordCanNotBeZeroCharacters">
         Password cannot be zero characters
     </string>
+    <string name="Error_PleaseEnterPrice">
+        Please Enter Price
+    </string>
 
 </resources>

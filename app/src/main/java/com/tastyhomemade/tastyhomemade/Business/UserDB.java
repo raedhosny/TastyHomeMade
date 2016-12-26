@@ -37,7 +37,8 @@ public class UserDB {
                     "  ,@ActivationCode=?\n"+
                     ",@IsHaveDelivery=?");
 
-
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_User.getId()); //id
             stmt.setString(2,p_User.getName()); //name
             stmt.setString(3,p_User.getUsername()); //username
@@ -95,7 +96,8 @@ public class UserDB {
                     "   @Username=?\n" +
                     "  ,@Password=?\n");
 
-
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setString(1,p_sUsername); //id
             stmt.setString(2,p_sPassword); //name
 
@@ -154,7 +156,8 @@ public class UserDB {
                     "   @Id=?"
                     );
 
-
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId); //id
 
 

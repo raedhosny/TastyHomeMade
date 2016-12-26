@@ -22,6 +22,8 @@ public class Orders_AdditionsDB {
                             "  ,@AdditionId=?\n" +
                             "  ,@Quantity=?"
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_Orders_Additions.getId());
             stmt.setInt(2,p_Orders_Additions.getOrderId());
             stmt.setInt(3,p_Orders_Additions.getAdditionId());
@@ -60,17 +62,19 @@ public class Orders_AdditionsDB {
 
     public Orders_Additions Select (int p_iId)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                             "EXECUTE SP_Orders_Additions_Select\n" +
                             "   @Id"
 
             );
+
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId);
-
-
 
             ResultSet ObjResultSet = stmt.executeQuery();
 
@@ -92,6 +96,16 @@ public class Orders_AdditionsDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return null;

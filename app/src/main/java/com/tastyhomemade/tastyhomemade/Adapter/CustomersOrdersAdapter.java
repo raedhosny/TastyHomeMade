@@ -38,6 +38,7 @@ import com.tastyhomemade.tastyhomemade.R;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -228,14 +229,19 @@ public class CustomersOrdersAdapter extends BaseAdapter {
             @Override
             public void run() {
                 final Foods ObjFoods = new FoodsDB().Select(ObjOrdersList.get(position).getFood_Id(), ObjSettings.getCurrentLanguageId());
-                byte[] Photo = Base64.decode(ObjFoods.getPhoto(), Base64.DEFAULT);
-                final Bitmap ObjBitmap = BitmapFactory.decodeByteArray(Photo, 0, Photo.length);
+
+                final Bitmap[] ObjBitmap = new Bitmap[1];
+                try {
+                    ObjBitmap[0] = Utils.LoadImage(ObjFoods.getPhoto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 // Food Image
                 ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageItem.setImageBitmap(ObjBitmap);
+                        ImageItem.setImageBitmap(ObjBitmap[0]);
                     }
                 });
 

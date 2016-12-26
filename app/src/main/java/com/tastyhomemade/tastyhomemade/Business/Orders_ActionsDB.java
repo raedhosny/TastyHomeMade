@@ -25,6 +25,8 @@ public class Orders_ActionsDB {
                             "  ,@ActionId=?\n" +
                             "  ,@ActionDate=?\n"
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_Orders_Actions.getId());
             stmt.setInt(2,p_Orders_Actions.getOrderId());
             stmt.setInt(3,p_Orders_Actions.getActionId());
@@ -64,15 +66,18 @@ public class Orders_ActionsDB {
 
     public List<Orders_Actions> SelectByOrderId (int p_iOrderId,int p_iOrderBy)
     {
+        java.sql.Connection ObjConnection = null;
         try {
 
-            java.sql.Connection ObjConnection = new DB().CreateConnection();
+            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
                     "EXECUTE SP_Orders_Actions_SelectByOrderId\n" +
                             "   @OrderId=?," +
                             "   @Orderby=?"
 
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iOrderId);
             stmt.setInt(2,p_iOrderBy);
 
@@ -100,6 +105,16 @@ public class Orders_ActionsDB {
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         return null;

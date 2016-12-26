@@ -20,6 +20,8 @@ public class ActionsDB {
             PreparedStatement stmt = ObjConnection.prepareStatement("EXECUTE SP_Actions_Select\n" +
                     "   @Id=?\n" +
                     "  ,@LanguageId=?");
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId);
             stmt.setInt(2,p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();

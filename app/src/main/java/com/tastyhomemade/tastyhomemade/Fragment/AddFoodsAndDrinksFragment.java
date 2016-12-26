@@ -203,8 +203,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
 
         }
         if (view == btnAddFoodSave) {
-            ObjWaitDialog = new WaitDialog(getContext());
-            ObjWaitDialog.ShowDialog();
+
 
             if (txtAddFoodName.getText().toString().trim().length() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFoodName, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
@@ -222,6 +221,12 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                 return;
             }
 
+            if (txtAddFoodOrderPrice.getText().toString().trim().length() == 0 || txtAddFoodOrderPrice.getText().toString().trim() == "0")
+            {
+                Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterPrice, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                return;
+            }
+
             imgAddFoodPhoto.setDrawingCacheEnabled(true);
             imgAddFoodPhoto.buildDrawingCache(true);
             Bitmap  ObjBitmapTemp = Bitmap.createBitmap(imgAddFoodPhoto.getDrawingCache());
@@ -234,6 +239,8 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             }
 
 
+
+
             if (ddlShowToCustomer.getSelectedItemPosition() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseSelectIsFoodVisibleToCustomerOrNot, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
@@ -244,6 +251,8 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             {
 
             }
+            ObjWaitDialog = new WaitDialog(getContext());
+            ObjWaitDialog.ShowDialog();
 
              //Insert New Food
             final Foods ObjFood = new Foods();

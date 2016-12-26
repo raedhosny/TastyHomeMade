@@ -23,6 +23,8 @@ public class Foods_AdditionsDB {
                             ",@FoodId=?\n" +
                             ",@AdditionId=?"
             );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_Foods_Additions.getId());
             stmt.setInt(2,p_Foods_Additions.getFoodId());
             stmt.setInt(3,p_Foods_Additions.getAdditionId());
@@ -70,6 +72,8 @@ public class Foods_AdditionsDB {
 
             );
 
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iFoodId);
 
             ResultSet ObjResultSet = stmt.executeQuery();
@@ -124,7 +128,8 @@ public class Foods_AdditionsDB {
                             ",@AdditionId=?"
 
             );
-
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iFoodId);
             stmt.setInt(2,p_iAdditionId);
 

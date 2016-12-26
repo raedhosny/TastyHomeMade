@@ -29,6 +29,7 @@ import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -105,12 +106,16 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                 final ImageView ImageFood = (ImageView) vv.findViewById(R.id.ImageFood);
 
 
-                byte[] Photo = Base64.decode(ObjFood.getPhoto(), Base64.DEFAULT);
-                final Bitmap ObjBitmap = BitmapFactory.decodeByteArray(Photo, 0, Photo.length);
+                final Bitmap[] ObjBitmap = new Bitmap[1];
+                try {
+                    ObjBitmap[0] = Utils.LoadImage(ObjFood.getPhoto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageFood.setImageBitmap(ObjBitmap);
+                        ImageFood.setImageBitmap(ObjBitmap[0]);
                     }
                 });
 

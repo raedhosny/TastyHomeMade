@@ -48,4 +48,8 @@
         كلمة السر لا يمكن ان تكون خاليه من الحروف
     </string>
 
+     <string name="Error_PleaseEnterPrice">
+       فضلا ادخل سعر الوجبه
+    </string>
+
 </resources>

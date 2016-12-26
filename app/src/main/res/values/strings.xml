@@ -8,7 +8,7 @@
         <item>5,My Orders Follow,Customer</item>
         <item>6,Add Foods and Drinks,FoodMaker</item>
         <item>7,My Choices,Customer</item>
-        <item>8,Mostly Requested,All</item>
+        <item>8,Mostly Requested,Customer</item>
         <item>9,Nearest To Me,Customer</item>
 
     </string-array>

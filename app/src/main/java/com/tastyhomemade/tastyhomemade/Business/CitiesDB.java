@@ -22,6 +22,8 @@ public class CitiesDB {
 
            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement("EXECUTE SP_Cities_SelectAll @LanguageId=?");
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();
 
@@ -77,6 +79,8 @@ public class CitiesDB {
 
             ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement("EXECUTE SP_Cities_SelectAll @Id=?,@LanguageId=?");
+            stmt.setEscapeProcessing(true);
+            stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();
 

@@ -25,6 +25,7 @@ import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -74,9 +75,9 @@ public class EditFoodsAdapter extends BaseAdapter {
         TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
         TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
         TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
-        ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
-        Button BtnItemDelete = (Button)v.findViewById(R.id.BtnItemDelete);
-        Button BtnEditItem = (Button)v.findViewById(R.id.BtnEditItem);
+        final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
+        Button BtnItemDelete = (Button) v.findViewById(R.id.BtnItemDelete);
+        Button BtnEditItem = (Button) v.findViewById(R.id.BtnEditItem);
 
         int iUserId = ObjFoodsList.get(position).getUserId();
 
@@ -87,7 +88,7 @@ public class EditFoodsAdapter extends BaseAdapter {
             ObjImagedeliverable.setVisibility(View.GONE);
         }
 
-        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context,R.string.Currency,new Settings(context).getCurrentLanguageId()));
+        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
         lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
         lblHomeMenuItemDescription.setText(ObjFoodsList.get(position).getDescription());
         String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
@@ -104,45 +105,65 @@ public class EditFoodsAdapter extends BaseAdapter {
         }
         lblHomeMenuItemTimeFromTo.setText(sTemp);
 
-        byte [] ObjPhotoBytes = Base64.decode(ObjFoodsList.get(position).getPhoto(),Base64.DEFAULT);
-        Bitmap ObjBitmap = BitmapFactory.decodeByteArray(ObjPhotoBytes ,0,ObjPhotoBytes .length);
-        ImageHomeMenuItem.setImageBitmap(ObjBitmap);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+        final Bitmap[] ObjBitmap = new Bitmap[1];
+        try {
+            ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
+                    }
+                });
+
+            }
+        });
+        t.start();
 
         BtnItemDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 AlertDialog.Builder ctlAlertDialog = new AlertDialog.Builder(context);
-               // ctlAlertDialog.setTitle(Utils.GetResourceName(context, R.string.AreYouSure, ObjSettings.getCurrentLanguageId()));
+                // ctlAlertDialog.setTitle(Utils.GetResourceName(context, R.string.AreYouSure, ObjSettings.getCurrentLanguageId()));
                 ctlAlertDialog.setMessage(Utils.GetResourceName(context, R.string.AreYouSure, ObjSettings.getCurrentLanguageId()));
                 ctlAlertDialog.setPositiveButton(Utils.GetResourceName(context, R.string.Yes, ObjSettings.getCurrentLanguageId()), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Thread t = new Thread(new Runnable() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Thread t = new Thread(new Runnable() {
+                            public void run() {
+                                new FoodsDB().Delete(ObjFoodsList.get(position).getId());
+                                ObjFoodsList.remove(position);
+                                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        new FoodsDB().Delete(ObjFoodsList.get(position).getId());
-                                        ObjFoodsList.remove(position);
-                                        ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                notifyDataSetChanged();
-                                            }
-                                        });
-
-
+                                        notifyDataSetChanged();
                                     }
                                 });
-                                t.start();
+
+
                             }
                         });
+                        t.start();
+                    }
+                });
                 ctlAlertDialog.setNegativeButton(Utils.GetResourceName(context, R.string.No, ObjSettings.getCurrentLanguageId()), new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                } );
+                });
                 ctlAlertDialog.show();
             }
         });
@@ -151,7 +172,7 @@ public class EditFoodsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-          new Utils().ShowActivity(context, null, "UpdateFoodsandDrinks", String.valueOf(ObjFoodsList.get(position).getId()));
+                new Utils().ShowActivity(context, null, "UpdateFoodsandDrinks", String.valueOf(ObjFoodsList.get(position).getId()));
 
             }
         });

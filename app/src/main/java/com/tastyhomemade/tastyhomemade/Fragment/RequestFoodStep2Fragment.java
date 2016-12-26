@@ -47,6 +47,7 @@ import com.tastyhomemade.tastyhomemade.R;
 import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
 import com.tastyhomemade.tastyhomemade.Services.GPSTrackerBackground;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -180,7 +181,9 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                FillData();
+
+                    FillData();
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -260,7 +263,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
         ddlDayNight.setAdapter(ObjAdapterDayNight);
     }
 
-    private void FillData() {
+    private void FillData()  {
         Bundle ObjBundle = getArguments();
         int iOrderId = ObjBundle.getInt("OrderId");
         final Orders ObjOrder = new OrdersDB().Select(iOrderId);
@@ -269,8 +272,14 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
         // Fill Cities
         ObjCitiesList = new CitiesDB().SelectAll(ObjSettings.getCurrentLanguageId());
 
-        byte[] ObjPhotosList = Base64.decode(ObjFood.getPhoto(), Base64.DEFAULT);
-        final Bitmap ObjBitmapTemp = BitmapFactory.decodeByteArray(ObjPhotosList, 0, ObjPhotosList.length);
+        final Bitmap[] ObjBitmapTemp = new Bitmap[1];
+        try {
+            ObjBitmapTemp[0] = Utils.LoadImage(ObjFood.getPhoto());
+        }
+        catch (IOException ex)
+        {
+
+        }
 
 
         getActivity().runOnUiThread(new Runnable() {
@@ -290,7 +299,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                 lblTimeFromTo.setText(sTemp);
 
 
-                ImageFood.setImageBitmap(ObjBitmapTemp);
+                ImageFood.setImageBitmap(ObjBitmapTemp[0]);
 
                 if (ObjUser.isHaveDelivary())
                     ImageDeliverable.setVisibility(View.VISIBLE);

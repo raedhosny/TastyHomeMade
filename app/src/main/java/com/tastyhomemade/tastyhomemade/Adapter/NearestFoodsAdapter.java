@@ -20,6 +20,7 @@ import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.R;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -106,8 +107,13 @@ public class NearestFoodsAdapter extends BaseAdapter {
 
 
         // Set Food Photo
-        byte [] ObjPhotoBytes = Base64.decode(ObjFoodsList.get(position).getPhoto(),Base64.DEFAULT);
-        Bitmap ObjBitmap = BitmapFactory.decodeByteArray(ObjPhotoBytes ,0,ObjPhotoBytes .length);
+
+        Bitmap ObjBitmap = null;
+        try {
+            ObjBitmap = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ImageHomeMenuItem.setImageBitmap(ObjBitmap);
 
         // Set Food Rating

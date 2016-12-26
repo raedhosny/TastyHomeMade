@@ -38,6 +38,7 @@ import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -130,62 +131,76 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
 
-        if (txtNumberOfOrders.getText().toString().trim().length() == 0) {
-            Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterNumberOfOrders, new Settings(getActivity()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        if (view == btnNext) {
 
 
-                Calendar c = Calendar.getInstance();
-                Foods ObjFood = new FoodsDB().Select(iFoodId, new Settings(getContext()).getCurrentLanguageId());
-                User ObjFoodMakerUser = new UserDB().Select(ObjFood.getUserId());
 
-                // Insert Order
-                Orders ObjOrder = new Orders(-1,
-                        iFoodId,
-                        new Settings(getContext()).getUserId(),
-                        new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis()),
-                        ObjFoodMakerUser.isHaveDelivary(),
-                        -1,
-                        -1,
-                        -1,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        Integer.parseInt(txtNumberOfOrders.getText().toString().trim()),
-                        null,
-                        false,
-                        false
-                );
-
-                int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
-
-                // Insert Order Gradients
-                List<Foods_Additions> ObjFoodsAdditions = new Foods_AdditionsDB().SelectByFoodId(iFoodId);
-
-                for (int i=0;i< lvGradients.getCount();i++)
-                {
-                    int iQuantity = Integer.parseInt (((TextView)lvGradients.getChildAt(i).findViewById(R.id.Include_control_dropdown_addremove).findViewById(R.id.txtDropDownItem)).getText().toString());
-                    Orders_Additions Obj_Orders_Additions = new Orders_Additions();
-                    Obj_Orders_Additions.setOrderId(iOrderId);
-                    Obj_Orders_Additions.setAdditionId(ObjFoodsAdditions.get(i).getAdditionId());
-                    Obj_Orders_Additions.setQuantity(iQuantity);
-                    new Orders_AdditionsDB().InsertUpdate(Obj_Orders_Additions);
-                }
-
-                // Go to step 2
-                new Utils().ShowActivity(getContext(), null, "RequestFormStep2", String.valueOf(iOrderId));
+            if (txtNumberOfOrders.getText().toString().trim().length() == 0 || txtNumberOfOrders.getText().toString().trim().equals("0")) {
+                Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterNumberOfOrders, new Settings(getActivity()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                return;
             }
-        });
 
-        t.start();
+            ObjWaitDialog.ShowDialog();
+
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+
+                    Calendar c = Calendar.getInstance();
+                    Foods ObjFood = new FoodsDB().Select(iFoodId, new Settings(getContext()).getCurrentLanguageId());
+                    User ObjFoodMakerUser = new UserDB().Select(ObjFood.getUserId());
+
+                    // Insert Order
+                    Orders ObjOrder = new Orders(-1,
+                            iFoodId,
+                            new Settings(getContext()).getUserId(),
+                            new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis()),
+                            ObjFoodMakerUser.isHaveDelivary(),
+                            -1,
+                            -1,
+                            -1,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            null,
+                            Integer.parseInt(txtNumberOfOrders.getText().toString().trim()),
+                            "",
+                            false,
+                            false
+                    );
+
+                    int iOrderId = new OrdersDB().InsertUpdate(ObjOrder);
+
+                    // Insert Order Gradients
+                    List<Foods_Additions> ObjFoodsAdditions = new Foods_AdditionsDB().SelectByFoodId(iFoodId);
+
+                    for (int i = 0; i < lvGradients.getCount(); i++) {
+                        int iQuantity = Integer.parseInt(((TextView) lvGradients.getChildAt(i).findViewById(R.id.Include_control_dropdown_addremove).findViewById(R.id.txtDropDownItem)).getText().toString());
+                        Orders_Additions Obj_Orders_Additions = new Orders_Additions();
+                        Obj_Orders_Additions.setOrderId(iOrderId);
+                        Obj_Orders_Additions.setAdditionId(ObjFoodsAdditions.get(i).getAdditionId());
+                        Obj_Orders_Additions.setQuantity(iQuantity);
+                        new Orders_AdditionsDB().InsertUpdate(Obj_Orders_Additions);
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ObjWaitDialog.HideDialog();
+                        }
+                    });
+
+
+                    // Go to step 2
+                    new Utils().ShowActivity(getContext(), null, "RequestFormStep2", String.valueOf(iOrderId));
+                }
+            });
+
+            t.start();
+        }
     }
 
     private void FillData(int p_FoodId) {
@@ -203,12 +218,18 @@ public class RequestFoodStep1Fragment extends Fragment implements View.OnClickLi
                     }
                 });
 
-                byte[] Photo = Base64.decode(ObjFood.getPhoto(), Base64.DEFAULT);
-                final Bitmap ObjBitmapTemp = BitmapFactory.decodeByteArray(Photo, 0, Photo.length);
+
+                final Bitmap[] ObjBitmapTemp= new Bitmap[1];
+
+                try {
+                    ObjBitmapTemp[0] = Utils.LoadImage(ObjFood.getPhoto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ImageFood.setImageBitmap(ObjBitmapTemp);
+                        ImageFood.setImageBitmap(ObjBitmapTemp[0]);
                         lblName.setText(ObjFood.getName());
                         lblDescription.setText(ObjFood.getDescription());
                         if (ObjUser.isHaveDelivary())

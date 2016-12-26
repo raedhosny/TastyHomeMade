@@ -159,27 +159,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lvMainMenu.addHeaderView(Header);
         lvMainMenu.setAdapter(new MainMenuAdapter(this, FilteredSideMenuItemsList, AllSideMenuItemsList));
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ObjCategoriesList = new CategoriesDB().SelectAll(ObjSettings.getCurrentLanguageId());
-                final CategoriesAdapter ObjCategoriesAdapter = new CategoriesAdapter(MainActivity.this, ObjCategoriesList);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (lvCategories.getHeaderViewsCount() == 0)
-                        {
-                            View CategoriesHeader = getLayoutInflater().inflate(R.layout.categories_menu_header,null);
-                            lvCategories.addHeaderView(CategoriesHeader);
+        if (ObjSettings.getUserType() .equals(Settings.enumUserType.Customer)) {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ObjCategoriesList = new CategoriesDB().SelectAll(ObjSettings.getCurrentLanguageId());
+                    final CategoriesAdapter ObjCategoriesAdapter = new CategoriesAdapter(MainActivity.this, ObjCategoriesList);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (lvCategories.getHeaderViewsCount() == 0) {
+                                View CategoriesHeader = getLayoutInflater().inflate(R.layout.categories_menu_header, null);
+                                lvCategories.addHeaderView(CategoriesHeader);
+                            }
+                            lvCategories.setAdapter(ObjCategoriesAdapter);
                         }
-                        lvCategories.setAdapter(ObjCategoriesAdapter);
-                    }
-                });
+                    });
 
 
-            }
-        });
-        t.start();
+                }
+            });
+            t.start();
+        }
 
         Drawer_Layout.closeDrawer(Linear_SideMenu);
 
