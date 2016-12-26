@@ -16,6 +16,7 @@ public class ConnectionProperties {
     public static String Password = "tested1";
     public static String Port = "1430";
     public static String DatabaseName= "wwwtasty_tastyhomemade";
+    public static String SiteUrl = "http://www.tastyhomemade.net";
 
 //    public static String IP = "192.168.1.11";
 //    public static String UserName = "sa";

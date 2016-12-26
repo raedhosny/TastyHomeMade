@@ -18,14 +18,24 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.tastyhomemade.tastyhomemade.Business.ConnectionProperties;
 import com.tastyhomemade.tastyhomemade.Business.MainMenuItem;
 import com.tastyhomemade.tastyhomemade.Business.OnGetCity;
 import com.tastyhomemade.tastyhomemade.Business.OnGetDistance;
 import com.tastyhomemade.tastyhomemade.Fragment.*;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,6 +43,16 @@ import java.util.List;
 import java.util.Locale;
 
 import com.tastyhomemade.tastyhomemade.R;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpPost;
+
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,6 +63,11 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 
 /**
  * Created by raed on 11/22/2016.
@@ -527,6 +552,7 @@ public class Utils {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
+
 
 
 }
