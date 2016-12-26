@@ -38,7 +38,7 @@ public class CategoriesDB {
             while (ObjResultSet.next())
             {
                 Categories ObjCategory = new Categories();
-                ObjCategory .setId(ObjResultSet.getInt("id"));
+                ObjCategory .setId(ObjResultSet.getInt("CategoryId"));
                 ObjCategory .setLanguageId(ObjResultSet.getInt("LanguageId"));
                 ObjCategory .setName(ObjResultSet.getString("Name"));
                 ObjCategoriesList.add(ObjCategory);

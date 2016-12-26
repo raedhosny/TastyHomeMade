@@ -29,7 +29,7 @@ public class FoodsDB {
 
             ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
-                    "EXECUTE [dbo].[SP_Foods_InsertUpdate] \n" +
+                    "EXECUTE SP_Foods_InsertUpdate \n" +
                     "   @Id=?\n" +
                     "  ,@LanguageId=?\n" +
                     "  ,@CategoryId=?\n" +

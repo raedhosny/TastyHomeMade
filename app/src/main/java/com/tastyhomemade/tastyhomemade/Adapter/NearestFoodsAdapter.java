@@ -3,6 +3,7 @@ package com.tastyhomemade.tastyhomemade.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,9 +67,9 @@ public class NearestFoodsAdapter extends BaseAdapter {
         TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
         TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
         TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
-        ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
-        Button BtnHomeMenuItemRequest = (Button)v.findViewById(R.id.BtnHomeMenuItemRequest);
-        TextView lblFoodMakerDistance = (TextView)v.findViewById(R.id.lblNumberOfRequests);
+        final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
+        Button BtnHomeMenuItemRequest = (Button) v.findViewById(R.id.BtnHomeMenuItemRequest);
+        TextView lblFoodMakerDistance = (TextView) v.findViewById(R.id.lblNumberOfRequests);
 
 
         // Set Delivery availability
@@ -82,7 +83,7 @@ public class NearestFoodsAdapter extends BaseAdapter {
         }
 
         // Set Food Price
-        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context,R.string.Currency,new Settings(context).getCurrentLanguageId()));
+        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
 
         // Set Food Name
         lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
@@ -108,30 +109,43 @@ public class NearestFoodsAdapter extends BaseAdapter {
 
         // Set Food Photo
 
-        Bitmap ObjBitmap = null;
-        try {
-            ObjBitmap = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ImageHomeMenuItem.setImageBitmap(ObjBitmap);
+        final Bitmap[] ObjBitmap = new Bitmap[1];
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                try {
+                    ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
+                    }
+                });
+            }
+        });
+        t.start();
 
         // Set Food Rating
         // /////////////////////
         ////////////////////////
 
 
-
         ////////////////////////
         ////////////////////////
 
         // Distance In Meter
-        String ObjTemp = Utils.GetResourceName(context,R.string.AboutMeters, new Settings(context).getCurrentLanguageId());
+        String ObjTemp = Utils.GetResourceName(context, R.string.AboutMeters, new Settings(context).getCurrentLanguageId());
         if (!ObjTemp.equals("Unknow") || !ObjTemp.equals("غير معروف"))
-            ObjTemp = ObjTemp.replace("X",ObjFoodsList.get(position).getDistance());
+            ObjTemp = ObjTemp.replace("X", ObjFoodsList.get(position).getDistance());
 
         lblFoodMakerDistance.setText(ObjTemp);
-
 
 
         BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
@@ -139,10 +153,8 @@ public class NearestFoodsAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (new Settings(context).getUserId() != -1) {
                     new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
-                }
-                else
-                {
-                    Toast.makeText(context,new Utils().GetResourceName(context,R.string.Error_YouAreNotLoginYet,new Settings(context).getCurrentLanguageId()),  Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, new Utils().GetResourceName(context, R.string.Error_YouAreNotLoginYet, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 }
             }
         });

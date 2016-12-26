@@ -16,6 +16,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -261,7 +262,7 @@ public class Utils {
         int width = p_CurrentView.getWidth();
         int height = p_CurrentView.getHeight();
 
-        return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=11&size="+(width/3) +"x"+(height/3)+"&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
+        return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=11&size="+(width) +"x"+(height)+"&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
     }
 
     public static String GetGoogleMapAddress(double p_Latitude, double p_Longitude, int p_iLanguageId) {
@@ -528,7 +529,7 @@ public class Utils {
         for (int i = 0; i < listAdapter.getCount(); i++) {
             view = listAdapter.getView(i, view, listView);
             if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+                view.setLayoutParams(new AbsListView.LayoutParams(desiredWidth, AbsListView.LayoutParams.WRAP_CONTENT));
 
             view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             totalHeight += view.getMeasuredHeight();

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<Categories> ObjCategoriesList;
     TextView lblHeader;
     TextView lblDate;
+    View CategoriesHeader;
 
 
     @Override
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lblHeader = (TextView) findViewById(R.id.lblHeader);
         lblDate = (TextView) findViewById (R.id.lblDate);
         ObjSettings = new Settings(this);
+        CategoriesHeader = getLayoutInflater().inflate(R.layout.categories_menu_header, null);
 
         LoadMainInfo();
 
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lvMainMenu.addHeaderView(Header);
         lvMainMenu.setAdapter(new MainMenuAdapter(this, FilteredSideMenuItemsList, AllSideMenuItemsList));
 
-        if (ObjSettings.getUserType() .equals(Settings.enumUserType.Customer)) {
+        if (!ObjSettings.getUserType().equals(String.valueOf(Settings.enumUserType.FoodMaker) )) {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -169,9 +171,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void run() {
                             if (lvCategories.getHeaderViewsCount() == 0) {
-                                View CategoriesHeader = getLayoutInflater().inflate(R.layout.categories_menu_header, null);
+
                                 lvCategories.addHeaderView(CategoriesHeader);
                             }
+
                             lvCategories.setAdapter(ObjCategoriesAdapter);
                         }
                     });
@@ -181,6 +184,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             t.start();
         }
+        else {
+
+            lvCategories.setAdapter(null);
+            lvCategories.removeHeaderView(CategoriesHeader);
+
+        }
+
 
         Drawer_Layout.closeDrawer(Linear_SideMenu);
 

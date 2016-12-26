@@ -87,22 +87,22 @@ public class NearestFoodsFragment extends Fragment {
                     {
                     }
 
-                    List<Integer> Indeces = new ArrayList<Integer>();
+                    List<Foods> Indeces = new ArrayList<Foods>();
 
                     for (int i=0;i<ObjFoodsList.size();i++) {
-                        if ((ObjFoodsList.get(i).getDistance() == "Unknown")
-                                &&
-                                (ObjFoodsList.get(i).getDistance() == "غير معروف")
+                        if ((ObjFoodsList.get(i).getDistance() .equals("Unknown"))
+                                ||
+                                (ObjFoodsList.get(i).getDistance() .equals("غير معروف"))
 
                                 )
                         {
-                          Indeces.add(i);
+                          Indeces.add(ObjFoodsList.get(i));
                         }
                     }
 
-                    for (int i =0;i<Indeces.size();i++)
+                    for (int i =Indeces.size()-1;i>=0;i--)
                     {
-                        ObjUnknowFoodsList.add(ObjFoodsList.get(Indeces.get(i)));
+                        ObjUnknowFoodsList.add(Indeces.get(i));
                         ObjFoodsList.remove(Indeces.get(i));
                     }
 

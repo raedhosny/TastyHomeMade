@@ -28,6 +28,7 @@ import com.tastyhomemade.tastyhomemade.Business.CitiesDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Business.Orders;
+import com.tastyhomemade.tastyhomemade.Business.OrdersDB;
 import com.tastyhomemade.tastyhomemade.Business.Orders_Actions;
 import com.tastyhomemade.tastyhomemade.Business.Orders_ActionsDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
@@ -118,7 +119,12 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                         ObjOrderAction.setActionId(iActionId);
                         Calendar ObjCalendar = Calendar.getInstance();
                         ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
-                        new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                        int iId  = new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                        final Orders_Actions ObjOrderActionFinal = new Orders_ActionsDB().Select(iId);
+
+
+
+
 
                         ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                             @Override
@@ -156,7 +162,10 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                         ObjOrderAction.setActionId(iActionId);
                         Calendar ObjCalendar = Calendar.getInstance();
                         ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
-                        new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                        int iId = new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+
+                        final Orders_Actions ObjOrderActionFinal = new Orders_ActionsDB().Select(iId);
+
 
 
                         ((AppCompatActivity) context).runOnUiThread(new Runnable() {
@@ -172,6 +181,27 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                                 btnOrderRejected.setEnabled(true);
                                 btnOrderRejected.setBackgroundResource(R.drawable.button_style3_disabled);
                                 btnOrderRejected.setTextColor(Color.parseColor("#929292"));
+
+                                if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
+                                    sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("ar"));
+                                else
+                                    sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("en"));
+
+                                final SimpleDateFormat sdfFinal3 = sdf;
+                                // Delivery Date
+
+                                lblDeliveryDate.setText(sdfFinal3.format(ObjOrderActionFinal.getActionDate()));
+
+
+                                if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
+                                    sdf = new SimpleDateFormat("h:mm a", new Locale("ar"));
+                                else
+                                    sdf = new SimpleDateFormat("h:mm a");
+
+                                final SimpleDateFormat sdfFinal4 = sdf;
+
+                                lblDeliveryTime.setText(sdfFinal4.format(ObjOrderActionFinal.getActionDate()));
+
                                 Toast.makeText(context, Utils.GetResourceName(context,R.string.OrderHasBeenReceived,ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
 
                             }

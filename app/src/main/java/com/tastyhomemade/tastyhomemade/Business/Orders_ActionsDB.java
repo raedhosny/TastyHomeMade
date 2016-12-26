@@ -121,4 +121,55 @@ public class Orders_ActionsDB {
 
     }
 
+    public Orders_Actions Select (int p_iId)
+    {
+        java.sql.Connection ObjConnection = null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_Orders_Actions_Select\n" +
+                            "   @Id=?"
+
+            );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
+            stmt.setInt(1,p_iId);
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+           Orders_Actions Obj_Orders_Actions = new Orders_Actions();
+
+            while (ObjResultSet.next())
+            {
+                Obj_Orders_Actions.setId(ObjResultSet.getInt("Id"));
+                Obj_Orders_Actions.setOrderId(ObjResultSet.getInt("OrderId"));
+                Obj_Orders_Actions.setActionId(ObjResultSet.getInt("ActionId"));
+                Obj_Orders_Actions.setActionDate(ObjResultSet.getTimestamp("ActionDate"));
+              return Obj_Orders_Actions;
+
+            }
+            return new Orders_Actions();
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        return null;
+
+    }
+
 }

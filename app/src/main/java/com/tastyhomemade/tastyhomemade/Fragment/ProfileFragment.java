@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        ObjWaitDialog.ShowDialog();
+
         if (v == btnSave) {
             if (!txtPassword.getText().toString().equals(txtPasswordConfirm.getText().toString())) {
                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PasswordDoesNotMatch, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
@@ -111,6 +111,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_CantFindCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
 
             } else {
+                ObjWaitDialog.ShowDialog();
                 Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -183,8 +184,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     Utils.GoogleMapClassCity ObjGoogleMapClass = new Utils().new GoogleMapClassCity(getContext(),ObjOnGetCity);
                     ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude());
                     //String sCurrentCity = ObjGoogleMapClass.getsCurrentCity();
-                    iCurrentLatitude = ObjGPSTracker.getLatitude();
-                    iCurrentLongtitude = ObjGPSTracker.getlongtitude();
+                    //iCurrentLatitude = ObjGPSTracker.getLatitude();
+                    //iCurrentLongtitude = ObjGPSTracker.getlongtitude();
 
                 } else {
                     ObjGPSTracker.ShowSettingsAlert();

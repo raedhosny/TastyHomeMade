@@ -21,7 +21,8 @@ public class OrdersDB {
 
             ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement(
-                    "EXECUTE SP_Orders_InsertUpdate \n" +
+
+                            "EXECUTE [dbo].[SP_Orders_InsertUpdate] \n" +
                             "   @Id=?\n" +
                             "  ,@Food_Id=?\n" +
                             "  ,@User_Id=?\n" +
@@ -37,10 +38,9 @@ public class OrdersDB {
                             "  ,@ShippingOtherDetails=?\n" +
                             "  ,@ShippingDeliveryDate=?\n" +
                             "  ,@NumberOfOrders=?\n" +
-                            "  ,@OrderAddress=?\n"+
-                            "  ,@IsCompleteOrder=?\n"+
-                            "  ,@IsReportDelayed=?"
-                            );
+                            "  ,@OrderAddress=?\n" +
+                            "  ,@IsCompleteOrder=?\n" +
+                            "  ,@IsReportDelayed=?");
 
 
             stmt.setEscapeProcessing(false);
@@ -64,13 +64,13 @@ public class OrdersDB {
             stmt.setBoolean(17,p_ObjOrder.isCompleteOrder());
             stmt.setBoolean(18,p_ObjOrder.isReportDelayed());
 
+
+
             ResultSet ObjResultSet = stmt.executeQuery();
 
             if (ObjResultSet.next())
                 return ObjResultSet.getInt(1);
-                //return iResult;
             return -1;
-
 
         }
         catch (Exception ex)

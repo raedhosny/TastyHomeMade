@@ -141,7 +141,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if (v == btnRegisterSave) {
-            ObjWaitDialog.ShowDialog();
+
 
             // Validate Email
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtRegisterEmail.getText()).matches() == false) {
@@ -172,7 +172,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
             //Validate Register Type
             if (ddlRegisterType.getSelectedItemPosition() == 0) {
-                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PleaseSelectCity, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.Error_PleaseSelectRegisterType, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -213,6 +213,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             else if (ddlRepresentive.getSelectedItemPosition() == 2)
                 IsHaveDelivary = false;
             final boolean IsHaveDelivaryResult = IsHaveDelivary;
+
+            ObjWaitDialog.ShowDialog();
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -223,8 +225,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     ObjUser.setPassword(txtRegisterPassword.getText().toString());
                     ObjUser.setEmail(txtRegisterEmail.getText().toString());
                     ObjUser.setRegisterTypeId(iRegisterTypeId);
-                    ObjUser.setCurrentLocation_Latitude(-1);
-                    ObjUser.setCurrentLocation_Longitude(-1);
+                    ObjUser.setCurrentLocation_Latitude(iCurrentLatitude);
+                    ObjUser.setCurrentLocation_Longitude(iCurrentLongtitude);
                     ObjUser.setCityId(iCityId);
                     ObjUser.setDistrict("Nothing");
                     ObjUser.setStreet("Nothing");
@@ -312,8 +314,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     ObjGoogleMapClass.execute(ObjGPSTracker.getLatitude(), ObjGPSTracker.getlongtitude());
                     //String sCurrentCity = ObjGoogleMapClass.getsCurrentCity();
                     //Log.d("City is ",sCurrentCity);
-                    iCurrentLatitude = ObjGPSTracker.getLatitude();
-                    iCurrentLongtitude = ObjGPSTracker.getlongtitude();
+                    //iCurrentLatitude = ObjGPSTracker.getLatitude();
+                    //iCurrentLongtitude = ObjGPSTracker.getlongtitude();
 
                 } else {
 
