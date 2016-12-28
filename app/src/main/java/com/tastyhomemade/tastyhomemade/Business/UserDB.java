@@ -200,4 +200,63 @@ public class UserDB {
         return ObjUser;
     }
 
+
+    public User SelectByUserName(String p_UserName)
+    {
+        User ObjUser = new User();
+        ObjUser.setId(-1);
+
+        java.sql.Connection myConnection= null;
+        try {
+
+            myConnection = new DB().CreateConnection();
+            PreparedStatement stmt = myConnection.prepareStatement("EXECUTE [SP_users_SelectByUserName] \n" +
+                    "   @UserName=?"
+            );
+
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
+            stmt.setString(1,p_UserName); //id
+
+
+            ResultSet res =  stmt.executeQuery();
+            if (res.next()) {
+                ObjUser.setId(res.getInt(1)); //id
+                ObjUser.setName(res.getString(2)); //name
+                ObjUser.setUsername(res.getString(3)); //username
+                ObjUser.setPassword(res.getString(4)); //password
+                ObjUser.setEmail(res.getString(5)); //email
+                ObjUser.setRegisterTypeId(res.getInt(6)); //registertypeid
+                ObjUser.setCurrentLocation_Longitude(res.getDouble(7)); //current location longtitude
+                ObjUser.setCurrentLocation_Latitude(res.getDouble(8)); // current location latitude
+                ObjUser.setCityId(res.getInt(9)); // cityid
+                ObjUser.setDistrict(res.getString(10)); //district
+                ObjUser.setStreet(res.getString(11)); //street
+                ObjUser.setBuilding(res.getString(12));// building
+                ObjUser.setApartment(res.getString(13)); // apartment
+                ObjUser.setActive(res.getBoolean(14));// IsActive
+                ObjUser.setActivationCode(res.getString(15)); //activationcode
+                ObjUser.setHaveDelivary(res.getBoolean(16)); //activationcode
+                return ObjUser;
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            try
+            {
+                myConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        return ObjUser;
+    }
+
+
 }

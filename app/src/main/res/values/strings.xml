@@ -195,4 +195,11 @@
      <string name="OrderHasBeenRejected">
         Order has been rejected by client
     </string>
+    <string name="PleaseEnterUserName">
+        Please enter username
+    </string>
+      <string name="PleaseCheckYourEmailInbox">
+        Please check your email inbox for your recovered password
+    </string>
+
 </resources>

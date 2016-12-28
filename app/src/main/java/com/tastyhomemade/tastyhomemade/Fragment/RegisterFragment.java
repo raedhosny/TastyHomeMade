@@ -1,13 +1,7 @@
 package com.tastyhomemade.tastyhomemade.Fragment;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,6 +25,7 @@ import com.tastyhomemade.tastyhomemade.Business.RegisterTypes;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
+import com.tastyhomemade.tastyhomemade.Others.GMailSender;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
@@ -38,6 +33,14 @@ import com.tastyhomemade.tastyhomemade.R;
 import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
 import com.tastyhomemade.tastyhomemade.Services.GPSTrackerBackground;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -214,6 +217,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 IsHaveDelivary = false;
             final boolean IsHaveDelivaryResult = IsHaveDelivary;
 
+            final String sActivationCode = java.util.UUID.randomUUID().toString().replace("-", "");
+
             ObjWaitDialog.ShowDialog();
             Thread t = new Thread(new Runnable() {
                 @Override
@@ -233,10 +238,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     ObjUser.setBuilding("Nothing");
                     ObjUser.setApartment("Nothing");
                     ObjUser.setActive(false);
-                    ObjUser.setActivationCode(java.util.UUID.randomUUID().toString().replace("-", ""));
+                    ObjUser.setActivationCode(sActivationCode);
                     ObjUser.setHaveDelivary(IsHaveDelivaryResult);
 
                     int iResult = new UserDB().InsertUpdate(ObjUser);
+                    SendEmail(txtRegisterUserName.getText().toString().trim(),txtRegisterEmail.getText().toString(),sActivationCode);
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -463,5 +470,31 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void SendEmail (String p_sUserName,String p_sEmail,String p_ActivationCode)
+    {
+        try {
+            URL ObjUrl = new URL("http://www.tastyhomemade.net/Template/UserActivationMessage.html");
+            InputStreamReader ObjStream = new InputStreamReader( ObjUrl.openStream());
+            BufferedReader ObjReader = new BufferedReader(ObjStream);
+            String sMessageBody = "";
+            String sTemp = "";
+            while ((sTemp =ObjReader.readLine()) != null)
+                sMessageBody  +=sTemp;
 
+            sMessageBody= sMessageBody.replace("&lt;user&gt;",p_sUserName).replace("&lt;ActivateCode&gt;",p_ActivationCode);
+
+        GMailSender sender = new GMailSender("tastyhomemade2016@gmail.com", "tested12");
+        sender.sendMail("مرحبا "+p_sUserName ,
+                sMessageBody,
+                "tastyhomemade2016@gmail.com",
+                p_sEmail);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

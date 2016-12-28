@@ -183,5 +183,11 @@
     <string name="OrderHasBeenRejected">
         تم الابلاغ عن عدم استلام الطلب
     </string>
+    <string name="PleaseEnterUserName">
+        فضلا ادخل اسم المستخدم
+    </string>
+      <string name="PleaseCheckYourEmailInbox">
+        فضلا افحص بريدك الالكتروني لمعرفة كلمة مرورك
+    </string>
 
 </resources>
