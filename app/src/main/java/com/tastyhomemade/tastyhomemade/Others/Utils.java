@@ -66,7 +66,7 @@ public class Utils {
 
     }
 
-    public void ShowActivity(Context p_context, List<MainMenuItem> p_ItemsList, String sSelectedItem, String... args) {
+    public void ShowActivity(Context p_context, List<MainMenuItem> p_ItemsList, String sSelectedItem, String... args ) {
         FragmentManager Manager = ((AppCompatActivity) p_context).getSupportFragmentManager();
         TextView lblHeader  = (TextView)((AppCompatActivity) p_context).findViewById(R.id.lblHeader);
 
@@ -77,8 +77,21 @@ public class Utils {
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.FoodsAndDrinks,new Settings(p_context).getCurrentLanguageId()));
             MainFragment ObjMainFragment = new MainFragment();
             Bundle ObjBundle = new Bundle();
-            ObjBundle.putInt("CategoryId", Integer.parseInt(args[0]));
-            ObjMainFragment.setArguments(ObjBundle);
+
+            if (args.length == 2) {
+
+                ObjBundle.putString("ViewMode",(args[0]));
+                ObjBundle.putInt("CategoryId", Integer.parseInt(args[1]));
+                ObjMainFragment.setArguments(ObjBundle);
+            }
+            else if (args.length == 3) {
+
+                ObjBundle.putString("ViewMode",(args[0]));
+                ObjBundle.putInt("CategoryId", Integer.parseInt(args[1]));
+                ObjBundle.putString("Keyword", args[2]);
+                ObjMainFragment.setArguments(ObjBundle);
+            }
+
             Transaction.replace(R.id.main_content, ObjMainFragment);
             Transaction.commit();
         } else if (sSelectedItem == "Register") {
@@ -143,7 +156,20 @@ public class Utils {
                 }
             });
 
-            Transaction.replace(R.id.main_content, new ListOfFoodsandDrinksFragment());
+            ListOfFoodsandDrinksFragment ObjListOfFoodsandDrinksFragment =  new ListOfFoodsandDrinksFragment();
+            Bundle ObjBundle = new Bundle();
+
+            if (args.length == 2)
+            {
+                ObjBundle.putString("ViewMode", args[0]);
+                ObjBundle.putString("Keyword",args[1]);
+            }
+            else if (args.length == 1)
+            {
+                ObjBundle.putString("ViewMode", args[0]);
+            }
+            ObjListOfFoodsandDrinksFragment.setArguments(ObjBundle);
+            Transaction.replace(R.id.main_content,ObjListOfFoodsandDrinksFragment);
             Transaction.commit();
         }
 
@@ -163,7 +189,11 @@ public class Utils {
         }
         else if (sSelectedItem.equals(p_ItemsList.get(2).getName())) { // List of Foods and Drinks
             lblHeader.setText(Utils.GetResourceName(p_context,R.string.MyFoodsAndDrinks,new Settings(p_context).getCurrentLanguageId()));
-            Transaction.replace(R.id.main_content, new ListOfFoodsandDrinksFragment());
+            Bundle ObjBundle = new Bundle();
+            ObjBundle.putString("ViewMode",ViewMode.NormalMode.name());
+            ListOfFoodsandDrinksFragment ObjListOfFoodsandDrinksFragment = new ListOfFoodsandDrinksFragment();
+            ObjListOfFoodsandDrinksFragment.setArguments(ObjBundle);
+            Transaction.replace(R.id.main_content, ObjListOfFoodsandDrinksFragment);
             Transaction.commit();
         }
 

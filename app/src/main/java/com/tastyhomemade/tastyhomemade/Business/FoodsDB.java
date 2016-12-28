@@ -458,4 +458,139 @@ public class FoodsDB {
 
     }
 
+
+    public List<Foods> GlobalSearchByCustomer (String p_sKeyword, int p_iLanguageIdId)
+    {
+        java.sql.Connection ObjConnection = null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            ObjConnection.createStatement();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_GlobalSearch_ByCustomer\n" +
+                            "   @Keyword=?\n" +
+                            "  ,@LanguageId=?"
+
+            );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
+            stmt.setString(1,p_sKeyword);
+            stmt.setInt(2,p_iLanguageIdId);
+
+
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+
+
+            List<Foods> ObjFoodList = new ArrayList<Foods>();
+
+            while(ObjResultSet.next())
+            {
+                Foods ObjFood = new Foods();
+
+                ObjFood.setId(ObjResultSet.getInt("FoodId"));
+                ObjFood.setCategoryId(ObjResultSet.getInt("CategoryId"));
+                ObjFood.setUserId(ObjResultSet.getInt("UserId"));
+                ObjFood.setRequestTimeFrom(ObjResultSet.getTime("RequestTimeFrom"));
+                ObjFood.setRequestTimeTo(ObjResultSet.getTime("RequestTimeTo"));
+                ObjFood.setPhoto(ObjResultSet.getString("Photo"));
+                ObjFood.setPrice(ObjResultSet.getFloat("Price"));
+                ObjFood.setLanguageId(ObjResultSet.getInt("LanguageId"));
+                ObjFood.setName(ObjResultSet.getString("Name"));
+                ObjFood.setDescription(ObjResultSet.getString("Description"));
+
+                ObjFoodList.add(ObjFood);
+            }
+            return  ObjFoodList;
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        return null;
+
+
+    }
+
+    public List<Foods> GlobalSearchByFoodMaker (String p_sKeyword, int p_iLanguageIdId,int p_iUserId)
+    {
+        java.sql.Connection ObjConnection = null;
+        try {
+
+            ObjConnection = new DB().CreateConnection();
+            ObjConnection.createStatement();
+            PreparedStatement stmt = ObjConnection.prepareStatement(
+                    "EXECUTE SP_GlobalSearch_SearchByFoodMaker\n" +
+                            "   @Keyword=?\n" +
+                            "  ,@LanguageId=?" +
+                            "  ,@UserId=?"
+
+            );
+            stmt.setEscapeProcessing(false);
+            stmt.setQueryTimeout(60);
+            stmt.setString(1,p_sKeyword);
+            stmt.setInt(2,p_iLanguageIdId);
+            stmt.setInt(3,p_iUserId);
+
+            ResultSet ObjResultSet = stmt.executeQuery();
+
+            List<Foods> ObjFoodList = new ArrayList<Foods>();
+
+            while(ObjResultSet.next())
+            {
+                Foods ObjFood = new Foods();
+
+                ObjFood.setId(ObjResultSet.getInt("FoodId"));
+                ObjFood.setCategoryId(ObjResultSet.getInt("CategoryId"));
+                ObjFood.setUserId(ObjResultSet.getInt("UserId"));
+                ObjFood.setRequestTimeFrom(ObjResultSet.getTime("RequestTimeFrom"));
+                ObjFood.setRequestTimeTo(ObjResultSet.getTime("RequestTimeTo"));
+                ObjFood.setPhoto(ObjResultSet.getString("Photo"));
+                ObjFood.setPrice(ObjResultSet.getFloat("Price"));
+                ObjFood.setLanguageId(ObjResultSet.getInt("LanguageId"));
+                ObjFood.setName(ObjResultSet.getString("Name"));
+                ObjFood.setDescription(ObjResultSet.getString("Description"));
+
+                ObjFoodList.add(ObjFood);
+            }
+            return  ObjFoodList;
+
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally {
+            try
+            {
+                ObjConnection.close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        return null;
+
+
+    }
+
+
+
 }

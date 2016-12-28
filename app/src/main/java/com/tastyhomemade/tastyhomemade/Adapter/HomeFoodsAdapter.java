@@ -19,6 +19,7 @@ import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.R;
 
 import org.w3c.dom.Text;
@@ -147,7 +148,7 @@ public class HomeFoodsAdapter extends BaseAdapter {
                             ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
+                                    new Utils().ShowActivity(context, null, "RequestForm", ViewMode.NormalMode.name(), String.valueOf(ObjFoodsList.get(position).getId()));
                                 }
                             });
                         } else {

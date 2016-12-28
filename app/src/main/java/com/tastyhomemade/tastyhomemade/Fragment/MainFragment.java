@@ -14,6 +14,7 @@ import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
@@ -29,6 +30,11 @@ public class MainFragment extends Fragment {
 
 
     WaitDialog ObjWaitDialog = null;
+    int iCategoryId = -1;
+    String sKeyword = "";
+    ViewMode ObjCurrentMode = null;
+    Settings ObjSetting;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,12 +45,25 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final int iCategoryId = getArguments().getInt("CategoryId");
+        ObjSetting = new Settings (getContext());
+
+        if (getArguments().size() ==3) {
+            ObjCurrentMode = ViewMode.valueOf( getArguments().getString("ViewMode"));
+            iCategoryId = getArguments().getInt("CategoryId");
+            sKeyword = getArguments().getString("Keyword");
+        }
+        else
+        {
+            ObjCurrentMode = ViewMode.valueOf( getArguments().getString("ViewMode"));
+            iCategoryId = getArguments().getInt("CategoryId");
+        }
 
         ObjWaitDialog = new WaitDialog(getContext());
 
-        FillData(iCategoryId);
-
+        if (ObjCurrentMode == ViewMode.NormalMode )
+            FillData(iCategoryId);
+        else if (ObjCurrentMode == ViewMode.SearchMode)
+            FillData(sKeyword);
     }
 
     private void FillData(int p_iCategoryId) {
@@ -59,6 +78,41 @@ public class MainFragment extends Fragment {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SelectByCategoryId(iCategoryId, new Settings(getActivity()).getCurrentLanguageId()));
+                    final HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
+                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
+                    getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
+                                }
+                            }
+                    );
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        t.start();
+
+
+    }
+
+    private void FillData(String p_sKeyword) {
+
+        ObjWaitDialog.ShowDialog();
+
+        final String sKeywordFinal = p_sKeyword;
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<Foods> ObjFoodsList = new ArrayList<Foods>();
+                    ObjFoodsList.addAll(new FoodsDB().GlobalSearchByCustomer(sKeywordFinal,ObjSetting .getCurrentLanguageId()));
                     final HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
                     final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
                     getActivity().runOnUiThread(

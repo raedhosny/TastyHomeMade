@@ -22,6 +22,7 @@ import com.tastyhomemade.tastyhomemade.Business.MainMenuItem;
 import com.tastyhomemade.tastyhomemade.Fragment.ProfileFragment;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 
 import org.w3c.dom.Text;
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMainForm = (Button) this.findViewById(R.id.btnMainForm);
         txtSearch = (EditText) this.findViewById(R.id.txtSearch);
         btnSearch = (Button) this.findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(this);
         btnMainRegister = (Button) this.findViewById(R.id.btnMainRegister);
         btnMainForm.setOnClickListener(this);
         btnMainRegister.setOnClickListener(this);
@@ -123,6 +125,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }
+        else if (view == btnSearch) {
+
+            if (ObjSettings.getUserType().equals(Settings.enumUserType.FoodMaker.toString()))
+                new Utils().ShowActivity(this, null, "MainForFoodMaker",ViewMode.SearchMode.name(),txtSearch.getText().toString().trim());
+            else
+                new Utils().ShowActivity(this, null, "Main", ViewMode.SearchMode.name(), "-1",txtSearch.getText().toString().trim());
+
+
+        }
+
 
     }
 
@@ -221,9 +233,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (ObjSettings.getUserType().equals(Settings.enumUserType.FoodMaker.toString()))
-            new Utils().ShowActivity(this, null, "MainForFoodMaker");
+            new Utils().ShowActivity(this, null, "MainForFoodMaker",ViewMode.NormalMode.name());
         else
-            new Utils().ShowActivity(this, null, "Main", "-1");
+            new Utils().ShowActivity(this, null, "Main", ViewMode.NormalMode.name(),"-1");
 
 
     }

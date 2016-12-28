@@ -13,6 +13,7 @@ import com.tastyhomemade.tastyhomemade.Fragment.ProfileFragment;
 import com.tastyhomemade.tastyhomemade.Fragment.SettingsFragment;
 import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class MainMenuAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 String sSelectedItem  =((TextView)view).getText().toString();
-                new Utils().ShowActivity ((MainActivity)context,AllItems,sSelectedItem);
+                new Utils().ShowActivity ((MainActivity)context,AllItems,  sSelectedItem,ViewMode.NormalMode.name());
                 ((DrawerLayout)((MainActivity)context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity)context).findViewById(R.id.Linear_SideMenu));;
 
             }

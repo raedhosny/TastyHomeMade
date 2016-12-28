@@ -19,6 +19,7 @@ import com.tastyhomemade.tastyhomemade.Business.CategoriesDB;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
@@ -38,6 +39,8 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
     Button btnSearch;
     List<Categories> ObjCategoriesList;
     WaitDialog ObjWaitDialog;
+    ViewMode ObjCurrentViewMode;
+    String sKeyword ;
 
     @Nullable
     @Override
@@ -56,8 +59,7 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
 
         ObjWaitDialog = new WaitDialog(getContext());
         ObjWaitDialog.ShowDialog();
-        FillCategories();
-        FillData(txtName.getText().toString(),-1);
+
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +69,26 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
                 FillData(txtName.getText().toString().trim(),ObjCategories.getId());
             }
         });
+
+
+        if (getArguments() .size() == 1)
+        {
+            ObjCurrentViewMode = ViewMode.valueOf(getArguments().getString("ViewMode"));
+        }
+        else  if (getArguments() .size() == 2)
+        {
+            ObjCurrentViewMode = ViewMode.valueOf(getArguments().getString("ViewMode"));
+            sKeyword = getArguments().getString("Keyword");
+
+        }
+
+        FillCategories();
+        if (ObjCurrentViewMode == ViewMode.NormalMode) {
+            FillData(txtName.getText().toString(), -1);
+        }
+        else if (ObjCurrentViewMode == ViewMode.SearchMode) {
+            FillData(sKeyword);
+        }
 
     }
 
@@ -121,7 +143,39 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
                             }
                     );
 
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
+        t.start();
+
+
+    }
+
+    private void FillData(String p_sKeyword) {
+
+        final String sKeywordFinal  = p_sKeyword;
+
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<Foods> ObjFoodsList = new ArrayList<Foods>();
+                            ObjFoodsList.addAll(new FoodsDB().GlobalSearchByFoodMaker(sKeywordFinal,ObjSettings.getCurrentLanguageId(), ObjSettings.getUserId() ));
+                    final EditFoodsAdapter ObjFoodsListAdapter = new EditFoodsAdapter(getContext(), ObjFoodsList);
+                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
+                    getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
+                                }
+                            }
+                    );
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

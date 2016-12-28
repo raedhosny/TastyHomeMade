@@ -21,6 +21,7 @@ import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.R;
 
 import java.sql.Time;
@@ -66,7 +67,7 @@ public class CategoriesAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                new Utils().ShowActivity (context,null,"Main", String.valueOf(ObjCategoriesList.get(position).getId()) );
+                new Utils().ShowActivity (context,null,"Main", ViewMode.NormalMode.name(), String.valueOf(ObjCategoriesList.get(position).getId()) );
                 ((DrawerLayout)((MainActivity)context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity)context).findViewById(R.id.Linear_SideMenu));
 
             }
