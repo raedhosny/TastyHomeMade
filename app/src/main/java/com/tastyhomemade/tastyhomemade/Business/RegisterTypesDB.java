@@ -16,7 +16,7 @@ public class RegisterTypesDB {
         try {
             MyConnection = new DB().CreateConnection();
             PreparedStatement stmt = MyConnection.prepareStatement("EXECUTE SP_RegisterTypes_SelectAll @LanguageId=?");
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1, p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();
@@ -64,7 +64,7 @@ public class RegisterTypesDB {
         try {
             MyConnection = new DB().CreateConnection();
             PreparedStatement stmt = MyConnection.prepareStatement("EXECUTE SP_RegisterTypes_Select @Id=?,@LanguageId=?");
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1, p_iId);
             stmt.setInt(2, p_iLanguageId);

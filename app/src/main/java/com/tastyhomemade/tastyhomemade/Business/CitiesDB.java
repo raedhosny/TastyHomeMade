@@ -22,7 +22,7 @@ public class CitiesDB {
 
            ObjConnection = new DB().CreateConnection();
             PreparedStatement stmt = ObjConnection.prepareStatement("EXECUTE SP_Cities_SelectAll @LanguageId=?");
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iLanguageId);
             ResultSet ObjResultSet = stmt.executeQuery();

@@ -156,7 +156,7 @@ public class UserDB {
                     "   @Id=?"
                     );
 
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId); //id
 
@@ -214,7 +214,7 @@ public class UserDB {
                     "   @UserName=?"
             );
 
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setString(1,p_UserName); //id
 

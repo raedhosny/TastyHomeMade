@@ -22,7 +22,7 @@ public class Orders_AdditionsDB {
                             "  ,@AdditionId=?\n" +
                             "  ,@Quantity=?"
             );
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1,p_Orders_Additions.getId());
             stmt.setInt(2,p_Orders_Additions.getOrderId());
@@ -72,7 +72,7 @@ public class Orders_AdditionsDB {
 
             );
 
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId);
 

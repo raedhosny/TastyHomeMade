@@ -148,7 +148,7 @@ public class HomeFoodsAdapter extends BaseAdapter {
                             ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    new Utils().ShowActivity(context, null, "RequestForm", ViewMode.NormalMode.name(), String.valueOf(ObjFoodsList.get(position).getId()));
+                                    new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
                                 }
                             });
                         } else {

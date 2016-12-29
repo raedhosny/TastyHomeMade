@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.tastyhomemade.tastyhomemade.Business.Cities;
 import com.tastyhomemade.tastyhomemade.Business.CitiesDB;
+import com.tastyhomemade.tastyhomemade.Business.ConnectionProperties;
 import com.tastyhomemade.tastyhomemade.Business.DB;
 import com.tastyhomemade.tastyhomemade.Business.OnGetCity;
 import com.tastyhomemade.tastyhomemade.Business.OnTaskCompleted;
@@ -28,6 +29,7 @@ import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.GMailSender;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
@@ -248,7 +250,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void run() {
                             Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                            new Utils().ShowActivity(getContext(), null, "Main", "-1");
+                            new Utils().ShowActivity(getContext(), null, "Main", ViewMode.NormalMode.name(), "-1");
                             ObjWaitDialog.HideDialog();
                         }
                     });
@@ -473,7 +475,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private void SendEmail (String p_sUserName,String p_sEmail,String p_ActivationCode)
     {
         try {
-            URL ObjUrl = new URL("http://www.tastyhomemade.net/Template/UserActivationMessage.html");
+            URL ObjUrl = new URL(ConnectionProperties.SiteUrl + "/Template/UserActivationMessage.html");
             InputStreamReader ObjStream = new InputStreamReader( ObjUrl.openStream());
             BufferedReader ObjReader = new BufferedReader(ObjStream);
             String sMessageBody = "";

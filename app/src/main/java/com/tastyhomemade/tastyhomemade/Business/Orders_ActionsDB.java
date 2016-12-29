@@ -25,7 +25,7 @@ public class Orders_ActionsDB {
                             "  ,@ActionId=?\n" +
                             "  ,@ActionDate=?\n"
             );
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1,p_Orders_Actions.getId());
             stmt.setInt(2,p_Orders_Actions.getOrderId());
@@ -76,7 +76,7 @@ public class Orders_ActionsDB {
                             "   @Orderby=?"
 
             );
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iOrderId);
             stmt.setInt(2,p_iOrderBy);
@@ -132,7 +132,7 @@ public class Orders_ActionsDB {
                             "   @Id=?"
 
             );
-            stmt.setEscapeProcessing(false);
+            stmt.setEscapeProcessing(true);
             stmt.setQueryTimeout(60);
             stmt.setInt(1,p_iId);
 

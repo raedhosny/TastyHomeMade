@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tastyhomemade.tastyhomemade.Business.ConnectionProperties;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.MainActivity;
@@ -135,7 +136,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         try {
             User ObjUser = new UserDB().SelectByUserName(p_sUserName);
 
-            URL ObjUrl = new URL("http://www.tastyhomemade.net/Template/RecoverPasswordMessage.html");
+            URL ObjUrl = new URL(ConnectionProperties.SiteUrl +"/Template/RecoverPasswordMessage.html");
             InputStreamReader ObjStream = new InputStreamReader(ObjUrl.openStream());
             BufferedReader ObjReader = new BufferedReader(ObjStream);
             String sMessageBody = "";

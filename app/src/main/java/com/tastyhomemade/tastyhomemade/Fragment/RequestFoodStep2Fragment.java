@@ -42,6 +42,7 @@ import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 import com.tastyhomemade.tastyhomemade.Services.GPSTracker;
@@ -488,7 +489,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                             @Override
                             public void run() {
                                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.OrderHasBeenSubmitted, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                                new Utils().ShowActivity(getContext(), null, "Main", "-1");
+                                new Utils().ShowActivity(getContext(), null, "Main",ViewMode.NormalMode.name(), "-1");
                             }
                         });
                     } else if (SelectedTab == 2) // if client request to receive order at his current location
@@ -518,7 +519,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                                 @Override
                                 public void run() {
                                     Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.OrderHasBeenSubmitted, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                                    new Utils().ShowActivity(getContext(), null, "Main", "-1");
+                                    new Utils().ShowActivity(getContext(), null, "Main",ViewMode.NormalMode.name(), "-1");
                                 }
                             });
 
@@ -571,7 +572,7 @@ public class RequestFoodStep2Fragment extends Fragment implements View.OnClickLi
                                 @Override
                                 public void run() {
                                     Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.OrderHasBeenSubmitted, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                                    new Utils().ShowActivity(getContext(), null, "Main", "-1");
+                                    new Utils().ShowActivity(getContext(), null, "Main", ViewMode.NormalMode.name(), "-1");
                                 }
                             });
 
