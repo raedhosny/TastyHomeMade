@@ -23,6 +23,7 @@ import com.tastyhomemade.tastyhomemade.Business.RegisterTypes;
 import com.tastyhomemade.tastyhomemade.Business.RegisterTypesDB;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
+import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
 import com.tastyhomemade.tastyhomemade.Others.ViewMode;
@@ -127,8 +128,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             @Override
                             public void run() {
                                 Toast.makeText(getContext(), Utils.GetResourceName(getContext(), R.string.DataSavedSuccessfuly, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-
-                                new Utils().ShowActivity(getContext(), null, "Main", ViewMode.NormalMode.name(), "-1");
+                                ((MainActivity) getActivity()).LoadMainInfo();
+                                //new Utils().ShowActivity(getContext(), null, "Main", ViewMode.NormalMode.name(), "-1");
                                 ObjWaitDialog.HideDialog();
                             }
                         });

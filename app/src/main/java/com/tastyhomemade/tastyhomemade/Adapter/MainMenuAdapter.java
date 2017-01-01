@@ -58,23 +58,23 @@ public class MainMenuAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (Utils.IsDataLoadedBefore(i,LoadedRecords))
-            return view;
-        LoadedRecords.add(i);
+        View v = view;
+        if (v == null) {
+            v = View.inflate(context, R.layout.main_menu_item, null);
+            TextView lblItem = (TextView) v.findViewById(R.id.lblItem);
+            lblItem.setText(FilteredItemsList.get(i).getName());
 
-        View v = View.inflate (context,R.layout.main_menu_item,null);
-        TextView lblItem = (TextView) v.findViewById(R.id.lblItem);
-        lblItem.setText(FilteredItemsList.get(i).getName());
+            lblItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String sSelectedItem = ((TextView) view).getText().toString();
+                    new Utils().ShowActivity((MainActivity) context, AllItems, sSelectedItem, ViewMode.NormalMode.name());
+                    ((DrawerLayout) ((MainActivity) context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity) context).findViewById(R.id.Linear_SideMenu));
+                    ;
 
-        lblItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String sSelectedItem  =((TextView)view).getText().toString();
-                new Utils().ShowActivity ((MainActivity)context,AllItems,  sSelectedItem,ViewMode.NormalMode.name());
-                ((DrawerLayout)((MainActivity)context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity)context).findViewById(R.id.Linear_SideMenu));;
-
-            }
-        });
+                }
+            });
+        }
 
         return v;
     }

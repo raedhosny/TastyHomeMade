@@ -51,36 +51,38 @@ public class OrdersActionsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        View v = View.inflate(context, R.layout.orderfollowup_listview_item, null);
+        View v= convertView;
+        if (v == null) {
+            v = View.inflate(context, R.layout.orderfollowup_listview_item, null);
 
-        final TextView lblTime = (TextView) v.findViewById(R.id.lblTime);
-        final TextView lblAction = (TextView) v.findViewById(R.id.lblAction);
+            final TextView lblTime = (TextView) v.findViewById(R.id.lblTime);
+            final TextView lblAction = (TextView) v.findViewById(R.id.lblAction);
 
-        final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy h:mm a", ObjSettings.getCurrentLanguageId() == 1 ? new Locale("ar") : new Locale("en"));
+            final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy h:mm a", ObjSettings.getCurrentLanguageId() == 1 ? new Locale("ar") : new Locale("en"));
 
-        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                lblTime.setText(sdf.format(Obj_Orders_Actions_List.get(position).getActionDate()));
-            }
-        });
-
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Actions ObjAction = new ActionsDB().Select(Obj_Orders_Actions_List.get(position).getActionId(), ObjSettings.getCurrentLanguageId());
-                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        lblAction.setText(ObjAction.getName());
-                    }
-                });
-            }
-        });
-        t.start();
+            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lblTime.setText(sdf.format(Obj_Orders_Actions_List.get(position).getActionDate()));
+                }
+            });
 
 
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Actions ObjAction = new ActionsDB().Select(Obj_Orders_Actions_List.get(position).getActionId(), ObjSettings.getCurrentLanguageId());
+                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblAction.setText(ObjAction.getName());
+                        }
+                    });
+                }
+            });
+            t.start();
+
+        }
         return v;
     }
 }

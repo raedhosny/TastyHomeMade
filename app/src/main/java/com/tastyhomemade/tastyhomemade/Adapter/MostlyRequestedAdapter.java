@@ -57,104 +57,105 @@ public class MostlyRequestedAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
+        View v = convertView;
+        if (v == null) {
+             v = View.inflate(context, R.layout.mostlyrequested_list_item, null);
+
+            RatingBar ObjRatingBar = (RatingBar) v.findViewById(R.id.txtHomeMenuItemRating);
+            ImageView ObjImagedeliverable = (ImageView) v.findViewById(R.id.txtHomeMenuItemDeliverable);
+            TextView ObjHomeMenuItemPrice = (TextView) v.findViewById(R.id.txtHomeMenuItemPrice);
+            TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
+            TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
+            TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
+            final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
+            Button BtnHomeMenuItemRequest = (Button) v.findViewById(R.id.BtnHomeMenuItemRequest);
+            TextView lblNumberOfRequests = (TextView) v.findViewById(R.id.lblNumberOfRequests);
 
 
-        View v = View.inflate(context, R.layout.mostlyrequested_list_item, null);
+            // Set Delivery availability
+            int iUserId = ObjFoodsList.get(position).getUserId();
 
-        RatingBar ObjRatingBar = (RatingBar) v.findViewById(R.id.txtHomeMenuItemRating);
-        ImageView ObjImagedeliverable = (ImageView) v.findViewById(R.id.txtHomeMenuItemDeliverable);
-        TextView ObjHomeMenuItemPrice = (TextView) v.findViewById(R.id.txtHomeMenuItemPrice);
-        TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
-        TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
-        TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
-        final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
-        Button BtnHomeMenuItemRequest = (Button) v.findViewById(R.id.BtnHomeMenuItemRequest);
-        TextView lblNumberOfRequests = (TextView) v.findViewById(R.id.lblNumberOfRequests);
+            User ObjUser = new UserDB().Select(iUserId);
+            if (ObjUser.isHaveDelivary()) {
+                ObjImagedeliverable.setVisibility(View.VISIBLE);
+            } else {
+                ObjImagedeliverable.setVisibility(View.GONE);
+            }
 
+            // Set Food Price
+            ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
 
-        // Set Delivery availability
-        int iUserId = ObjFoodsList.get(position).getUserId();
+            // Set Food Name
+            lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
 
-        User ObjUser = new UserDB().Select(iUserId);
-        if (ObjUser.isHaveDelivary()) {
-            ObjImagedeliverable.setVisibility(View.VISIBLE);
-        } else {
-            ObjImagedeliverable.setVisibility(View.GONE);
-        }
+            // Set Food Description
+            lblHomeMenuItemDescription.setText(ObjFoodsList.get(position).getDescription());
 
-        // Set Food Price
-        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
+            // Set Request Time From To
+            String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
 
-        // Set Food Name
-        lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
+            Time ObjRequestTimeFrom = ObjFoodsList.get(position).getRequestTimeFrom();
+            Time ObjRequestTimeTo = ObjFoodsList.get(position).getRequestTimeTo();
 
-        // Set Food Description
-        lblHomeMenuItemDescription.setText(ObjFoodsList.get(position).getDescription());
+            SimpleDateFormat formater = new SimpleDateFormat("h:mm a");
 
-        // Set Request Time From To
-        String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
-
-        Time ObjRequestTimeFrom = ObjFoodsList.get(position).getRequestTimeFrom();
-        Time ObjRequestTimeTo = ObjFoodsList.get(position).getRequestTimeTo();
-
-        SimpleDateFormat formater = new SimpleDateFormat("h:mm a");
-
-        sTemp = sTemp.replace("[X]", formater.format(ObjRequestTimeFrom));
-        sTemp = sTemp.replace("[Y]", formater.format(ObjRequestTimeTo));
-        if (new Settings(context).getCurrentLanguageId() == 1) {
-            sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
-        }
-        lblHomeMenuItemTimeFromTo.setText(sTemp);
+            sTemp = sTemp.replace("[X]", formater.format(ObjRequestTimeFrom));
+            sTemp = sTemp.replace("[Y]", formater.format(ObjRequestTimeTo));
+            if (new Settings(context).getCurrentLanguageId() == 1) {
+                sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
+            }
+            lblHomeMenuItemTimeFromTo.setText(sTemp);
 
 
-        // Set Food Photo
+            // Set Food Photo
 
-        final Bitmap[] ObjBitmap = new Bitmap[1];
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-
-                try {
-                    ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+            final Bitmap[] ObjBitmap = new Bitmap[1];
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
 
 
-                        ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
+                    try {
+                        ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
-            }
-        });
-        t.start();
+                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
 
-        // Set Food Rating
-        // /////////////////////
-        ////////////////////////
-
-
-        ////////////////////////
-        ////////////////////////
-
-        // Number of total Requests
-        lblNumberOfRequests.setText(Utils.GetResourceName(context, R.string.numberofrequests, new Settings(context).getCurrentLanguageId()) + " " + ObjFoodsList.get(position).getNumberOfRequestsCount());
-
-
-        BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (new Settings(context).getUserId() != -1) {
-                    new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
-                } else {
-                    Toast.makeText(context, new Utils().GetResourceName(context, R.string.Error_YouAreNotLoginYet, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                            ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
+                        }
+                    });
                 }
-            }
-        });
+            });
+            t.start();
+
+
+            // Set Food Rating
+            // /////////////////////
+            ////////////////////////
+
+
+            ////////////////////////
+            ////////////////////////
+
+            // Number of total Requests
+            lblNumberOfRequests.setText(Utils.GetResourceName(context, R.string.numberofrequests, new Settings(context).getCurrentLanguageId()) + " " + ObjFoodsList.get(position).getNumberOfRequestsCount());
+
+
+            BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (new Settings(context).getUserId() != -1) {
+                        new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
+                    } else {
+                        Toast.makeText(context, new Utils().GetResourceName(context, R.string.Error_YouAreNotLoginYet, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
 
         return v;
     }

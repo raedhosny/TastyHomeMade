@@ -59,19 +59,22 @@ public class CategoriesAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
-        View v = View.inflate (context,R.layout.main_menu_item,null);
-        TextView lblItem = (TextView) v.findViewById(R.id.lblItem);
-        lblItem.setText(ObjCategoriesList.get(position).getName());
+        View v = convertView;
+        if (v == null) {
+            v = View.inflate(context, R.layout.main_menu_item, null);
+            TextView lblItem = (TextView) v.findViewById(R.id.lblItem);
+            lblItem.setText(ObjCategoriesList.get(position).getName());
 
-        lblItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            lblItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                new Utils().ShowActivity (context,null,"Main", ViewMode.NormalMode.name(), String.valueOf(ObjCategoriesList.get(position).getId()) );
-                ((DrawerLayout)((MainActivity)context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity)context).findViewById(R.id.Linear_SideMenu));
+                    new Utils().ShowActivity(context, null, "Main", ViewMode.NormalMode.name(), String.valueOf(ObjCategoriesList.get(position).getId()));
+                    ((DrawerLayout) ((MainActivity) context).findViewById(R.id.Drawer_Layout)).closeDrawer(((MainActivity) context).findViewById(R.id.Linear_SideMenu));
 
-            }
-        });
+                }
+            });
+        }
 
         return v;
 

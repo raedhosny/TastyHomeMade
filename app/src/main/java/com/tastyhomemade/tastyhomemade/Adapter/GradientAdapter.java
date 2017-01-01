@@ -55,47 +55,49 @@ public class GradientAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = View.inflate(context, R.layout.control_dropdown_remove,null);
-        final TextView txtDropDownItem  = (TextView) v.findViewById(R.id.txtDropDownItem);
-        ImageView imgDropDownRemove = (ImageView) v.findViewById(R.id.imgDropDownRemove);
-        final int iPostition = i;
-        imgDropDownRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final int iFoodId = Obj_Foods_Additions_List.get(iPostition).getFoodId();
-                final int iAdditionId = Obj_Foods_Additions_List.get(iPostition).getAdditionId();
+        View v = view;
+        if (v == null) {
+            v = View.inflate(context, R.layout.control_dropdown_remove, null);
+            final TextView txtDropDownItem = (TextView) v.findViewById(R.id.txtDropDownItem);
+            ImageView imgDropDownRemove = (ImageView) v.findViewById(R.id.imgDropDownRemove);
+            final int iPostition = i;
+            imgDropDownRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final int iFoodId = Obj_Foods_Additions_List.get(iPostition).getFoodId();
+                    final int iAdditionId = Obj_Foods_Additions_List.get(iPostition).getAdditionId();
 
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new Foods_AdditionsDB().Delete(iFoodId,iAdditionId);
-                    }
-                });
-                t.start();
-                Obj_Foods_Additions_List.remove(iPostition);
-                notifyDataSetChanged();
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new Foods_AdditionsDB().Delete(iFoodId, iAdditionId);
+                        }
+                    });
+                    t.start();
+                    Obj_Foods_Additions_List.remove(iPostition);
+                    notifyDataSetChanged();
 
 
+                }
+            });
 
-            }
-        });
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int iAdditionId = Obj_Foods_Additions_List.get(iPostition).getAdditionId();
+                    final Additions ObjAddition = new AdditionsDB().Select(iAdditionId, new Settings(context).getCurrentLanguageId());
+                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtDropDownItem.setText(ObjAddition.getName());
+                        }
+                    });
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int iAdditionId = Obj_Foods_Additions_List.get(iPostition).getAdditionId();
-                final Additions ObjAddition = new AdditionsDB().Select(iAdditionId,new Settings(context).getCurrentLanguageId());
-                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        txtDropDownItem.setText(ObjAddition.getName());
-                    }
-                });
+                }
+            });
 
-            }
-        });
-
-        t.start();
+            t.start();
+        }
         return v;
     }
 }

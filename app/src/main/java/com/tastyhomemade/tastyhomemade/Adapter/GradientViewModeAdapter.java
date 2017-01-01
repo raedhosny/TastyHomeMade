@@ -62,102 +62,103 @@ public class GradientViewModeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = View.inflate(context,R.layout.gradient_viewmode_item, null);
+        View v = view;
+        if (v == null) {
+             v = View.inflate(context, R.layout.gradient_viewmode_item, null);
+            final TextView txtDropDownItem = (TextView) v.findViewById(R.id.Include_control_dropdown_addremove).findViewById(R.id.txtDropDownItem);
+            final TextView lblGradient = (TextView) v.findViewById(R.id.lblGradient);
+            final TextView lblPrice = (TextView) v.findViewById(R.id.lblPrice);
+            final TextView lblCurrency = (TextView) v.findViewById(R.id.lblCurrency);
+            txtDropDownItem.setEnabled(false);
+            txtDropDownItem.setText("0");
+            ImageView imgDropDownDecrease = (ImageView) v.findViewById(R.id.imgDropDownDecrease);
+            ImageView imgDropDownIncrease = (ImageView) v.findViewById(R.id.imgDropDownIncrease);
+            final int iPostition = i;
+            imgDropDownDecrease.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int iCount = Integer.parseInt(txtDropDownItem.getText().toString().trim());
+                    if (iCount == 0)
+                        return;
+                    else
+                        iCount = iCount - 1;
+                    final int iCountFinal = iCount;
 
-        final TextView txtDropDownItem = (TextView) v.findViewById(R.id.Include_control_dropdown_addremove).findViewById(R.id.txtDropDownItem);
-        final TextView lblGradient = (TextView) v.findViewById(R.id.lblGradient);
-        final TextView lblPrice = (TextView) v.findViewById(R.id.lblPrice);
-        final TextView lblCurrency = (TextView) v.findViewById(R.id.lblCurrency);
-        txtDropDownItem.setEnabled(false);
-        txtDropDownItem.setText("0");
-        ImageView imgDropDownDecrease = (ImageView) v.findViewById(R.id.imgDropDownDecrease);
-        ImageView imgDropDownIncrease = (ImageView) v.findViewById(R.id.imgDropDownIncrease);
-        final int iPostition = i;
-        imgDropDownDecrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int iCount = Integer.parseInt(txtDropDownItem.getText().toString().trim());
-                if (iCount == 0)
-                    return;
-                else
-                    iCount = iCount - 1;
-                final int iCountFinal = iCount;
-
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Additions ObjAddition = new AdditionsDB().Select(Obj_Foods_Additions_List.get(iPostition).getAdditionId(), ObjSettings.getCurrentLanguageId());
-                        ((AppCompatActivity)context).runOnUiThread(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        txtDropDownItem.setText(String.valueOf(iCountFinal) );
-                                        lblPrice.setText(String.valueOf(iCountFinal*ObjAddition.getPrice()) );
-                                        if (mOnDataChangedListener!=null)
-                                            mOnDataChangedListener.onDataChanged();
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final Additions ObjAddition = new AdditionsDB().Select(Obj_Foods_Additions_List.get(iPostition).getAdditionId(), ObjSettings.getCurrentLanguageId());
+                            ((AppCompatActivity) context).runOnUiThread(
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            txtDropDownItem.setText(String.valueOf(iCountFinal));
+                                            lblPrice.setText(String.valueOf(iCountFinal * ObjAddition.getPrice()));
+                                            if (mOnDataChangedListener != null)
+                                                mOnDataChangedListener.onDataChanged();
+                                        }
                                     }
-                                }
-                        );
+                            );
 
-                    }
-                });
-                t.start();
+                        }
+                    });
+                    t.start();
 
 
-            }
-        });
+                }
+            });
 
-        imgDropDownIncrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int iCount = Integer.parseInt(txtDropDownItem.getText().toString().trim());
-                iCount = iCount + 1;
-                final int iCountFinal = iCount;
+            imgDropDownIncrease.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int iCount = Integer.parseInt(txtDropDownItem.getText().toString().trim());
+                    iCount = iCount + 1;
+                    final int iCountFinal = iCount;
 
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Additions ObjAddition = new AdditionsDB().Select(Obj_Foods_Additions_List.get(iPostition).getAdditionId(), ObjSettings.getCurrentLanguageId());
-                        ((AppCompatActivity)context).runOnUiThread(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        txtDropDownItem.setText(String.valueOf(iCountFinal) );
-                                        lblPrice.setText(String.valueOf(iCountFinal*ObjAddition.getPrice()) );
-                                        if (mOnDataChangedListener!=null)
-                                            mOnDataChangedListener.onDataChanged();
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final Additions ObjAddition = new AdditionsDB().Select(Obj_Foods_Additions_List.get(iPostition).getAdditionId(), ObjSettings.getCurrentLanguageId());
+                            ((AppCompatActivity) context).runOnUiThread(
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            txtDropDownItem.setText(String.valueOf(iCountFinal));
+                                            lblPrice.setText(String.valueOf(iCountFinal * ObjAddition.getPrice()));
+                                            if (mOnDataChangedListener != null)
+                                                mOnDataChangedListener.onDataChanged();
 
+                                        }
                                     }
-                                }
-                        );
+                            );
 
-                    }
-                });
-                t.start();
-            }
-        });
+                        }
+                    });
+                    t.start();
+                }
+            });
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Additions ObjAddition = new AdditionsDB().Select(Obj_Foods_Additions_List.get(iPostition).getAdditionId(), ObjSettings.getCurrentLanguageId());
-                final Foods ObjFood = new FoodsDB().Select(Obj_Foods_Additions_List.get(iPostition).getFoodId(), ObjSettings.getCurrentLanguageId());
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Additions ObjAddition = new AdditionsDB().Select(Obj_Foods_Additions_List.get(iPostition).getAdditionId(), ObjSettings.getCurrentLanguageId());
+                    final Foods ObjFood = new FoodsDB().Select(Obj_Foods_Additions_List.get(iPostition).getFoodId(), ObjSettings.getCurrentLanguageId());
 
-                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        lblGradient.setText(ObjAddition.getName());
-                        lblPrice.setText("0"); // Must be initiated as Zero first time not item price
-                        lblCurrency.setText (Utils.GetResourceName(context, R.string.Currency, ObjSettings.getCurrentLanguageId()));
-                    }
-                });
+                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblGradient.setText(ObjAddition.getName());
+                            lblPrice.setText("0"); // Must be initiated as Zero first time not item price
+                            lblCurrency.setText(Utils.GetResourceName(context, R.string.Currency, ObjSettings.getCurrentLanguageId()));
+                        }
+                    });
 
-            }
-        });
+                }
+            });
 
-        t.start();
+            t.start();
 
-
+        }
         return v;
     }
 
