@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
+    android:layoutDirection="locale"
     android:orientation="vertical"
     android:padding="5dp"
     android:focusable="true"
@@ -61,6 +61,66 @@
 
 
                 <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblAddFoodNameAr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:text="الإسم بالعربيه"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    />
+
+
+                <EditText
+                    android:id="@+id/txtAddFoodNameAr"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="37.00dp"
+                    android:layout_weight="0.25"
+
+                    android:background="@drawable/textbox_enabled"
+
+                    />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lblAddFoodNameEn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:text="الإسم بالانجليزيه"
+                        android:textColor="#000"
+                        android:textSize="14sp"
+                        />
+
+
+                    <EditText
+                        android:id="@+id/txtAddFoodNameEn"
+                        style="@style/myedittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="37.00dp"
+                        android:layout_weight="0.25"
+
+                        android:background="@drawable/textbox_enabled"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -75,6 +135,7 @@
                         android:text="الإسم"
                         android:textColor="#000"
                         android:textSize="14sp" />
+
 
                     <EditText
                         android:id="@+id/txtAddFoodName"
@@ -118,6 +179,32 @@
                 </LinearLayout>
 
                 <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblAddDescriptionAr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="0.75"
+                    android:text="الوصف العربيه"
+                    android:textColor="#000" />
+
+                <EditText
+                    android:id="@+id/txtAddFoodDescriptionAr"
+                    style="@style/myedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="83.33dp"
+                    android:layout_weight="0.25"
+                    android:background="@drawable/textbox_enabled"
+                    android:gravity="top|right" />
+            </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -125,25 +212,24 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/lblAddDescription"
+                        android:id="@+id/lblAddDescriptionEn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
                         android:layout_weight="0.75"
-                        android:text="الوصف"
+                        android:text="الوصف الانجليزيه"
                         android:textColor="#000" />
 
                     <EditText
-                        android:id="@+id/txtAddFoodDescription"
+                        android:id="@+id/txtAddFoodDescriptionEn"
                         style="@style/myedittext"
                         android:layout_width="match_parent"
                         android:layout_height="83.33dp"
-                        android:layout_alignBaseline="@id/lblAddDescription"
-
                         android:layout_weight="0.25"
                         android:background="@drawable/textbox_enabled"
                         android:gravity="top|right" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -380,6 +466,35 @@
 
 
                         <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.75"
+                            android:text="الإسم بالعربيه"
+                            android:textColor="#000" />
+
+                        <EditText
+                            android:id="@+id/txtAddGradientAr"
+                            style="@style/myedittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="37.00dp"
+                            android:layout_weight="0.25"
+                            android:background="@drawable/textbox_enabled"
+
+
+                            />
+
+                    </LinearLayout>
+
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -387,15 +502,15 @@
                             >
 
                             <TextView
-                                android:id="@+id/textView9"
+                                android:id="@+id/textView10"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.75"
-                                android:text="الإسم"
+                                android:text="الإسم بالانجليزيه"
                                 android:textColor="#000" />
 
                             <EditText
-                                android:id="@+id/txtAddGradient"
+                                android:id="@+id/txtAddGradientEn"
                                 style="@style/myedittext"
                                 android:layout_width="match_parent"
                                 android:layout_height="37.00dp"
@@ -416,10 +531,12 @@
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="0.75"
                                 android:text="السعر"
-                                android:textColor="#000" />
+                                android:textColor="#000"
+                                android:gravity="center_vertical"
+                                />
 
                             <LinearLayout
                                 android:layout_width="match_parent"

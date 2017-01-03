@@ -52,4 +52,7 @@
        فضلا ادخل سعر الوجبه
     </string>
 
+    <string name="Error_YouCantRequestThisOrderAtThisTime">
+       لا يمكن اجراء الطلب لهذه الوجبه الان
+    </string>
 </resources>

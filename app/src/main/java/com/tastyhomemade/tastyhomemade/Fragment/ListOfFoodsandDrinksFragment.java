@@ -130,7 +130,7 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
             public void run() {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
-                    ObjFoodsList.addAll(new FoodsDB().SearchbyFoodMaker(sName,iCategoryId, ObjSettings.getUserId() ));
+                    ObjFoodsList.addAll(new FoodsDB().SearchbyFoodMaker(sName,iCategoryId, ObjSettings.getUserId(),ObjSettings.getCurrentLanguageId() ));
                     final EditFoodsAdapter ObjFoodsListAdapter = new EditFoodsAdapter(getContext(), ObjFoodsList);
                     final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
                     getActivity().runOnUiThread(

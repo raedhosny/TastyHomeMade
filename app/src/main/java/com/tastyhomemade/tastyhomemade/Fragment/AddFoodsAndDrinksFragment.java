@@ -57,14 +57,17 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
     private int CAMERA_RESULT = 1;
     private int PICKPHOTO_RESULT = 2;
 
-    EditText txtAddFoodName;
+    EditText txtAddFoodNameAr;
+    EditText txtAddFoodNameEn;
     View Include_ddlAddCategory;
-    EditText txtAddFoodDescription;
+    EditText txtAddFoodDescriptionAr;
+    EditText txtAddFoodDescriptionEn;
     EditText txtAddFoodOrderPrice;
     Button btnAddFoodCameraPhoto;
     Button btnAddFoodFromStoragePhoto;
     ImageView imgAddFoodPhoto;
-    EditText txtAddGradient;
+    EditText txtAddGradientAr;
+    EditText txtAddGradientEn;
     EditText txtAddGradientPrice;
     Button btnAddGradientCamera;
     Button btnAddGradientFromStorage;
@@ -83,6 +86,7 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
     ListView lvAddFoodGradient;
     List<Foods_Additions> Obj_Foods_Additions_List;
     WaitDialog ObjWaitDialog;
+    Foods ObjFood = null;
 
 
 
@@ -96,16 +100,19 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        txtAddFoodName = (EditText) view.findViewById(R.id.txtAddFoodName);
+        txtAddFoodNameAr = (EditText) view.findViewById(R.id.txtAddFoodNameAr);
+        txtAddFoodNameEn = (EditText) view.findViewById(R.id.txtAddFoodNameEn);
         Include_ddlAddCategory = (View) view.findViewById(R.id.Include_ddlAddCategory);
-        txtAddFoodDescription = (EditText) view.findViewById(R.id.txtAddFoodDescription);
+        txtAddFoodDescriptionAr = (EditText) view.findViewById(R.id.txtAddFoodDescriptionAr);
+        txtAddFoodDescriptionEn = (EditText) view.findViewById(R.id.txtAddFoodDescriptionEn);
         txtAddFoodOrderPrice = (EditText) view.findViewById(R.id.txtAddFoodOrderPrice);
         btnAddFoodCameraPhoto = (Button) view.findViewById(R.id.btnAddFoodCameraPhoto);
         btnAddFoodCameraPhoto.setOnClickListener(this);
         btnAddFoodFromStoragePhoto = (Button) view.findViewById(R.id.btnAddFoodFromStoragePhoto);
         btnAddFoodFromStoragePhoto.setOnClickListener(this);
         imgAddFoodPhoto = (ImageView) view.findViewById(R.id.imgAddFoodPhoto);
-        txtAddGradient = (EditText) view.findViewById(R.id.txtAddGradient);
+        txtAddGradientAr = (EditText) view.findViewById(R.id.txtAddGradientAr);
+        txtAddGradientEn = (EditText) view.findViewById(R.id.txtAddGradientEn);
         txtAddGradientPrice = (EditText) view.findViewById(R.id.txtAddGradientPrice);
         btnAddGradientCamera = (Button) view.findViewById(R.id.btnAddGradientCamera);
         btnAddGradientCamera.setOnClickListener(this);
@@ -165,12 +172,12 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (txtAddGradient.getText().toString().trim().equals("") || txtAddGradientPrice.getText().toString().trim().equals("") )
+                    if (txtAddGradientAr.getText().toString().trim().equals("") || txtAddGradientEn.getText().toString().trim().equals("") || txtAddGradientPrice.getText().toString().trim().equals("") )
                         return;
 
                     Additions ObjAddition = new Additions();
-                    ObjAddition.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
-                    ObjAddition.setName(txtAddGradient.getText().toString().trim());
+                    ObjAddition.setLanguageId(1); // Arabic
+                    ObjAddition.setName(txtAddGradientAr.getText().toString().trim());
                     ObjAddition.setPrice(Float.parseFloat(txtAddGradientPrice.getText().toString().trim()));
                    // imgGradientPhoto.setDrawingCacheEnabled(true);
                     //imgGradientPhoto.buildDrawingCache(true);
@@ -180,6 +187,13 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                     //ObjBitmapTemp.compress(Bitmap.CompressFormat.PNG,100,ObjArrayTemp);
                     //ObjAddition.setPhoto(Base64.encode(ObjArrayTemp.toByteArray(),Base64.DEFAULT));
                     int iAdditionId = new AdditionsDB().InsertUpdate(ObjAddition);
+                    ObjAddition = new Additions();
+                    ObjAddition.setId(iAdditionId);
+                    ObjAddition.setLanguageId(2); // English
+                    ObjAddition.setName(txtAddGradientEn.getText().toString().trim());
+                    ObjAddition.setPrice(Float.parseFloat(txtAddGradientPrice.getText().toString().trim()));
+                    new AdditionsDB().InsertUpdate(ObjAddition);
+
                     Foods_Additions ObjFoods_Additions = new Foods_Additions(-1,-1,iAdditionId);
                     Obj_Foods_Additions_List.add(ObjFoods_Additions);
                     getActivity().runOnUiThread(new Runnable() {
@@ -188,7 +202,8 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                             GradientAdapter ObjAdapter = new GradientAdapter(getActivity(),Obj_Foods_Additions_List);
 
                             lvAddFoodGradient.setAdapter(ObjAdapter);
-                            txtAddGradient.setText("");
+                            txtAddGradientAr.setText("");
+                            txtAddGradientEn.setText("");
                             txtAddGradientPrice.setText("");
                             ObjWaitDialog.HideDialog();
                         }
@@ -205,7 +220,12 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
         if (view == btnAddFoodSave) {
 
 
-            if (txtAddFoodName.getText().toString().trim().length() == 0) {
+            if (txtAddFoodNameAr.getText().toString().trim().length() == 0) {
+                Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFoodName, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (txtAddFoodNameEn.getText().toString().trim().length() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFoodName, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
             }
@@ -216,7 +236,12 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
                 return;
             }
 
-            if (txtAddFoodDescription.getText().toString().length() == 0) {
+            if (txtAddFoodDescriptionAr.getText().toString().length() == 0) {
+                Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFooDescription, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (txtAddFoodDescriptionEn.getText().toString().length() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFooDescription, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
             }
@@ -247,18 +272,25 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             }
 
 
-            if (txtAddGradient.getText().toString().trim().length() == 0)
+            if (txtAddGradientAr.getText().toString().trim().length() == 0)
             {
 
             }
+
+            if (txtAddGradientEn.getText().toString().trim().length() == 0)
+            {
+
+            }
+
             ObjWaitDialog = new WaitDialog(getContext());
             ObjWaitDialog.ShowDialog();
 
              //Insert New Food
-            final Foods ObjFood = new Foods();
+            ObjFood = new Foods();
             ObjFood.setCategoryId(ObjCategoriesList.get(ddlAddCategory.getSelectedItemPosition()).getId());
             ObjFood.setUserId(new Settings(getActivity()).getUserId());
-            ObjFood.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
+            //ObjFood.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
+            ObjFood.setLanguageId(1); //Arabic
             int iRequestTimeFromMinutes = Integer.parseInt(ddlRequestTimeFromMinutes.getSelectedItem().toString());
             int iRequestTimeFromHours = Integer.parseInt(ddlRequestTimeFromHours.getSelectedItem().toString());
             if (dllRequestTimeFromDayNight.getSelectedItem().toString() .equals("مساءا")
@@ -286,8 +318,8 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             }
 
             ObjFood.setPrice(Float.parseFloat(txtAddFoodOrderPrice.getText().toString()) );
-            ObjFood.setName(txtAddFoodName.getText().toString().trim());
-            ObjFood.setDescription(txtAddFoodDescription.getText().toString().trim());
+            ObjFood.setName(txtAddFoodNameAr.getText().toString().trim());
+            ObjFood.setDescription(txtAddFoodDescriptionAr.getText().toString().trim());
             boolean bIsVisible =  false;
             if (ddlShowToCustomer.getSelectedItemPosition() == 1)
                 bIsVisible = true;
@@ -297,8 +329,14 @@ public class AddFoodsAndDrinksFragment extends Fragment implements View.OnClickL
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final Foods ObjFoodTemp = ObjFood;
-                    int iFoodId = new FoodsDB().InsertUpdate(ObjFoodTemp);
+
+                    int iFoodId = new FoodsDB().InsertUpdate(ObjFood);
+                    ObjFood.setId(iFoodId);
+                    ObjFood.setLanguageId(2); // English
+                    ObjFood.setName(txtAddFoodNameEn.getText().toString().trim());
+                    ObjFood.setDescription(txtAddFoodDescriptionEn.getText().toString().trim());
+                    new FoodsDB().InsertUpdate(ObjFood);
+
                     for (Foods_Additions Obj_Foods_Additions : Obj_Foods_Additions_List)
                     {
                         Obj_Foods_Additions.setFoodId(iFoodId);

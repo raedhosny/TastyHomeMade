@@ -51,5 +51,7 @@
     <string name="Error_PleaseEnterPrice">
         Please Enter Price
     </string>
-
+  <string name="Error_YouCantRequestThisOrderAtThisTime">
+You Cant Request This Order At This Time
+    </string>
 </resources>

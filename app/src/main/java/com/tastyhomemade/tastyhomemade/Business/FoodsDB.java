@@ -279,7 +279,7 @@ public class FoodsDB {
 
     }
 
-    public List<Foods> SearchbyFoodMaker (String p_sName, int p_iCategoryId,int p_iUserId)
+    public List<Foods> SearchbyFoodMaker (String p_sName, int p_iCategoryId,int p_iUserId,int p_iLanguageId)
     {
         java.sql.Connection ObjConnection = null;
         try {
@@ -290,7 +290,8 @@ public class FoodsDB {
                     "EXECUTE SP_Foods_SearchByFoodMaker\n" +
                             "   @Name=?\n" +
                             "  ,@CategoryId=?\n" +
-                            "  ,@UserId=?\n"
+                            "  ,@UserId=?\n"+
+                            " ,@LanguageId=?"
 
             );
             stmt.setEscapeProcessing(true);
@@ -298,6 +299,7 @@ public class FoodsDB {
             stmt.setString(1,p_sName);
             stmt.setInt(2,p_iCategoryId);
             stmt.setInt(3,p_iUserId);
+            stmt.setInt(4,p_iLanguageId);
 
 
             ResultSet ObjResultSet = stmt.executeQuery();

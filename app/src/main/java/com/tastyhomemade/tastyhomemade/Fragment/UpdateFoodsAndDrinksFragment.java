@@ -59,14 +59,17 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
     private int CAMERA_RESULT = 1;
     private int PICKPHOTO_RESULT = 2;
 
-    EditText txtAddFoodName;
+    EditText txtAddFoodNameAr;
+    EditText txtAddFoodNameEn;
     View Include_ddlAddCategory;
-    EditText txtAddFoodDescription;
+    EditText txtAddFoodDescriptionAr;
+    EditText txtAddFoodDescriptionEn;
     EditText txtAddFoodOrderPrice;
     Button btnAddFoodCameraPhoto;
     Button btnAddFoodFromStoragePhoto;
     ImageView imgAddFoodPhoto;
-    EditText txtAddGradient;
+    EditText txtAddGradientAr;
+    EditText txtAddGradientEn;
     EditText txtAddGradientPrice;
     Button btnAddGradientCamera;
     Button btnAddGradientFromStorage;
@@ -88,6 +91,7 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
     int iCurrentFoodId;
     Settings ObjSettings;
     WaitDialog ObjWaitDialog;
+    Foods ObjFood = null;
 
 
     @Nullable
@@ -100,16 +104,19 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        txtAddFoodName = (EditText) view.findViewById(R.id.txtAddFoodName);
+        txtAddFoodNameAr = (EditText) view.findViewById(R.id.txtAddFoodNameAr);
+        txtAddFoodNameEn = (EditText) view.findViewById(R.id.txtAddFoodNameEn);
         Include_ddlAddCategory = (View) view.findViewById(R.id.Include_ddlAddCategory);
-        txtAddFoodDescription = (EditText) view.findViewById(R.id.txtAddFoodDescription);
+        txtAddFoodDescriptionAr = (EditText) view.findViewById(R.id.txtAddFoodDescriptionAr);
+        txtAddFoodDescriptionEn = (EditText) view.findViewById(R.id.txtAddFoodDescriptionEn);
         txtAddFoodOrderPrice = (EditText) view.findViewById(R.id.txtAddFoodOrderPrice);
         btnAddFoodCameraPhoto = (Button) view.findViewById(R.id.btnAddFoodCameraPhoto);
         btnAddFoodCameraPhoto.setOnClickListener(this);
         btnAddFoodFromStoragePhoto = (Button) view.findViewById(R.id.btnAddFoodFromStoragePhoto);
         btnAddFoodFromStoragePhoto.setOnClickListener(this);
         imgAddFoodPhoto = (ImageView) view.findViewById(R.id.imgAddFoodPhoto);
-        txtAddGradient = (EditText) view.findViewById(R.id.txtAddGradient);
+        txtAddGradientAr = (EditText) view.findViewById(R.id.txtAddGradientAr);
+        txtAddGradientEn = (EditText) view.findViewById(R.id.txtAddGradientEn);
         txtAddGradientPrice = (EditText) view.findViewById(R.id.txtAddGradientPrice);
         btnAddGradientCamera = (Button) view.findViewById(R.id.btnAddGradientCamera);
         btnAddGradientCamera.setOnClickListener(this);
@@ -182,12 +189,13 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (txtAddGradient.getText().toString().trim().equals("") || txtAddGradientPrice.getText().toString().trim().equals(""))
+                    if (txtAddGradientAr.getText().toString().trim().equals("") || txtAddGradientEn.getText().toString().trim().equals("") ||txtAddGradientPrice.getText().toString().trim().equals(""))
                         return;
 
                     Additions ObjAddition = new Additions();
-                    ObjAddition.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
-                    ObjAddition.setName(txtAddGradient.getText().toString().trim());
+                    //ObjAddition.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
+                    ObjAddition.setLanguageId(1); //Arabic
+                    ObjAddition.setName(txtAddGradientAr.getText().toString().trim());
                     ObjAddition.setPrice(Float.parseFloat(txtAddGradientPrice.getText().toString().trim()));
                     // imgGradientPhoto.setDrawingCacheEnabled(true);
                     //imgGradientPhoto.buildDrawingCache(true);
@@ -197,6 +205,10 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                     //ObjBitmapTemp.compress(Bitmap.CompressFormat.PNG,100,ObjArrayTemp);
                     //ObjAddition.setPhoto(Base64.encode(ObjArrayTemp.toByteArray(),Base64.DEFAULT));
                     int iAdditionId = new AdditionsDB().InsertUpdate(ObjAddition);
+                    ObjAddition.setId(iAdditionId);
+                    ObjAddition.setName(txtAddGradientEn.getText().toString().trim());
+                    new AdditionsDB().InsertUpdate(ObjAddition);
+
                     Foods_Additions ObjFoods_Additions = new Foods_Additions(-1, -1, iAdditionId);
                     Obj_Foods_Additions_List.add(ObjFoods_Additions);
                     getActivity().runOnUiThread(new Runnable() {
@@ -204,7 +216,8 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                         public void run() {
                             GradientAdapter ObjAdapter = new GradientAdapter(getActivity(), Obj_Foods_Additions_List);
                             lvAddFoodGradient.setAdapter(ObjAdapter);
-                            txtAddGradient.setText("");
+                            txtAddGradientAr.setText("");
+                            txtAddGradientEn.setText("");
                             txtAddGradientPrice.setText("");
                             ObjWaitDialog.HideDialog();
 
@@ -221,7 +234,7 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
         if (view == btnAddFoodSave) {
 
 
-            if (txtAddFoodName.getText().toString().trim().length() == 0) {
+            if (txtAddFoodNameAr.getText().toString().trim().length() == 0 || txtAddFoodNameEn.getText().toString().trim().length() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFoodName, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
             }
@@ -232,7 +245,7 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                 return;
             }
 
-            if (txtAddFoodDescription.getText().toString().length() == 0) {
+            if (txtAddFoodDescriptionAr.getText().toString().length() == 0 || txtAddFoodDescriptionEn.getText().toString().length() == 0) {
                 Toast.makeText(getActivity(), Utils.GetResourceName(getActivity(), R.string.Error_PleaseEnterFooDescription, new Settings(getContext()).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                 return;
             }
@@ -263,7 +276,7 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
             }
 
 
-            if (txtAddGradient.getText().toString().trim().length() == 0) {
+            if (txtAddGradientAr.getText().toString().trim().length() == 0 || txtAddGradientEn.getText().toString().trim().length() == 0) {
 
             }
 
@@ -274,10 +287,11 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                 @Override
                 public void run() {
                     //Insert New Food
-                    final Foods ObjFood = new FoodsDB().Select(iCurrentFoodId, ObjSettings.getCurrentLanguageId());
+                    ObjFood = new FoodsDB().Select(iCurrentFoodId, ObjSettings.getCurrentLanguageId());
                     ObjFood.setCategoryId(ObjCategoriesList.get(ddlAddCategory.getSelectedItemPosition()).getId());
                     ObjFood.setUserId(new Settings(getActivity()).getUserId());
-                    ObjFood.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
+                    //ObjFood.setLanguageId(new Settings(getActivity()).getCurrentLanguageId());
+                    ObjFood.setLanguageId(1);
                     int iRequestTimeFromMinutes = Integer.parseInt(ddlRequestTimeFromMinutes.getSelectedItem().toString());
                     int iRequestTimeFromHours = Integer.parseInt(ddlRequestTimeFromHours.getSelectedItem().toString());
                     if (dllRequestTimeFromDayNight.getSelectedItem().toString().equals("مساءا")
@@ -305,8 +319,8 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                     }
 
                     ObjFood.setPrice(Float.parseFloat(txtAddFoodOrderPrice.getText().toString()));
-                    ObjFood.setName(txtAddFoodName.getText().toString().trim());
-                    ObjFood.setDescription(txtAddFoodDescription.getText().toString().trim());
+                    ObjFood.setName(txtAddFoodNameAr.getText().toString().trim());
+                    ObjFood.setDescription(txtAddFoodDescriptionAr.getText().toString().trim());
                     boolean bIsVisible = false;
                     if (ddlShowToCustomer.getSelectedItemPosition() == 1)
                         bIsVisible = true;
@@ -314,8 +328,14 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
                         bIsVisible = false;
                     ObjFood.setVisible(bIsVisible);
 
-                    final Foods ObjFoodTemp = ObjFood;
-                    int iFoodId = new FoodsDB().InsertUpdate(ObjFoodTemp);
+
+                    int iFoodId = new FoodsDB().InsertUpdate(ObjFood);
+                    ObjFood.setId(iFoodId);
+                    ObjFood.setLanguageId(2);
+                    ObjFood.setName(txtAddFoodNameEn.getText().toString().trim());
+                    ObjFood.setDescription(txtAddFoodDescriptionEn.getText().toString().trim());
+                    new FoodsDB().InsertUpdate(ObjFood);
+
                     for (Foods_Additions Obj_Foods_Additions : Obj_Foods_Additions_List) {
                         Obj_Foods_Additions.setFoodId(iFoodId);
                         new Foods_AdditionsDB().InsertUpdate(Obj_Foods_Additions);
@@ -435,15 +455,24 @@ public class UpdateFoodsAndDrinksFragment extends Fragment implements View.OnCli
         Thread t = new Thread((new Runnable() {
             @Override
             public void run() {
-                final Foods ObjFood = new FoodsDB().Select(p_iFoodId, ObjSettings.getCurrentLanguageId());
+                ObjFood = new FoodsDB().Select(p_iFoodId, 1);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
 
-                        txtAddFoodName.setText(ObjFood.getName());
-                        txtAddFoodDescription.setText(ObjFood.getDescription());
+                        txtAddFoodNameAr.setText(ObjFood.getName());
+                        txtAddFoodDescriptionAr.setText(ObjFood.getDescription());
                         txtAddFoodOrderPrice.setText(String.valueOf(ObjFood.getPrice()));
+                    }
+                });
+
+                ObjFood = new FoodsDB().Select(p_iFoodId, 2);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtAddFoodNameEn.setText(ObjFood.getName());
+                        txtAddFoodDescriptionEn.setText(ObjFood.getDescription());
                     }
                 });
 

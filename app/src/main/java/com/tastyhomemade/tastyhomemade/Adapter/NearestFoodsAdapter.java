@@ -24,6 +24,7 @@ import com.tastyhomemade.tastyhomemade.R;
 import java.io.IOException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -153,7 +154,24 @@ public class NearestFoodsAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     if (new Settings(context).getUserId() != -1) {
-                        new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
+                        Calendar ObjCalender = Calendar.getInstance();
+                        Calendar ObjCalendarFrom = Calendar.getInstance();
+                        Calendar ObjCalendarTo= Calendar.getInstance();
+                        ObjCalendarFrom.set(Calendar.HOUR,ObjFoodsList.get(position).getRequestTimeFrom().getHours());
+                        ObjCalendarFrom.set(Calendar.MINUTE,ObjFoodsList.get(position).getRequestTimeFrom().getMinutes());
+
+                        ObjCalendarTo.set(Calendar.HOUR,ObjFoodsList.get(position).getRequestTimeTo().getHours());
+                        ObjCalendarTo.set(Calendar.MINUTE,ObjFoodsList.get(position).getRequestTimeTo().getMinutes());
+
+                        if (ObjCalender.compareTo(ObjCalendarFrom) > 0 && ObjCalender.compareTo(ObjCalendarTo) < 0
+//                            ||
+//                            (iCurrentTime >= iTimeTo&&
+//                                    iCurrentTime <= iTimeFrom )
+                                )
+
+                            new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
+                        else
+                            Toast.makeText(context, Utils.GetResourceName(context, R.string.Error_YouCantRequestThisOrderAtThisTime, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(context, new Utils().GetResourceName(context, R.string.Error_YouAreNotLoginYet, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
                     }

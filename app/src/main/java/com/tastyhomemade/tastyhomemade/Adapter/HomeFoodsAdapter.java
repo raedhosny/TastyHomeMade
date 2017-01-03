@@ -2,9 +2,7 @@ package com.tastyhomemade.tastyhomemade.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,27 +11,16 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.tastyhomemade.tastyhomemade.Business.ConnectionProperties;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
-import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.R;
-
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -45,26 +32,9 @@ public class HomeFoodsAdapter extends BaseAdapter {
     List<Foods> ObjFoodsList;
     View v = null;
 
-    ImageLoader imageLoader = null;
-
     public HomeFoodsAdapter(Context p_context, List<Foods> p_ObjFoodsList) {
         context = p_context;
         ObjFoodsList = p_ObjFoodsList;
-
-//        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-//                .cacheOnDisc(true).cacheInMemory(true)
-//                .imageScaleType(ImageScaleType.EXACTLY)
-//                .displayer(new FadeInBitmapDisplayer(300)).build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                context).build();
-//                .defaultDisplayImageOptions(defaultOptions)
-//                .memoryCache(new WeakMemoryCache())
-//                .discCacheSize(100 * 1024 * 1024).build();
-
-        imageLoader = ImageLoader.getInstance();
-        imageLoader.init(config);
-
     }
 
 
@@ -86,115 +56,135 @@ public class HomeFoodsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
 
-//        v = convertView;
-//        if (v == null) {
+              v = convertView;
+        if (v == null) {
 
-            v = View.inflate(context, R.layout.home_menu_item, null);
+        v = View.inflate(context, R.layout.home_menu_item, null);
 
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
 
-                    final RatingBar ObjRatingBar = (RatingBar) v.findViewById(R.id.txtHomeMenuItemRating);
-                    final ImageView ObjImagedeliverable = (ImageView) v.findViewById(R.id.txtHomeMenuItemDeliverable);
-                    final TextView ObjHomeMenuItemPrice = (TextView) v.findViewById(R.id.txtHomeMenuItemPrice);
-                    final TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
-                    final TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
-                    final TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
-                    final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
-                    final Button BtnHomeMenuItemRequest = (Button) v.findViewById(R.id.BtnHomeMenuItemRequest);
+                final RatingBar ObjRatingBar = (RatingBar) v.findViewById(R.id.txtHomeMenuItemRating);
+                final ImageView ObjImagedeliverable = (ImageView) v.findViewById(R.id.txtHomeMenuItemDeliverable);
+                final TextView ObjHomeMenuItemPrice = (TextView) v.findViewById(R.id.txtHomeMenuItemPrice);
+                final TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
+                final TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
+                final TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
+                final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
+                final Button BtnHomeMenuItemRequest = (Button) v.findViewById(R.id.BtnHomeMenuItemRequest);
 
-                    int iUserId = ObjFoodsList.get(position).getUserId();
+                int iUserId = ObjFoodsList.get(position).getUserId();
 
-                    User ObjUser = new UserDB().Select(iUserId);
-                    if (ObjUser.isHaveDelivary()) {
-                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ObjImagedeliverable.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    } else {
-                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ObjImagedeliverable.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-
+                User ObjUser = new UserDB().Select(iUserId);
+                if (ObjUser.isHaveDelivary()) {
                     ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
-                            lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
-                            lblHomeMenuItemDescription.setText(ObjFoodsList.get(position).getDescription());
+                            ObjImagedeliverable.setVisibility(View.VISIBLE);
                         }
                     });
-                    String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
-
-                    Time ObjRequestTimeFrom = ObjFoodsList.get(position).getRequestTimeFrom();
-                    Time ObjRequestTimeTo = ObjFoodsList.get(position).getRequestTimeTo();
-
-                    SimpleDateFormat formater = new SimpleDateFormat("h:mm a");
-
-                    sTemp = sTemp.replace("[X]", formater.format(ObjRequestTimeFrom));
-                    sTemp = sTemp.replace("[Y]", formater.format(ObjRequestTimeTo));
-                    if (new Settings(context).getCurrentLanguageId() == 1) {
-                        sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
-                    }
-
-                    final String sTempFinal = sTemp;
+                } else {
                     ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            lblHomeMenuItemTimeFromTo.setText(sTempFinal);
+                            ObjImagedeliverable.setVisibility(View.GONE);
                         }
                     });
-
-
-//                    final Bitmap[] ObjBitmap = new Bitmap[1];
-//                    try {
-//                        ObjBitmap[0] =
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-
-//                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-                          //  ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
-//                        }
-//                    });
-                    imageLoader.displayImage( ConnectionProperties.SiteUrl + "/Images/" +  ObjFoodsList.get(position).getPhoto(),ImageHomeMenuItem);
-
-
-                    BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (new Settings(context).getUserId() != -1) {
-                                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
-                                    }
-                                });
-                            } else {
-                                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(context, new Utils().GetResourceName(context, R.string.Error_YouAreNotLoginYet, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }
-                    });
-
                 }
-            });
-            t.start();
-        //}
+
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
+                        lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
+                        lblHomeMenuItemDescription.setText(ObjFoodsList.get(position).getDescription());
+                    }
+                });
+                String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
+
+                Time ObjRequestTimeFrom = ObjFoodsList.get(position).getRequestTimeFrom();
+                Time ObjRequestTimeTo = ObjFoodsList.get(position).getRequestTimeTo();
+
+                SimpleDateFormat formater = new SimpleDateFormat("h:mm a");
+
+                sTemp = sTemp.replace("[X]", formater.format(ObjRequestTimeFrom));
+                sTemp = sTemp.replace("[Y]", formater.format(ObjRequestTimeTo));
+                if (new Settings(context).getCurrentLanguageId() == 1) {
+                    sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
+                }
+
+                final String sTempFinal = sTemp;
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lblHomeMenuItemTimeFromTo.setText(sTempFinal);
+                    }
+                });
+
+
+                final Bitmap[] ObjBitmap = new Bitmap[1];
+                try {
+                    ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
+                    }
+                });
+
+                BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (new Settings(context).getUserId() != -1) {
+                            Calendar ObjCalender = Calendar.getInstance();
+                            Calendar ObjCalendarFrom = Calendar.getInstance();
+                            Calendar ObjCalendarTo= Calendar.getInstance();
+                            ObjCalendarFrom.set(Calendar.HOUR,ObjFoodsList.get(position).getRequestTimeFrom().getHours());
+                            ObjCalendarFrom.set(Calendar.MINUTE,ObjFoodsList.get(position).getRequestTimeFrom().getMinutes());
+
+                            ObjCalendarTo.set(Calendar.HOUR,ObjFoodsList.get(position).getRequestTimeTo().getHours());
+                            ObjCalendarTo.set(Calendar.MINUTE,ObjFoodsList.get(position).getRequestTimeTo().getMinutes());
+
+                            if (ObjCalender.compareTo(ObjCalendarFrom) > 0 && ObjCalender.compareTo(ObjCalendarTo) < 0
+//                            ||
+//                            (iCurrentTime >= iTimeTo&&
+//                                    iCurrentTime <= iTimeFrom )
+                                    )
+                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    new Utils().ShowActivity(context, null, "RequestForm", String.valueOf(ObjFoodsList.get(position).getId()));
+                                }
+                            });
+                            else
+                                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(context, new Utils().GetResourceName(context, R.string.Error_YouCantRequestThisOrderAtThisTime, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                        } else {
+                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.Error_YouCantRequestThisOrderAtThisTime, new Settings(context).getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                });
+
+            }
+        });
+        t.start();
+         }
 
         return v;
     }
