@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.Utils;
+import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.R;
 
 /**
@@ -73,12 +74,19 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             if (IsArabic)
             {
                 Utils.SetCurrentLanguage(getContext(),1);
-                Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.DataSavedSuccessfuly, Toast.LENGTH_SHORT).show();
+
             }
             else if (!IsArabic)
             {
                 Utils.SetCurrentLanguage(getContext(),2);
+                Toast.makeText(getContext(), R.string.DataSavedSuccessfuly, Toast.LENGTH_SHORT).show();
             }
+
+            if (ObjSettings.getUserType().equals(Settings.enumUserType.FoodMaker.toString()))
+                new Utils().ShowActivity(getActivity(), null, "MainForFoodMaker",ViewMode.NormalMode.name());
+            else
+                new Utils().ShowActivity(getActivity(), null, "Main", ViewMode.NormalMode.name(),"-1");
 
         }
     }

@@ -14,6 +14,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.tastyhomemade.tastyhomemade.Business.ConnectionProperties;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.User;
 import com.tastyhomemade.tastyhomemade.Business.UserDB;
@@ -38,9 +45,26 @@ public class HomeFoodsAdapter extends BaseAdapter {
     List<Foods> ObjFoodsList;
     View v = null;
 
+    ImageLoader imageLoader = null;
+
     public HomeFoodsAdapter(Context p_context, List<Foods> p_ObjFoodsList) {
         context = p_context;
         ObjFoodsList = p_ObjFoodsList;
+
+//        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+//                .cacheOnDisc(true).cacheInMemory(true)
+//                .imageScaleType(ImageScaleType.EXACTLY)
+//                .displayer(new FadeInBitmapDisplayer(300)).build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                context).build();
+//                .defaultDisplayImageOptions(defaultOptions)
+//                .memoryCache(new WeakMemoryCache())
+//                .discCacheSize(100 * 1024 * 1024).build();
+
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+
     }
 
 
@@ -62,8 +86,8 @@ public class HomeFoodsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
 
-        v = convertView;
-        if (v == null) {
+//        v = convertView;
+//        if (v == null) {
 
             v = View.inflate(context, R.layout.home_menu_item, null);
 
@@ -130,19 +154,21 @@ public class HomeFoodsAdapter extends BaseAdapter {
                     });
 
 
-                    final Bitmap[] ObjBitmap = new Bitmap[1];
-                    try {
-                        ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    final Bitmap[] ObjBitmap = new Bitmap[1];
+//                    try {
+//                        ObjBitmap[0] =
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
 
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
-                        }
-                    });
+//                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+                          //  ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
+//                        }
+//                    });
+                    imageLoader.displayImage( ConnectionProperties.SiteUrl + "/Images/" +  ObjFoodsList.get(position).getPhoto(),ImageHomeMenuItem);
+
 
                     BtnHomeMenuItemRequest.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -168,7 +194,7 @@ public class HomeFoodsAdapter extends BaseAdapter {
                 }
             });
             t.start();
-        }
+        //}
 
         return v;
     }
