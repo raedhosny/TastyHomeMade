@@ -3,23 +3,19 @@ package com.tastyhomemade.tastyhomemade.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 
 import com.tastyhomemade.tastyhomemade.Adapter.HomeFoodsAdapter;
 import com.tastyhomemade.tastyhomemade.Business.Foods;
 import com.tastyhomemade.tastyhomemade.Business.FoodsDB;
-import com.tastyhomemade.tastyhomemade.MainActivity;
 import com.tastyhomemade.tastyhomemade.Others.Settings;
 import com.tastyhomemade.tastyhomemade.Others.ViewMode;
 import com.tastyhomemade.tastyhomemade.Others.WaitDialog;
 import com.tastyhomemade.tastyhomemade.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,30 +42,32 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ObjSetting = new Settings (getContext());
+        ObjSetting = new Settings(getContext());
 
-        if (getArguments().size() ==3) {
-            ObjCurrentMode = ViewMode.valueOf( getArguments().getString("ViewMode"));
+        if (getArguments().size() == 3) {
+            ObjCurrentMode = ViewMode.valueOf(getArguments().getString("ViewMode"));
             iCategoryId = getArguments().getInt("CategoryId");
             sKeyword = getArguments().getString("Keyword");
-        }
-        else
-        {
-            ObjCurrentMode = ViewMode.valueOf( getArguments().getString("ViewMode"));
+        } else {
+            ObjCurrentMode = ViewMode.valueOf(getArguments().getString("ViewMode"));
             iCategoryId = getArguments().getInt("CategoryId");
         }
 
         ObjWaitDialog = new WaitDialog(getContext());
 
-        if (ObjCurrentMode == ViewMode.NormalMode )
+        if (ObjCurrentMode == ViewMode.NormalMode)
             FillData(iCategoryId);
         else if (ObjCurrentMode == ViewMode.SearchMode)
             FillData(sKeyword);
     }
 
+    List<Foods> ObjFoodsList = null;
+
+    boolean IsComplete = false;
+
     private void FillData(int p_iCategoryId) {
 
-        ObjWaitDialog.ShowDialog();
+      //  ObjWaitDialog.ShowDialog();
 
         final int iCategoryId = p_iCategoryId;
 
@@ -77,26 +75,22 @@ public class MainFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    List<Foods> ObjFoodsList = new ArrayList<Foods>();
+                    ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SelectByCategoryId(iCategoryId, new Settings(getActivity()).getCurrentLanguageId()));
-                    final HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
-                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
-                    getActivity().runOnUiThread(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-                                    ObjWaitDialog.HideDialog();
-                                }
-                            }
-                    );
-
+                    HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
+                    LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+                    ObjFoodsListAdapter.FillList(lvMainFoodsList);
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            ObjWaitDialog.HideDialog();
+//                        }
+//                    });
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         });
-
         t.start();
 
 
@@ -104,7 +98,7 @@ public class MainFragment extends Fragment {
 
     private void FillData(String p_sKeyword) {
 
-        ObjWaitDialog.ShowDialog();
+        //ObjWaitDialog.ShowDialog();
 
         final String sKeywordFinal = p_sKeyword;
 
@@ -113,18 +107,17 @@ public class MainFragment extends Fragment {
             public void run() {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
-                    ObjFoodsList.addAll(new FoodsDB().GlobalSearchByCustomer(sKeywordFinal,ObjSetting .getCurrentLanguageId()));
-                    final HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
-                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
-                    getActivity().runOnUiThread(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-                                    ObjWaitDialog.HideDialog();
-                                }
-                            }
-                    );
+                    ObjFoodsList.addAll(new FoodsDB().GlobalSearchByCustomer(sKeywordFinal, ObjSetting.getCurrentLanguageId()));
+                    HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
+                    LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+                    ObjFoodsListAdapter.FillList(lvMainFoodsList);
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            ObjWaitDialog.HideDialog();
+//                        }
+//                    });
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

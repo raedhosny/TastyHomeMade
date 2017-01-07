@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,7 @@ import static android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS;
  * Created by raed on 12/4/2016.
  */
 
-public class EditFoodsAdapter extends BaseAdapter {
+public class EditFoodsAdapter {
     Context context;
     List<Foods> ObjFoodsList;
     Settings ObjSettings;
@@ -47,141 +48,179 @@ public class EditFoodsAdapter extends BaseAdapter {
         ObjSettings = new Settings(p_context);
     }
 
+    public void FillList(LinearLayout p_Linear) {
 
-    @Override
-    public int getCount() {
-        return ObjFoodsList.size();
-    }
 
-    @Override
-    public Foods getItem(int position) {
-        return ObjFoodsList.get(position);
-    }
 
-    @Override
-    public long getItemId(int position) {
-        return ObjFoodsList.get(position).getId();
-    }
+        final LinearLayout LinearFinal = p_Linear;
+        final AppCompatActivity CurrentActivity = (AppCompatActivity) context;
 
-    View v;
-
-    @Override
-    public View getView(final int position, final View convertView, ViewGroup parent) {
-
-        View v =  convertView;
-        if ( v == null) {
-        v = View.inflate(context, R.layout.editfood_list_item, null);
-
-        RatingBar ObjRatingBar = (RatingBar) v.findViewById(R.id.txtHomeMenuItemRating);
-        ImageView ObjImagedeliverable = (ImageView) v.findViewById(R.id.txtHomeMenuItemDeliverable);
-        TextView ObjHomeMenuItemPrice = (TextView) v.findViewById(R.id.txtHomeMenuItemPrice);
-        TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
-        TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
-        TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
-        final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
-        Button BtnItemDelete = (Button) v.findViewById(R.id.BtnItemDelete);
-        Button BtnEditItem = (Button) v.findViewById(R.id.BtnEditItem);
-
-        int iUserId = ObjFoodsList.get(position).getUserId();
-
-        User ObjUser = new UserDB().Select(iUserId);
-        if (ObjUser.isHaveDelivary()) {
-            ObjImagedeliverable.setVisibility(View.VISIBLE);
-        } else {
-            ObjImagedeliverable.setVisibility(View.GONE);
-        }
-
-        ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(position).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
-        lblHomeMenuItemName.setText((ObjFoodsList.get(position).getName()));
-        lblHomeMenuItemDescription.setText(ObjFoodsList.get(position).getDescription());
-        String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
-
-        Time ObjRequestTimeFrom = ObjFoodsList.get(position).getRequestTimeFrom();
-        Time ObjRequestTimeTo = ObjFoodsList.get(position).getRequestTimeTo();
-
-        SimpleDateFormat formater = new SimpleDateFormat("h:mm a");
-
-        sTemp = sTemp.replace("[X]", formater.format(ObjRequestTimeFrom));
-        sTemp = sTemp.replace("[Y]", formater.format(ObjRequestTimeTo));
-        if (new Settings(context).getCurrentLanguageId() == 1) {
-            sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
-        }
-        lblHomeMenuItemTimeFromTo.setText(sTemp);
-
-        Thread t = new Thread(new Runnable() {
+        CurrentActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-
-                final Bitmap[] ObjBitmap = new Bitmap[1];
-                try {
-                    ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(position).getPhoto());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
-                    }
-                });
-
+                LinearFinal.removeAllViews();
             }
         });
-        t.start();
 
-        BtnItemDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        for (int i = 0; i <= ObjFoodsList.size() - 1; i++) {
 
-                AlertDialog.Builder ctlAlertDialog = new AlertDialog.Builder(context);
-                // ctlAlertDialog.setTitle(Utils.GetResourceName(context, R.string.AreYouSure, ObjSettings.getCurrentLanguageId()));
-                ctlAlertDialog.setMessage(Utils.GetResourceName(context, R.string.AreYouSure, ObjSettings.getCurrentLanguageId()));
-                ctlAlertDialog.setPositiveButton(Utils.GetResourceName(context, R.string.Yes, ObjSettings.getCurrentLanguageId()), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Thread t = new Thread(new Runnable() {
+            final View v = View.inflate(context, R.layout.editfood_list_item, null);
+            CurrentActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    LinearFinal.addView(v);
+                }
+            });
+
+            final RatingBar ObjRatingBar = (RatingBar) v.findViewById(R.id.txtHomeMenuItemRating);
+            final ImageView ObjImagedeliverable = (ImageView) v.findViewById(R.id.txtHomeMenuItemDeliverable);
+            final TextView ObjHomeMenuItemPrice = (TextView) v.findViewById(R.id.txtHomeMenuItemPrice);
+            final TextView lblHomeMenuItemName = (TextView) v.findViewById(R.id.lblHomeMenuItemName);
+            final TextView lblHomeMenuItemDescription = (TextView) v.findViewById(R.id.lblHomeMenuItemDescription);
+            final TextView lblHomeMenuItemTimeFromTo = (TextView) v.findViewById(R.id.lblHomeMenuItemTimeFromTo);
+            final ImageView ImageHomeMenuItem = (ImageView) v.findViewById(R.id.ImageHomeMenuItem);
+            final Button BtnItemDelete = (Button) v.findViewById(R.id.BtnItemDelete);
+            final Button BtnEditItem = (Button) v.findViewById(R.id.BtnEditItem);
+            final int iFinal = i;
+
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+
+                    int iUserId = ObjFoodsList.get(iFinal).getUserId();
+
+                    User ObjUser = new UserDB().Select(iUserId);
+                    if (ObjUser.isHaveDelivary()) {
+                        CurrentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                new FoodsDB().Delete(ObjFoodsList.get(position).getId());
-                                ObjFoodsList.remove(position);
-                                ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        notifyDataSetChanged();
-                                    }
-                                });
-
-
+                                ObjImagedeliverable.setVisibility(View.VISIBLE);
                             }
                         });
-                        t.start();
+                    } else {
+                        CurrentActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ObjImagedeliverable.setVisibility(View.GONE);
+                            }
+                        });
                     }
-                });
-                ctlAlertDialog.setNegativeButton(Utils.GetResourceName(context, R.string.No, ObjSettings.getCurrentLanguageId()), new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    CurrentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ObjHomeMenuItemPrice.setText(String.valueOf(ObjFoodsList.get(iFinal).getPrice()) + " " + new Utils().GetResourceName(context, R.string.Currency, new Settings(context).getCurrentLanguageId()));
+                            lblHomeMenuItemName.setText((ObjFoodsList.get(iFinal).getName()));
+                            lblHomeMenuItemDescription.setText(ObjFoodsList.get(iFinal).getDescription());
+                        }
+                    });
+
+                    String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
+
+                    Time ObjRequestTimeFrom = ObjFoodsList.get(iFinal).getRequestTimeFrom();
+                    Time ObjRequestTimeTo = ObjFoodsList.get(iFinal).getRequestTimeTo();
+
+                    SimpleDateFormat formater = new SimpleDateFormat("h:mm a");
+
+                    sTemp = sTemp.replace("[X]", formater.format(ObjRequestTimeFrom));
+                    sTemp = sTemp.replace("[Y]", formater.format(ObjRequestTimeTo));
+                    if (new Settings(context).getCurrentLanguageId() == 1) {
+                        sTemp = sTemp.replace("PM", "مساءا").replace("AM", "صباحا");
                     }
-                });
-                ctlAlertDialog.show();
-            }
-        });
 
-        BtnEditItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    final String sTempFinal = sTemp;
 
-                new Utils().ShowActivity(context, null, "UpdateFoodsandDrinks", String.valueOf(ObjFoodsList.get(position).getId()));
+                    CurrentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblHomeMenuItemTimeFromTo.setText(sTempFinal);
+                        }
+                    });
 
-            }
-        });
 
+                    final Bitmap[] ObjBitmap = new Bitmap[1];
+                    try {
+                        ObjBitmap[0] = Utils.LoadImage(ObjFoodsList.get(iFinal).getPhoto());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    CurrentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ImageHomeMenuItem.setImageBitmap(ObjBitmap[0]);
+                        }
+                    });
+
+
+                    BtnItemDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            AlertDialog.Builder ctlAlertDialog = new AlertDialog.Builder(context);
+                            // ctlAlertDialog.setTitle(Utils.GetResourceName(context, R.string.AreYouSure, ObjSettings.getCurrentLanguageId()));
+                            ctlAlertDialog.setMessage(Utils.GetResourceName(context, R.string.AreYouSure, ObjSettings.getCurrentLanguageId()));
+                            ctlAlertDialog.setPositiveButton(Utils.GetResourceName(context, R.string.Yes, ObjSettings.getCurrentLanguageId()), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Thread t = new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+
+                                            new FoodsDB().Delete(ObjFoodsList.get(iFinal).getId());
+                                            ObjFoodsList.remove(iFinal);
+                                        }
+                                    });
+                                    t.start();
+                                    CurrentActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            LinearFinal.removeViewAt(iFinal);
+                                            //notifyDataSetChanged();
+
+                                        }
+                                    });
+
+
+                                }
+                            });
+                            ctlAlertDialog.setNegativeButton(Utils.GetResourceName(context, R.string.No, ObjSettings.getCurrentLanguageId()), new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            ctlAlertDialog.show();
+                        }
+                    });
+
+                    BtnEditItem.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CurrentActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+
+                                    new Utils().ShowActivity(context, null, "UpdateFoodsandDrinks", String.valueOf(ObjFoodsList.get(iFinal).getId()));
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
+            t.start();
         }
-        return v;
+
     }
+
+
 }
+
+
+
 

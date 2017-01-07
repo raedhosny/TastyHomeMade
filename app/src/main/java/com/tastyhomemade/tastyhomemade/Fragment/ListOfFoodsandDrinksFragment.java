@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -58,13 +59,13 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
         ObjSettings = new Settings(getContext());
 
         ObjWaitDialog = new WaitDialog(getContext());
-        ObjWaitDialog.ShowDialog();
+//        ObjWaitDialog.ShowDialog();
 
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ObjWaitDialog.ShowDialog();
+                //ObjWaitDialog.ShowDialog();
                 Categories ObjCategories = ObjCategoriesList.get(ddlCategories.getSelectedItemPosition());
                 FillData(txtName.getText().toString().trim(),ObjCategories.getId());
             }
@@ -131,17 +132,17 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SearchbyFoodMaker(sName,iCategoryId, ObjSettings.getUserId(),ObjSettings.getCurrentLanguageId() ));
-                    final EditFoodsAdapter ObjFoodsListAdapter = new EditFoodsAdapter(getContext(), ObjFoodsList);
-                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
-                    getActivity().runOnUiThread(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-                                    ObjWaitDialog.HideDialog();
-                                }
-                            }
-                    );
+                     EditFoodsAdapter ObjFoodsListAdapter = new EditFoodsAdapter(getContext(), ObjFoodsList);
+                     LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+                    ObjFoodsListAdapter.FillList(lvMainFoodsList);
+//                    getActivity().runOnUiThread(
+//                            new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    ObjWaitDialog.HideDialog();
+//                                }
+//                            }
+//                    );
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -166,16 +167,16 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                             ObjFoodsList.addAll(new FoodsDB().GlobalSearchByFoodMaker(sKeywordFinal,ObjSettings.getCurrentLanguageId(), ObjSettings.getUserId() ));
                     final EditFoodsAdapter ObjFoodsListAdapter = new EditFoodsAdapter(getContext(), ObjFoodsList);
-                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
-                    getActivity().runOnUiThread(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-                                    ObjWaitDialog.HideDialog();
-                                }
-                            }
-                    );
+                    final LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+//                    getActivity().runOnUiThread(
+//                            new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+//                                    ObjWaitDialog.HideDialog();
+//                                }
+//                            }
+//                    );
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

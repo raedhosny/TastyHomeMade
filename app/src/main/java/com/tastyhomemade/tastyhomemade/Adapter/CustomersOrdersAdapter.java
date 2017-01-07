@@ -223,7 +223,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                             Calendar ObjCalendar = Calendar.getInstance();
                             ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
                             new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
-                            notifyDataSetChanged();
+                            //notifyDataSetChanged();
 
                             ((AppCompatActivity) context).runOnUiThread(new Runnable() {
                                 @Override

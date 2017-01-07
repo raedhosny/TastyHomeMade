@@ -87,10 +87,18 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <ListView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+    <LinearLayout
         android:id="@+id/lvMainFoodsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        ></LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

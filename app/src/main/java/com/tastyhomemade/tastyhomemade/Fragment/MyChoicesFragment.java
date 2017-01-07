@@ -114,7 +114,7 @@ public class MyChoicesFragment extends Fragment {
                             new Runnable() {
                                 @Override
                                 public void run() {
-                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                  //  lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
                                     ObjWaitDialog.HideDialog();
                                 }
                             }

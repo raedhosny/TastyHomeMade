@@ -68,8 +68,8 @@ public class OrdersFollowupAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        v= convertView;
-        if (v == null) {
+//        v= convertView;
+//        if (v == null) {
             v = View.inflate(context, R.layout.orderfollowup_list_item, null);
 
             Thread t = new Thread(new Runnable() {
@@ -207,7 +207,7 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                 }
             });
             t.start();
-        }
+        //}
         return v;
     }
 }
