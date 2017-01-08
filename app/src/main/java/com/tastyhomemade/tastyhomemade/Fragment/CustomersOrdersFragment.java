@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.tastyhomemade.tastyhomemade.Adapter.CustomersOrdersAdapter;
@@ -24,7 +25,7 @@ import java.util.List;
 public class CustomersOrdersFragment extends Fragment {
 
     Settings ObjSettings;
-    ListView lvCustomersOrders;
+    LinearLayout lvCustomersOrders;
     WaitDialog ObjWaitingDialog;
 
     @Nullable
@@ -37,7 +38,7 @@ public class CustomersOrdersFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ObjSettings = new Settings(getContext());
-        lvCustomersOrders = (ListView) view.findViewById(R.id.lvCustomersOrders);
+        lvCustomersOrders = (LinearLayout) view.findViewById(R.id.lvCustomersOrders);
         FillData();
 
     }
@@ -45,19 +46,20 @@ public class CustomersOrdersFragment extends Fragment {
     private void FillData() {
 
         ObjWaitingDialog= new WaitDialog(getContext());
-        ObjWaitingDialog.ShowDialog();
+       // ObjWaitingDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 List<Orders> ObjOrdersList = new OrdersDB().SelectByFoodMakerId(ObjSettings.getUserId());
-                final CustomersOrdersAdapter ObjCustomerOrdersAdapter = new CustomersOrdersAdapter(ObjOrdersList, getActivity());
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        lvCustomersOrders.setAdapter(ObjCustomerOrdersAdapter);
-                        ObjWaitingDialog.HideDialog();
-                    }
-                });
+                CustomersOrdersAdapter ObjCustomerOrdersAdapter = new CustomersOrdersAdapter(ObjOrdersList, getActivity());
+                ObjCustomerOrdersAdapter.FillView(lvCustomersOrders);
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        lvCustomersOrders.setAdapter(ObjCustomerOrdersAdapter);
+//                        ObjWaitingDialog.HideDialog();
+//                    }
+//                });
 
             }
         });

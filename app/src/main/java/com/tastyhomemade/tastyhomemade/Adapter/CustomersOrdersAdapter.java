@@ -19,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,7 @@ import java.util.Locale;
  * Created by raed on 12/20/2016.
  */
 
-public class CustomersOrdersAdapter extends BaseAdapter {
+public class CustomersOrdersAdapter {
 
     Context context;
     List<Orders> ObjOrdersList;
@@ -64,198 +65,202 @@ public class CustomersOrdersAdapter extends BaseAdapter {
 
     }
 
-    @Override
-    public int getCount() {
-        return ObjOrdersList.size();
-    }
 
-    @Override
-    public Orders getItem(int position) {
-        return ObjOrdersList.get(position);
-    }
+    public void FillView(LinearLayout p_Linear) {
 
-    @Override
-    public long getItemId(int position) {
-        return ObjOrdersList.get(position).getId();
-    }
+        final AppCompatActivity CurrentActivity = (AppCompatActivity) context;
+        final View v = View.inflate(context, R.layout.customerorder_listview_item, null);
+        final LinearLayout LinearFinal = p_Linear;
 
-    @Override
-    public View getView(final int position, final View convertView, ViewGroup parent) {
+        CurrentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearFinal.removeAllViews();
+            }
+        });
 
-        View v =   convertView;
-        if (v == null) {
-            v = View.inflate(context, R.layout.customerorder_listview_item, null);
-            final RatingBar ctlRating = (RatingBar) v.findViewById(R.id.ctlRating);
-            final ImageView ImageItem = (ImageView) v.findViewById(R.id.ImageItem);
-            final TextView lblFoodName = (TextView) v.findViewById(R.id.lblFoodName);
-            final TextView lblNumberOfOrders = (TextView) v.findViewById(R.id.lblNumberOfOrders);
-            final TextView lblRequestDate = (TextView) v.findViewById(R.id.lblRequestDate);
-            final TextView lblRequestTime = (TextView) v.findViewById(R.id.lblRequestTime);
-            final TextView lblDeliveryDate = (TextView) v.findViewById(R.id.lblDeliveryDate);
-            final TextView lblDeliveryTime = (TextView) v.findViewById(R.id.lblDeliveryTime);
-            final TextView lblCustomerName = (TextView) v.findViewById(R.id.lblCustomerName);
-            final TextView lblMobile = (TextView) v.findViewById(R.id.lblMobile);
-            final TextView lblAddress = (TextView) v.findViewById(R.id.lblAddress);
-            final WebView webview_Address = (WebView) v.findViewById(R.id.webview_Address);
-            webview_Address.setWebViewClient(new WebViewClient());
-            webview_Address.getSettings().setJavaScriptEnabled(true);
-
-
-            final Button btnSendOrder = (Button) v.findViewById(R.id.btnSendOrder);
-            final Button btnOrderReceived = (Button) v.findViewById(R.id.btnOrderReceived);
-            final Button btnOrderRejected = (Button) v.findViewById(R.id.btnOrderRejected);
-
-            btnSendOrder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Thread t = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-
-
-                            int iOrderId = ObjOrdersList.get(position).getId();
-                            int iActionId = 2;
-                            Orders_Actions ObjOrderAction = new Orders_Actions();
-                            ObjOrderAction.setOrderId(iOrderId);
-                            ObjOrderAction.setActionId(iActionId);
-                            Calendar ObjCalendar = Calendar.getInstance();
-                            ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
-                            int iId = new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
-                            final Orders_Actions ObjOrderActionFinal = new Orders_ActionsDB().Select(iId);
-
-
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //notifyDataSetChanged();
-                                    btnSendOrder.setEnabled(false);
-                                    btnSendOrder.setBackgroundResource(R.drawable.button_style3_disabled);
-                                    btnSendOrder.setTextColor(Color.parseColor("#929292"));
-                                    btnOrderReceived.setEnabled(true);
-                                    btnOrderReceived.setBackgroundResource(R.drawable.button_style3_enabled);
-                                    btnOrderReceived.setTextColor(Color.parseColor("#ffffff"));
-                                    btnOrderRejected.setEnabled(true);
-                                    btnOrderRejected.setBackgroundResource(R.drawable.button_style3_enabled);
-                                    btnOrderRejected.setTextColor(Color.parseColor("#ffffff"));
-                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasSentToClient, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    });
-
-                    t.start();
-                }
-            });
-
-            btnOrderReceived.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Thread t = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int iOrderId = ObjOrdersList.get(position).getId();
-                            int iActionId = 3;
-                            Orders_Actions ObjOrderAction = new Orders_Actions();
-                            ObjOrderAction.setOrderId(iOrderId);
-                            ObjOrderAction.setActionId(iActionId);
-                            Calendar ObjCalendar = Calendar.getInstance();
-                            ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
-                            int iId = new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
-
-                            final Orders_Actions ObjOrderActionFinal = new Orders_ActionsDB().Select(iId);
-
-
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //notifyDataSetChanged();
-                                    btnSendOrder.setEnabled(false);
-                                    btnSendOrder.setBackgroundResource(R.drawable.button_style3_disabled);
-                                    btnSendOrder.setTextColor(Color.parseColor("#929292"));
-                                    btnOrderReceived.setEnabled(true);
-                                    btnOrderReceived.setBackgroundResource(R.drawable.button_style3_disabled);
-                                    btnOrderReceived.setTextColor(Color.parseColor("#929292"));
-                                    btnOrderRejected.setEnabled(true);
-                                    btnOrderRejected.setBackgroundResource(R.drawable.button_style3_disabled);
-                                    btnOrderRejected.setTextColor(Color.parseColor("#929292"));
-
-                                    if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
-                                        sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("ar"));
-                                    else
-                                        sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("en"));
-
-                                    final SimpleDateFormat sdfFinal3 = sdf;
-                                    // Delivery Date
-
-                                    lblDeliveryDate.setText(sdfFinal3.format(ObjOrderActionFinal.getActionDate()));
-
-
-                                    if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
-                                        sdf = new SimpleDateFormat("h:mm a", new Locale("ar"));
-                                    else
-                                        sdf = new SimpleDateFormat("h:mm a");
-
-                                    final SimpleDateFormat sdfFinal4 = sdf;
-
-                                    lblDeliveryTime.setText(sdfFinal4.format(ObjOrderActionFinal.getActionDate()));
-
-                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasBeenReceived, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-
-                                }
-                            });
-                        }
-                    });
-                    t.start();
-                }
-            });
-
-            btnOrderRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Thread t = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int iOrderId = ObjOrdersList.get(position).getId();
-                            int iActionId = 4;
-                            Orders_Actions ObjOrderAction = new Orders_Actions();
-                            ObjOrderAction.setOrderId(iOrderId);
-                            ObjOrderAction.setActionId(iActionId);
-                            Calendar ObjCalendar = Calendar.getInstance();
-                            ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
-                            new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
-                            //notifyDataSetChanged();
-
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    btnSendOrder.setEnabled(false);
-                                    btnSendOrder.setBackgroundResource(R.drawable.button_style3_disabled);
-                                    btnSendOrder.setTextColor(Color.parseColor("#929292"));
-                                    btnOrderReceived.setEnabled(true);
-                                    btnOrderReceived.setBackgroundResource(R.drawable.button_style3_disabled);
-                                    btnOrderReceived.setTextColor(Color.parseColor("#929292"));
-                                    btnOrderRejected.setEnabled(true);
-                                    btnOrderRejected.setBackgroundResource(R.drawable.button_style3_disabled);
-                                    btnOrderRejected.setTextColor(Color.parseColor("#929292"));
-                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasBeenRejected, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    });
-                    t.start();
-                }
-            });
-
-
-            /// Do Rating
-            //////////////////////////
-            //////////////////////////////
-            ///////////////////////////////
-
+        for (int i = 0; i <= ObjOrdersList.size() - 1; i++) {
+            final int iFinal = i;
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final Foods ObjFoods = new FoodsDB().Select(ObjOrdersList.get(position).getFood_Id(), ObjSettings.getCurrentLanguageId());
+
+
+                    final RatingBar ctlRating = (RatingBar) v.findViewById(R.id.ctlRating);
+                    final ImageView ImageItem = (ImageView) v.findViewById(R.id.ImageItem);
+                    final TextView lblFoodName = (TextView) v.findViewById(R.id.lblFoodName);
+                    final TextView lblNumberOfOrders = (TextView) v.findViewById(R.id.lblNumberOfOrders);
+                    final TextView lblRequestDate = (TextView) v.findViewById(R.id.lblRequestDate);
+                    final TextView lblRequestTime = (TextView) v.findViewById(R.id.lblRequestTime);
+                    final TextView lblDeliveryDate = (TextView) v.findViewById(R.id.lblDeliveryDate);
+                    final TextView lblDeliveryTime = (TextView) v.findViewById(R.id.lblDeliveryTime);
+                    final TextView lblCustomerName = (TextView) v.findViewById(R.id.lblCustomerName);
+                    final TextView lblMobile = (TextView) v.findViewById(R.id.lblMobile);
+                    final TextView lblAddress = (TextView) v.findViewById(R.id.lblAddress);
+                    final WebView webview_Address = (WebView) v.findViewById(R.id.webview_Address);
+                    webview_Address.setWebViewClient(new WebViewClient());
+                    webview_Address.getSettings().setJavaScriptEnabled(true);
+
+
+                    final Button btnSendOrder = (Button) v.findViewById(R.id.btnSendOrder);
+                    final Button btnOrderReceived = (Button) v.findViewById(R.id.btnOrderReceived);
+                    final Button btnOrderRejected = (Button) v.findViewById(R.id.btnOrderRejected);
+
+                    btnSendOrder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+
+
+                                    int iOrderId = ObjOrdersList.get(iFinal).getId();
+                                    int iActionId = 2;
+                                    Orders_Actions ObjOrderAction = new Orders_Actions();
+                                    ObjOrderAction.setOrderId(iOrderId);
+                                    ObjOrderAction.setActionId(iActionId);
+                                    Calendar ObjCalendar = Calendar.getInstance();
+                                    ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
+                                    int iId = new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                                    final Orders_Actions ObjOrderActionFinal = new Orders_ActionsDB().Select(iId);
+
+
+                                    CurrentActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+
+                                            //notifyDataSetChanged();
+                                            btnSendOrder.setEnabled(false);
+                                            btnSendOrder.setBackgroundResource(R.drawable.button_style3_disabled);
+                                            btnSendOrder.setTextColor(Color.parseColor("#929292"));
+                                            btnOrderReceived.setEnabled(true);
+                                            btnOrderReceived.setBackgroundResource(R.drawable.button_style3_enabled);
+                                            btnOrderReceived.setTextColor(Color.parseColor("#ffffff"));
+                                            btnOrderRejected.setEnabled(true);
+                                            btnOrderRejected.setBackgroundResource(R.drawable.button_style3_enabled);
+                                            btnOrderRejected.setTextColor(Color.parseColor("#ffffff"));
+
+                                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasSentToClient, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+                                        }
+                                    });
+                                }
+                            });
+
+                            t.start();
+                        }
+                    });
+
+                    btnOrderReceived.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int iOrderId = ObjOrdersList.get(iFinal).getId();
+                                    int iActionId = 3;
+                                    Orders_Actions ObjOrderAction = new Orders_Actions();
+                                    ObjOrderAction.setOrderId(iOrderId);
+                                    ObjOrderAction.setActionId(iActionId);
+                                    Calendar ObjCalendar = Calendar.getInstance();
+                                    ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
+                                    int iId = new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+
+                                    final Orders_Actions ObjOrderActionFinal = new Orders_ActionsDB().Select(iId);
+
+
+                                    CurrentActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //notifyDataSetChanged();
+                                            btnSendOrder.setEnabled(false);
+                                            btnSendOrder.setBackgroundResource(R.drawable.button_style3_disabled);
+                                            btnSendOrder.setTextColor(Color.parseColor("#929292"));
+                                            btnOrderReceived.setEnabled(true);
+                                            btnOrderReceived.setBackgroundResource(R.drawable.button_style3_disabled);
+                                            btnOrderReceived.setTextColor(Color.parseColor("#929292"));
+                                            btnOrderRejected.setEnabled(true);
+                                            btnOrderRejected.setBackgroundResource(R.drawable.button_style3_disabled);
+                                            btnOrderRejected.setTextColor(Color.parseColor("#929292"));
+
+                                            if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
+                                                sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("ar"));
+                                            else
+                                                sdf = new SimpleDateFormat("dd MMMM yyyy", new Locale("en"));
+
+                                            final SimpleDateFormat sdfFinal3 = sdf;
+                                            // Delivery Date
+
+                                            lblDeliveryDate.setText(sdfFinal3.format(ObjOrderActionFinal.getActionDate()));
+
+
+                                            if (ObjSettings.getCurrentLanguageId() == 1) // Arabic
+                                                sdf = new SimpleDateFormat("h:mm a", new Locale("ar"));
+                                            else
+                                                sdf = new SimpleDateFormat("h:mm a");
+
+                                            final SimpleDateFormat sdfFinal4 = sdf;
+
+                                            lblDeliveryTime.setText(sdfFinal4.format(ObjOrderActionFinal.getActionDate()));
+
+
+                                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasBeenReceived, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+
+
+                                        }
+                                    });
+                                }
+                            });
+                            t.start();
+                        }
+                    });
+
+                    btnOrderRejected.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int iOrderId = ObjOrdersList.get(iFinal).getId();
+                                    int iActionId = 4;
+                                    Orders_Actions ObjOrderAction = new Orders_Actions();
+                                    ObjOrderAction.setOrderId(iOrderId);
+                                    ObjOrderAction.setActionId(iActionId);
+                                    Calendar ObjCalendar = Calendar.getInstance();
+                                    ObjOrderAction.setActionDate(new java.sql.Timestamp(ObjCalendar.getTimeInMillis()));
+                                    new Orders_ActionsDB().InsertUpdate(ObjOrderAction);
+                                    //notifyDataSetChanged();
+
+                                    CurrentActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            btnSendOrder.setEnabled(false);
+                                            btnSendOrder.setBackgroundResource(R.drawable.button_style3_disabled);
+                                            btnSendOrder.setTextColor(Color.parseColor("#929292"));
+                                            btnOrderReceived.setEnabled(true);
+                                            btnOrderReceived.setBackgroundResource(R.drawable.button_style3_disabled);
+                                            btnOrderReceived.setTextColor(Color.parseColor("#929292"));
+                                            btnOrderRejected.setEnabled(true);
+                                            btnOrderRejected.setBackgroundResource(R.drawable.button_style3_disabled);
+                                            btnOrderRejected.setTextColor(Color.parseColor("#929292"));
+                                            Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasBeenRejected, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            });
+                            t.start();
+                        }
+                    });
+
+
+                    /// Do Rating
+                    //////////////////////////
+                    //////////////////////////////
+                    ///////////////////////////////
+
+
+                    final Foods ObjFoods = new FoodsDB().Select(ObjOrdersList.get(iFinal).getFood_Id(), ObjSettings.getCurrentLanguageId());
 
                     final Bitmap[] ObjBitmap = new Bitmap[1];
                     try {
@@ -265,7 +270,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     }
 
                     // Food Image
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             ImageItem.setImageBitmap(ObjBitmap[0]);
@@ -273,7 +278,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     });
 
                     // Food Name
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             lblFoodName.setText(ObjFoods.getName());
@@ -281,10 +286,10 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     });
 
                     // Number of Orders
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            lblNumberOfOrders.setText(String.valueOf(ObjOrdersList.get(position).getNumberOfOrders()));
+                            lblNumberOfOrders.setText(String.valueOf(ObjOrdersList.get(iFinal).getNumberOfOrders()));
                         }
                     });
 
@@ -299,10 +304,10 @@ public class CustomersOrdersAdapter extends BaseAdapter {
 
                     final SimpleDateFormat sdfFinal1 = sdf;
 
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            lblRequestDate.setText(sdfFinal1.format(ObjOrdersList.get(position).getRequestDate()));
+                            lblRequestDate.setText(sdfFinal1.format(ObjOrdersList.get(iFinal).getRequestDate()));
                         }
                     });
 
@@ -315,15 +320,15 @@ public class CustomersOrdersAdapter extends BaseAdapter {
 
 
                     final SimpleDateFormat sdfFinal2 = sdf;
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            lblRequestTime.setText(sdfFinal2.format(ObjOrdersList.get(position).getRequestDate()));
+                            lblRequestTime.setText(sdfFinal2.format(ObjOrdersList.get(iFinal).getRequestDate()));
                         }
                     });
 
                     // Setting Delivery Date and Time
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             btnSendOrder.setEnabled(true);
@@ -339,11 +344,11 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     });
 
 
-                    List<Orders_Actions> ObjOrdersActionsList = new Orders_ActionsDB().SelectByOrderId(ObjOrdersList.get(position).getId(), 1);
+                    List<Orders_Actions> ObjOrdersActionsList = new Orders_ActionsDB().SelectByOrderId(ObjOrdersList.get(iFinal).getId(), 1);
 
                     for (int i = 0; i < ObjOrdersActionsList.size(); i++) {
                         if (ObjOrdersActionsList.get(i).getActionId() == 1) { // Order Request by customer
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     btnSendOrder.setEnabled(true);
@@ -360,10 +365,9 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                         }
 
                         if (ObjOrdersActionsList.get(i).getActionId() == 2) { // Order sent by foodmaker
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     btnSendOrder.setEnabled(false);
                                     btnSendOrder.setBackgroundResource(R.drawable.button_style3_disabled);
                                     btnSendOrder.setTextColor(Color.parseColor("#929292"));
@@ -378,7 +382,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                         }
 
                         if (ObjOrdersActionsList.get(i).getActionId() == 3 || ObjOrdersActionsList.get(i).getActionId() == 4) {
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     btnSendOrder.setEnabled(false);
@@ -404,7 +408,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                             final SimpleDateFormat sdfFinal3 = sdf;
                             // Delivery Date
                             final Orders_Actions ObjOrderAction = ObjOrdersActionsList.get(i);
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     lblDeliveryDate.setText(sdfFinal3.format(ObjOrderAction.getActionDate()));
@@ -418,7 +422,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
 
                             final SimpleDateFormat sdfFinal4 = sdf;
                             // Delivery Time
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     lblDeliveryTime.setText(sdfFinal4.format(ObjOrderAction.getActionDate()));
@@ -431,9 +435,9 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     }
 
                     // CustomerName
-                    final User ObjCustomerUser = new UserDB().Select(ObjOrdersList.get(position).getUser_Id());
+                    final User ObjCustomerUser = new UserDB().Select(ObjOrdersList.get(iFinal).getUser_Id());
                     final User ObjFoodMakerUser = new UserDB().Select(ObjFoods.getUserId());
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             lblCustomerName.setText(ObjCustomerUser.getUsername());
@@ -441,7 +445,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     });
 
                     // Mobile
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             lblMobile.setText("");
@@ -449,26 +453,26 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                     });
 
                     // Address
-                    if (ObjOrdersList.get(position).isShippingToClient()) {
+                    if (ObjOrdersList.get(iFinal).isShippingToClient()) {
 
                         final String sAddress;
 
-                        Cities ObjCity = new CitiesDB().Select(ObjOrdersList.get(position).getShippingCountryId(), ObjSettings.getCurrentLanguageId());
+                        Cities ObjCity = new CitiesDB().Select(ObjOrdersList.get(iFinal).getShippingCountryId(), ObjSettings.getCurrentLanguageId());
 
-                        if (ObjOrdersList.get(position).getOrderAddress() == "") {
+                        if (ObjOrdersList.get(iFinal).getOrderAddress() == "") {
                             sAddress =
                                     ObjCity.getName() +
                                             ", " +
-                                            ObjOrdersList.get(position).getShippingDistrict() +
+                                            ObjOrdersList.get(iFinal).getShippingDistrict() +
                                             " " +
-                                            ObjOrdersList.get(position).getShippingStreet() +
+                                            ObjOrdersList.get(iFinal).getShippingStreet() +
                                             " " +
-                                            ObjOrdersList.get(position).getShippingBuilding() +
+                                            ObjOrdersList.get(iFinal).getShippingBuilding() +
                                             " " +
-                                            ObjOrdersList.get(position).getShippingApartment() +
+                                            ObjOrdersList.get(iFinal).getShippingApartment() +
                                             "\n" +
-                                            ObjOrdersList.get(position).getShippingOtherDetails();
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                                            ObjOrdersList.get(iFinal).getShippingOtherDetails();
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     lblAddress.setText(sAddress);
@@ -477,12 +481,12 @@ public class CustomersOrdersAdapter extends BaseAdapter {
                             });
 
                         } else {
-                            sAddress = ObjOrdersList.get(position).getOrderAddress();
-                            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                            sAddress = ObjOrdersList.get(iFinal).getOrderAddress();
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     lblAddress.setText(sAddress);
-                                    webview_Address.loadUrl(Utils.GetGoogleMapUrl(webview_Address, ObjOrdersList.get(position).getShipping_Latitude(), ObjOrdersList.get(position).getShipping_Longitude()));
+                                    webview_Address.loadUrl(Utils.GetGoogleMapUrl(webview_Address, ObjOrdersList.get(iFinal).getShipping_Latitude(), ObjOrdersList.get(iFinal).getShipping_Longitude()));
                                 }
                             });
 
@@ -491,7 +495,7 @@ public class CustomersOrdersAdapter extends BaseAdapter {
 
                     } else {
 
-                        ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                        CurrentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 lblAddress.setText(Utils.GetResourceName(context, R.string.ClientComeToGetHisOrderByHimSelf, ObjSettings.getCurrentLanguageId()));
@@ -504,13 +508,11 @@ public class CustomersOrdersAdapter extends BaseAdapter {
 
                     }
 
-
                 }
             });
-
             t.start();
         }
 
-        return v;
+
     }
 }

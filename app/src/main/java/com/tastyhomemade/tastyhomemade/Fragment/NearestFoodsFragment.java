@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.tastyhomemade.tastyhomemade.Adapter.NearestFoodsAdapter;
@@ -53,7 +54,7 @@ public class NearestFoodsFragment extends Fragment {
 
     private void FillData() {
 
-        ObjWaitDialog.ShowDialog();
+       // ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -124,17 +125,18 @@ public class NearestFoodsFragment extends Fragment {
 
 
 
-                    final NearestFoodsAdapter ObjFoodsListAdapter = new NearestFoodsAdapter(getContext(), ObjFoodsList);
-                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
-                    getActivity().runOnUiThread(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-                                    ObjWaitDialog.HideDialog();
-                                }
-                            }
-                    );
+                    NearestFoodsAdapter ObjFoodsListAdapter = new NearestFoodsAdapter(getContext(), ObjFoodsList);
+                    final LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+                    ObjFoodsListAdapter.FillList(lvMainFoodsList);
+//                    getActivity().runOnUiThread(
+//                            new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+//                                    ObjWaitDialog.HideDialog();
+//                                }
+//                            }
+//                    );
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
