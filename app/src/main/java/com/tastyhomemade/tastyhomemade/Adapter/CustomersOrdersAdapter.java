@@ -69,7 +69,7 @@ public class CustomersOrdersAdapter {
     public void FillView(LinearLayout p_Linear) {
 
         final AppCompatActivity CurrentActivity = (AppCompatActivity) context;
-        final View v = View.inflate(context, R.layout.customerorder_listview_item, null);
+
         final LinearLayout LinearFinal = p_Linear;
 
         CurrentActivity.runOnUiThread(new Runnable() {
@@ -81,6 +81,15 @@ public class CustomersOrdersAdapter {
 
         for (int i = 0; i <= ObjOrdersList.size() - 1; i++) {
             final int iFinal = i;
+
+            final View v = View.inflate(context, R.layout.customerorder_listview_item, null);
+
+            CurrentActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    LinearFinal.addView(v);
+                }
+            });
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {

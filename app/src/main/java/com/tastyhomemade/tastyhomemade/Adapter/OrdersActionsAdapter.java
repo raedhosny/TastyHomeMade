@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tastyhomemade.tastyhomemade.Business.Actions;
@@ -21,7 +22,7 @@ import java.util.Locale;
  * Created by raed on 12/13/2016.
  */
 
-public class OrdersActionsAdapter extends BaseAdapter {
+public class OrdersActionsAdapter {
 
     List<Orders_Actions> Obj_Orders_Actions_List;
     Context context;
@@ -33,56 +34,63 @@ public class OrdersActionsAdapter extends BaseAdapter {
         ObjSettings = new Settings(p_context);
     }
 
-    @Override
-    public int getCount() {
-        return Obj_Orders_Actions_List.size();
-    }
 
-    @Override
-    public Orders_Actions getItem(int position) {
-        return Obj_Orders_Actions_List.get(position);
-    }
+    public void FillList(LinearLayout p_Linear) {
 
-    @Override
-    public long getItemId(int position) {
-        return Obj_Orders_Actions_List.get(position).getId();
-    }
+        final AppCompatActivity CurrentActivity = (AppCompatActivity) context;
 
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+        final LinearLayout LinearFinal = p_Linear;
 
-        View v= convertView;
-        if (v == null) {
-            v = View.inflate(context, R.layout.orderfollowup_listview_item, null);
+        CurrentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearFinal.removeAllViews();
+            }
+        });
 
-            final TextView lblTime = (TextView) v.findViewById(R.id.lblTime);
-            final TextView lblAction = (TextView) v.findViewById(R.id.lblAction);
 
-            final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy h:mm a", ObjSettings.getCurrentLanguageId() == 1 ? new Locale("ar") : new Locale("en"));
+        for (int i = 0; i <= Obj_Orders_Actions_List.size() - 1; i++) {
+            final int iFinal = i;
 
-            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+            final View v = View.inflate(context, R.layout.orderfollowup_listview_item, null);
+
+            CurrentActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    lblTime.setText(sdf.format(Obj_Orders_Actions_List.get(position).getActionDate()));
+                    LinearFinal.addView(v);
                 }
             });
-
 
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final Actions ObjAction = new ActionsDB().Select(Obj_Orders_Actions_List.get(position).getActionId(), ObjSettings.getCurrentLanguageId());
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+
+
+                    final TextView lblTime = (TextView) v.findViewById(R.id.lblTime);
+                    final TextView lblAction = (TextView) v.findViewById(R.id.lblAction);
+
+                    final SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy h:mm a", ObjSettings.getCurrentLanguageId() == 1 ? new Locale("ar") : new Locale("en"));
+
+                    CurrentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblTime.setText(sdf.format(Obj_Orders_Actions_List.get(iFinal).getActionDate()));
+                        }
+                    });
+
+
+                    final Actions ObjAction = new ActionsDB().Select(Obj_Orders_Actions_List.get(iFinal).getActionId(), ObjSettings.getCurrentLanguageId());
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             lblAction.setText(ObjAction.getName());
                         }
                     });
+
                 }
             });
             t.start();
-
         }
-        return v;
+
     }
 }

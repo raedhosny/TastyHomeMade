@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.tastyhomemade.tastyhomemade.Adapter.OrdersFollowupAdapter;
@@ -34,25 +35,26 @@ public class OrdersFollowUpFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final ListView lvOrders = (ListView) view.findViewById(R.id.lvOrders);
+        final LinearLayout lvOrders = (LinearLayout) view.findViewById(R.id.lvOrders);
         Bundle ObjBundle = getArguments();
         final int iUserId = ObjBundle.getInt("UserId");
         ObjWaitDialog = new WaitDialog(getContext());
-        ObjWaitDialog.ShowDialog();
+        //ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 List<Orders> ObjOrdersList = new OrdersDB().SelectByUserId(iUserId);
-                final OrdersFollowupAdapter ObjOrdersFollowUpAdapter = new OrdersFollowupAdapter(getActivity(), ObjOrdersList);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        lvOrders.setAdapter(ObjOrdersFollowUpAdapter);
-                        Utils.setListViewHeightBasedOnChildren(lvOrders);
-                        ObjWaitDialog.HideDialog();
-                    }
-                });
+                OrdersFollowupAdapter ObjOrdersFollowUpAdapter = new OrdersFollowupAdapter(getActivity(), ObjOrdersList);
+                ObjOrdersFollowUpAdapter.FillList(lvOrders);
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        lvOrders.setAdapter(ObjOrdersFollowUpAdapter);
+//                        Utils.setListViewHeightBasedOnChildren(lvOrders);
+//                        ObjWaitDialog.HideDialog();
+//                    }
+//                });
             }
         });
         t.start();

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -38,11 +39,10 @@ import java.util.List;
  * Created by raed on 12/13/2016.
  */
 
-public class OrdersFollowupAdapter extends BaseAdapter {
+public class OrdersFollowupAdapter {
     List<Orders> ObjOrderList;
     Context context;
     Settings ObjSettings;
-    View v;
 
     public OrdersFollowupAdapter(Context p_context, List<Orders> p_OrdersList) {
         ObjOrderList = p_OrdersList;
@@ -50,38 +50,44 @@ public class OrdersFollowupAdapter extends BaseAdapter {
         ObjSettings = new Settings(p_context);
     }
 
-
-    @Override
-    public int getCount() {
-        return ObjOrderList.size();
-    }
-
-    @Override
-    public Orders getItem(int position) {
-        return ObjOrderList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return ObjOrderList.get(position).getId();
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public void FillList(LinearLayout p_Linear) {
 //        v= convertView;
-//        if (v == null) {
-            v = View.inflate(context, R.layout.orderfollowup_list_item, null);
+//        if (v == null)
+// {
+        final AppCompatActivity CurrentActivity = (AppCompatActivity)context;
+
+        final LinearLayout LinearFinal = p_Linear;
+
+        CurrentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearFinal.removeAllViews();
+            }
+        });
+
+
+        for (int i=0;i<=ObjOrderList.size()-1;i++) {
+            final int iFinal = i;
+
+            final View v = View.inflate(context, R.layout.orderfollowup_list_item, null);
+
+            CurrentActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    LinearFinal.addView(v);
+                }
+            });
 
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
 
 
-                    final Orders ObjOrder = ObjOrderList.get(position);
+                    final Orders ObjOrder = ObjOrderList.get(iFinal);
                     final Foods ObjFood = new FoodsDB().Select(ObjOrder.getFood_Id(), ObjSettings.getCurrentLanguageId());
                     final User ObjUser = new UserDB().Select(ObjFood.getUserId());
 
-                    final Button btnReportDelay = (Button)  v.findViewById(R.id.btnReportDelay);
+                    final Button btnReportDelay = (Button) v.findViewById(R.id.btnReportDelay);
                     btnReportDelay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -90,7 +96,7 @@ public class OrdersFollowupAdapter extends BaseAdapter {
 
                             new OrdersDB().InsertUpdate(ObjOrder);
 
-                            ((MainActivity) context).runOnUiThread(new Runnable() {
+                            CurrentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     btnReportDelay.setVisibility(View.GONE);
@@ -100,11 +106,11 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                         }
                     });
 
-                    if (ObjOrderList.get(position).isReportDelayed())
+                    if (ObjOrderList.get(iFinal).isReportDelayed())
                         btnReportDelay.setVisibility(View.GONE);
                     //notifyDataSetChanged();
 
-                    final ImageView ImageFood = (ImageView)  v.findViewById(R.id.ImageFood);
+                    final ImageView ImageFood = (ImageView) v.findViewById(R.id.ImageFood);
 
 
                     final Bitmap[] ObjBitmap = new Bitmap[1];
@@ -113,7 +119,7 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             ImageFood.setImageBitmap(ObjBitmap[0]);
@@ -121,17 +127,17 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                     });
 
 
-                    final ImageView ImageDeliverable = (ImageView)  v.findViewById(R.id.ImageDeliverable);
+                    final ImageView ImageDeliverable = (ImageView) v.findViewById(R.id.ImageDeliverable);
 
                     if (ObjUser.isHaveDelivary()) {
-                        ((MainActivity) context).runOnUiThread(new Runnable() {
+                        CurrentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 ImageDeliverable.setVisibility(View.VISIBLE);
                             }
                         });
                     } else {
-                        ((MainActivity) context).runOnUiThread(new Runnable() {
+                        CurrentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 ImageDeliverable.setVisibility(View.GONE);
@@ -144,22 +150,22 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                     // Code for Rating will be Later
                     // Code for Rating will be Later
                     // Code for Rating will be Later
-                    final RatingBar FoodRating = (RatingBar)  v.findViewById(R.id.FoodRating);
+                    final RatingBar FoodRating = (RatingBar) v.findViewById(R.id.FoodRating);
                     // Code for Rating will be Later
                     // Code for Rating will be Later
                     // Code for Rating will be Later
                     // Code for Rating will be Later
 
-                    final TextView lblName = (TextView)  v.findViewById(R.id.lblName);
+                    final TextView lblName = (TextView) v.findViewById(R.id.lblName);
                     final String sNameTemp = ObjFood.getName();
-                    ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             lblName.setText(sNameTemp);
                         }
                     });
 
-                    final TextView lblTimeFromTo = (TextView)  v.findViewById(R.id.lblTimeFromTo);
+                    final TextView lblTimeFromTo = (TextView) v.findViewById(R.id.lblTimeFromTo);
 
                     String sTemp = Utils.GetResourceName(context, R.string.RequestTimeFromTo, new Settings(context).getCurrentLanguageId());
 
@@ -175,7 +181,7 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                     }
                     final String sTempFinal = sTemp;
 
-                    ((MainActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
 
@@ -183,21 +189,22 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                         }
                     });
 
-                    final ListView lvOrderActions = (ListView)  v.findViewById(R.id.lvOrderActions);
+                    final LinearLayout lvOrderActions = (LinearLayout) v.findViewById(R.id.lvOrderActions);
 
                     final List<Orders_Actions> Obj_Orders_Actions_List = new Orders_ActionsDB().SelectByOrderId(ObjOrder.getId(), 2);
 
                     final OrdersActionsAdapter ObjOrdersActionsAdapter = new OrdersActionsAdapter(context, Obj_Orders_Actions_List);
 
-                    ((MainActivity) context).runOnUiThread(new Runnable() {
+                    CurrentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            View Header =  v.inflate(context, R.layout.orderfollowup_listview_header, null);
-                            if (lvOrderActions.getHeaderViewsCount() == 0)
-                                lvOrderActions.addHeaderView(Header);
+                            View Header = v.inflate(context, R.layout.orderfollowup_listview_header, null);
 
-                            lvOrderActions.setAdapter(ObjOrdersActionsAdapter);
-                            Utils.setListViewHeightBasedOnChildren(lvOrderActions);
+                            lvOrderActions.addView(Header);
+
+                            ObjOrdersActionsAdapter.FillList(lvOrderActions);
+                            //lvOrderActions.setAdapter(ObjOrdersActionsAdapter);
+                           //Utils.setListViewHeightBasedOnChildren(lvOrderActions);
                             ///lvOrderActions.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT + Obj_Orders_Actions_List.size()*26));
 
 
@@ -207,7 +214,8 @@ public class OrdersFollowupAdapter extends BaseAdapter {
                 }
             });
             t.start();
+        }
         //}
-        return v;
+
     }
 }
