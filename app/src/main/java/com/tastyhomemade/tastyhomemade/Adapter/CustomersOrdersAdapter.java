@@ -10,10 +10,14 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.BaseAdapter;
@@ -65,6 +69,7 @@ public class CustomersOrdersAdapter {
 
     }
 
+    WebView webview_Address = null;
 
     public void FillView(LinearLayout p_Linear) {
 
@@ -83,6 +88,7 @@ public class CustomersOrdersAdapter {
             final int iFinal = i;
 
             final View v = View.inflate(context, R.layout.customerorder_listview_item, null);
+
 
             CurrentActivity.runOnUiThread(new Runnable() {
                 @Override
@@ -106,10 +112,24 @@ public class CustomersOrdersAdapter {
                     final TextView lblCustomerName = (TextView) v.findViewById(R.id.lblCustomerName);
                     final TextView lblMobile = (TextView) v.findViewById(R.id.lblMobile);
                     final TextView lblAddress = (TextView) v.findViewById(R.id.lblAddress);
-                    final WebView webview_Address = (WebView) v.findViewById(R.id.webview_Address);
-                    webview_Address.setWebViewClient(new WebViewClient());
-                    webview_Address.getSettings().setJavaScriptEnabled(true);
+                    final LinearLayout linearContainer = (LinearLayout) v.findViewById(R.id.linearContainer);
 
+                    CurrentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+                            webview_Address = new WebView(CurrentActivity);
+                            webview_Address.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                            //final WebView webview_Address = (WebView) v.findViewById(R.id.webview_Address);
+                            webview_Address.setWebViewClient(new WebViewClient());
+                            webview_Address.getSettings().setJavaScriptEnabled(true);
+                            linearContainer.addView(webview_Address);
+
+
+                        }
+                    });
 
                     final Button btnSendOrder = (Button) v.findViewById(R.id.btnSendOrder);
                     final Button btnOrderReceived = (Button) v.findViewById(R.id.btnOrderReceived);
@@ -150,7 +170,7 @@ public class CustomersOrdersAdapter {
                                             btnOrderRejected.setBackgroundResource(R.drawable.button_style3_enabled);
                                             btnOrderRejected.setTextColor(Color.parseColor("#ffffff"));
 
-                                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasSentToClient, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasSentToClient, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
 
                                         }
                                     });
@@ -214,7 +234,7 @@ public class CustomersOrdersAdapter {
                                             lblDeliveryTime.setText(sdfFinal4.format(ObjOrderActionFinal.getActionDate()));
 
 
-                                                    Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasBeenReceived, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(context, Utils.GetResourceName(context, R.string.OrderHasBeenReceived, ObjSettings.getCurrentLanguageId()), Toast.LENGTH_LONG).show();
 
 
                                         }

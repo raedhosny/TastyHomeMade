@@ -127,8 +127,8 @@ public class NearestFoodsFragment extends Fragment {
                     ObjFoodsList.addAll(ObjUnknowFoodsList);
 
 
-                    NearestFoodsAdapter ObjFoodsListAdapter = new NearestFoodsAdapter(getContext(), ObjFoodsList);
-                    final LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+                    NearestFoodsAdapter ObjFoodsListAdapter = new NearestFoodsAdapter(getActivity(), ObjFoodsList);
+                    LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
                     ObjFoodsListAdapter.FillList(lvMainFoodsList);
 
 

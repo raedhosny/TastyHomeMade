@@ -160,7 +160,7 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
     private void FillData(String p_sKeyword) {
 
         final String sKeywordFinal  = p_sKeyword;
-
+        ObjWaitDialog.ShowDialog();
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -168,17 +168,20 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                             ObjFoodsList.addAll(new FoodsDB().GlobalSearchByFoodMaker(sKeywordFinal,ObjSettings.getCurrentLanguageId(), ObjSettings.getUserId() ));
+
+                    getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                  //  lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
+                                }
+                            }
+                    );
+
                     final EditFoodsAdapter ObjFoodsListAdapter = new EditFoodsAdapter(getContext(), ObjFoodsList);
                     final LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
-//                    getActivity().runOnUiThread(
-//                            new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-//                                    ObjWaitDialog.HideDialog();
-//                                }
-//                            }
-//                    );
+                    ObjFoodsListAdapter.FillList(lvMainFoodsList );
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

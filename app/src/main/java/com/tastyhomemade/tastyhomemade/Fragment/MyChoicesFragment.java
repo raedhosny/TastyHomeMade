@@ -112,18 +112,19 @@ public class MyChoicesFragment extends Fragment {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SearchbyCustomer(sName,iCategoryId, ObjSettings.getUserId() ));
-                    HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
-                    LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
-                    ObjFoodsListAdapter.FillList(lvMainFoodsList);
                     getActivity().runOnUiThread(
                             new Runnable() {
                                 @Override
                                 public void run() {
-                                  //  lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    //  lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
                                     ObjWaitDialog.HideDialog();
                                 }
                             }
                     );
+                    HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getActivity(), ObjFoodsList);
+                    LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+                    ObjFoodsListAdapter.FillList(lvMainFoodsList);
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

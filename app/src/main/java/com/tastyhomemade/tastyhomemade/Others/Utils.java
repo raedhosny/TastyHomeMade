@@ -10,7 +10,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -289,8 +291,14 @@ public class Utils {
 //        Display display = wm.getDefaultDisplay();
 //        Point size = new Point();
 //        display.getSize(size);
+
+
         int width = p_CurrentView.getWidth();
         int height = p_CurrentView.getHeight();
+
+        DisplayMetrics ObjDisplayMetrics =  p_CurrentView.getContext() .getResources().getDisplayMetrics();
+        width =  width/(ObjDisplayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        height =  height/(ObjDisplayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
 
         return "https://maps.googleapis.com/maps/api/staticmap?center=" + p_Latitude + "," + p_Longitude + "&zoom=11&size="+(width) +"x"+(height)+"&markers=color:red|label:|" + p_Latitude + "," + p_Longitude;
     }

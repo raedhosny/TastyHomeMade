@@ -39,13 +39,14 @@ public class CustomersOrdersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ObjSettings = new Settings(getContext());
         lvCustomersOrders = (LinearLayout) view.findViewById(R.id.lvCustomersOrders);
+        ObjWaitingDialog= new WaitDialog(getContext());
         FillData();
 
     }
 
     private void FillData() {
 
-        ObjWaitingDialog= new WaitDialog(getContext());
+
         ObjWaitingDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
