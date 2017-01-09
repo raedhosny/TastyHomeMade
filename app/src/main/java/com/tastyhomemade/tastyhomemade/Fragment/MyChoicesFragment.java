@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -54,7 +55,7 @@ public class MyChoicesFragment extends Fragment {
         ObjSettings = new Settings(getContext());
 
         ObjWaitDialog = new WaitDialog(getContext());
-        ObjWaitDialog.ShowDialog();
+
         FillCategories();
         FillData(txtName.getText().toString(),-1);
 
@@ -70,6 +71,8 @@ public class MyChoicesFragment extends Fragment {
     }
 
     private void FillCategories() {
+
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -101,6 +104,7 @@ public class MyChoicesFragment extends Fragment {
 
         final String sName = p_sName;
         final int iCategoryId = p_iCategoryId;
+        ObjWaitDialog.ShowDialog();
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -108,8 +112,9 @@ public class MyChoicesFragment extends Fragment {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SearchbyCustomer(sName,iCategoryId, ObjSettings.getUserId() ));
-                    final HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
-                    final ListView lvMainFoodsList = (ListView) getActivity().findViewById(R.id.lvMainFoodsList);
+                    HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
+                    LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
+                    ObjFoodsListAdapter.FillList(lvMainFoodsList);
                     getActivity().runOnUiThread(
                             new Runnable() {
                                 @Override

@@ -25,6 +25,7 @@ import java.util.List;
 public class OrdersFollowUpFragment extends Fragment {
 
     WaitDialog ObjWaitDialog;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,22 +40,23 @@ public class OrdersFollowUpFragment extends Fragment {
         Bundle ObjBundle = getArguments();
         final int iUserId = ObjBundle.getInt("UserId");
         ObjWaitDialog = new WaitDialog(getContext());
-        //ObjWaitDialog.ShowDialog();
+        ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 List<Orders> ObjOrdersList = new OrdersDB().SelectByUserId(iUserId);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // lvOrders.setAdapter(ObjOrdersFollowUpAdapter);
+                        // Utils.setListViewHeightBasedOnChildren(lvOrders);
+                        ObjWaitDialog.HideDialog();
+                    }
+                });
                 OrdersFollowupAdapter ObjOrdersFollowUpAdapter = new OrdersFollowupAdapter(getActivity(), ObjOrdersList);
                 ObjOrdersFollowUpAdapter.FillList(lvOrders);
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        lvOrders.setAdapter(ObjOrdersFollowUpAdapter);
-//                        Utils.setListViewHeightBasedOnChildren(lvOrders);
-//                        ObjWaitDialog.HideDialog();
-//                    }
-//                });
+
             }
         });
         t.start();

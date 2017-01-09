@@ -150,11 +150,18 @@
 
             >
 
-            <com.tastyhomemade.tastyhomemade.Others.ExpandedListView
+            <!--<com.tastyhomemade.tastyhomemade.Others.ExpandedListView-->
+                <!--android:id="@+id/lvOrderActions"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--&gt;</com.tastyhomemade.tastyhomemade.Others.ExpandedListView>-->
+
+            <LinearLayout
                 android:id="@+id/lvOrderActions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ></com.tastyhomemade.tastyhomemade.Others.ExpandedListView>
+                android:orientation="vertical"
+                ></LinearLayout>
 
 
         </RelativeLayout>

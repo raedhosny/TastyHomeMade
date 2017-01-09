@@ -59,7 +59,7 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
         ObjSettings = new Settings(getContext());
 
         ObjWaitDialog = new WaitDialog(getContext());
-//        ObjWaitDialog.ShowDialog();
+
 
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +125,7 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
 
         final String sName = p_sName;
         final int iCategoryId = p_iCategoryId;
+        ObjWaitDialog.ShowDialog();
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -132,17 +133,18 @@ public class ListOfFoodsandDrinksFragment extends Fragment {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SearchbyFoodMaker(sName,iCategoryId, ObjSettings.getUserId(),ObjSettings.getCurrentLanguageId() ));
+                    getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    ObjWaitDialog.HideDialog();
+                                }
+                            }
+                    );
                      EditFoodsAdapter ObjFoodsListAdapter = new EditFoodsAdapter(getContext(), ObjFoodsList);
                      LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
                     ObjFoodsListAdapter.FillList(lvMainFoodsList);
-//                    getActivity().runOnUiThread(
-//                            new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    ObjWaitDialog.HideDialog();
-//                                }
-//                            }
-//                    );
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

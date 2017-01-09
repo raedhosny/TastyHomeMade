@@ -30,7 +30,7 @@ import java.util.List;
 public class NearestFoodsFragment extends Fragment {
 
     Settings ObjSettings;
-    List<Foods> ObjFoodsList= null;
+    List<Foods> ObjFoodsList = null;
     int iTotalSize = 0;
     int iUpdatedSize = 0;
     WaitDialog ObjWaitDialog;
@@ -45,7 +45,7 @@ public class NearestFoodsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ObjWaitDialog= new WaitDialog(getContext());
+        ObjWaitDialog = new WaitDialog(getContext());
         ObjSettings = new Settings(getContext());
 
         FillData();
@@ -54,21 +54,30 @@ public class NearestFoodsFragment extends Fragment {
 
     private void FillData() {
 
-       // ObjWaitDialog.ShowDialog();
+        ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     ObjFoodsList = new ArrayList<Foods>();
                     List<Foods> ObjUnknowFoodsList = new ArrayList<Foods>();
-                    ObjFoodsList.addAll(new FoodsDB().SelectByCategoryId( -1,new Settings(getActivity()).getCurrentLanguageId()));
+                    ObjFoodsList.addAll(new FoodsDB().SelectByCategoryId(-1, new Settings(getActivity()).getCurrentLanguageId()));
+                    getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    //lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
+                                }
+                            }
+                    );
+
                     iTotalSize = ObjFoodsList.size();
 
 
-                    for (int i=0;i<ObjFoodsList.size();i++)
-                    {
+                    for (int i = 0; i < ObjFoodsList.size(); i++) {
 
-                        User ObjFoodMakerUser =  new UserDB().Select(ObjFoodsList.get(i).getUserId());
+                        User ObjFoodMakerUser = new UserDB().Select(ObjFoodsList.get(i).getUserId());
                         User ObjCustomerUser = new UserDB().Select(new Settings(getContext()).getUserId());
 
                         final int j = i;
@@ -76,47 +85,41 @@ public class NearestFoodsFragment extends Fragment {
                             @Override
                             public void GetDistance(String result) {
                                 ObjFoodsList.get(j).setDistance(result);
-                                iUpdatedSize ++;
+                                iUpdatedSize++;
                             }
                         };
-                        Utils.GoogleMapClassDistance  ObjGoogleMapClassDistance = new Utils().new GoogleMapClassDistance(ObjOnGetDistance,ObjSettings);
-                        ObjGoogleMapClassDistance.execute(ObjCustomerUser.getCurrentLocation_Latitude(),ObjCustomerUser.getCurrentLocation_Longitude(),ObjFoodMakerUser.getCurrentLocation_Latitude(),ObjFoodMakerUser.getCurrentLocation_Longitude());
+                        Utils.GoogleMapClassDistance ObjGoogleMapClassDistance = new Utils().new GoogleMapClassDistance(ObjOnGetDistance, ObjSettings);
+                        ObjGoogleMapClassDistance.execute(ObjCustomerUser.getCurrentLocation_Latitude(), ObjCustomerUser.getCurrentLocation_Longitude(), ObjFoodMakerUser.getCurrentLocation_Latitude(), ObjFoodMakerUser.getCurrentLocation_Longitude());
 
                     }
 
-                    while (iTotalSize != iUpdatedSize)
-                    {
+                    while (iTotalSize != iUpdatedSize) {
                     }
 
                     List<Foods> Indeces = new ArrayList<Foods>();
 
-                    for (int i=0;i<ObjFoodsList.size();i++) {
-                        if ((ObjFoodsList.get(i).getDistance() .equals("Unknown"))
+                    for (int i = 0; i < ObjFoodsList.size(); i++) {
+                        if ((ObjFoodsList.get(i).getDistance().equals("Unknown"))
                                 ||
-                                (ObjFoodsList.get(i).getDistance() .equals("غير معروف"))
+                                (ObjFoodsList.get(i).getDistance().equals("غير معروف"))
 
-                                )
-                        {
-                          Indeces.add(ObjFoodsList.get(i));
+                                ) {
+                            Indeces.add(ObjFoodsList.get(i));
                         }
                     }
 
-                    for (int i =Indeces.size()-1;i>=0;i--)
-                    {
+                    for (int i = Indeces.size() - 1; i >= 0; i--) {
                         ObjUnknowFoodsList.add(Indeces.get(i));
                         ObjFoodsList.remove(Indeces.get(i));
                     }
 
                     // Now Arrange
-                    for (int i = 0; i < ObjFoodsList.size() - 1; i++)
-                    {
-                        for (int j = 0; j < ObjFoodsList.size() - i - 1; j++)
-                        {
-                            if (Integer.parseInt(ObjFoodsList.get(j).getDistance()) > Integer.parseInt(ObjFoodsList.get(j+1).getDistance())) /* For decreasing order use < */
-                            {
+                    for (int i = 0; i < ObjFoodsList.size() - 1; i++) {
+                        for (int j = 0; j < ObjFoodsList.size() - i - 1; j++) {
+                            if (Integer.parseInt(ObjFoodsList.get(j).getDistance()) > Integer.parseInt(ObjFoodsList.get(j + 1).getDistance())) /* For decreasing order use < */ {
                                 Foods ObjFoodswap = ObjFoodsList.get(j);
-                                ObjFoodsList.set(j,ObjFoodsList.get(j+1));
-                                ObjFoodsList.set(j+1,ObjFoodswap);
+                                ObjFoodsList.set(j, ObjFoodsList.get(j + 1));
+                                ObjFoodsList.set(j + 1, ObjFoodswap);
                             }
                         }
                     }
@@ -124,19 +127,10 @@ public class NearestFoodsFragment extends Fragment {
                     ObjFoodsList.addAll(ObjUnknowFoodsList);
 
 
-
                     NearestFoodsAdapter ObjFoodsListAdapter = new NearestFoodsAdapter(getContext(), ObjFoodsList);
                     final LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
                     ObjFoodsListAdapter.FillList(lvMainFoodsList);
-//                    getActivity().runOnUiThread(
-//                            new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-//                                    ObjWaitDialog.HideDialog();
-//                                }
-//                            }
-//                    );
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

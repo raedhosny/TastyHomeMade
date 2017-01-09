@@ -41,12 +41,12 @@ public class OrdersActionsAdapter {
 
         final LinearLayout LinearFinal = p_Linear;
 
-        CurrentActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LinearFinal.removeAllViews();
-            }
-        });
+//        CurrentActivity.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                LinearFinal.removeAllViews();
+//            }
+//        });
 
 
         for (int i = 0; i <= Obj_Orders_Actions_List.size() - 1; i++) {

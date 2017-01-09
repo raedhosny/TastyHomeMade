@@ -37,32 +37,33 @@ public class MostlyRequestedFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ObjWaitDialog = new WaitDialog(getContext());
-       // ObjWaitDialog.ShowDialog();
+
         FillData();
 
     }
 
     private void FillData() {
 
-
+        ObjWaitDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SelectByRequestCount( new Settings(getActivity()).getCurrentLanguageId()));
+                                        getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                   // lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
+                                    ObjWaitDialog.HideDialog();
+                                }
+                            }
+                    );
                     MostlyRequestedAdapter ObjFoodsListAdapter = new MostlyRequestedAdapter(getContext(), ObjFoodsList);
                     final LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
                     ObjFoodsListAdapter.FillList(lvMainFoodsList );
-//                    getActivity().runOnUiThread(
-//                            new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    lvMainFoodsList.setAdapter(ObjFoodsListAdapter);
-//                                    ObjWaitDialog.HideDialog();
-//                                }
-//                            }
-//                    );
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

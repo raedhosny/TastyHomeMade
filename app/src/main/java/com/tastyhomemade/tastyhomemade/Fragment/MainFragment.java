@@ -67,7 +67,7 @@ public class MainFragment extends Fragment {
 
     private void FillData(int p_iCategoryId) {
 
-      //  ObjWaitDialog.ShowDialog();
+        ObjWaitDialog.ShowDialog();
 
         final int iCategoryId = p_iCategoryId;
 
@@ -77,15 +77,16 @@ public class MainFragment extends Fragment {
                 try {
                     ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().SelectByCategoryId(iCategoryId, new Settings(getActivity()).getCurrentLanguageId()));
+                    getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                        public void run() {
+                            ObjWaitDialog.HideDialog();
+                        }
+                    });
                     HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
                     LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
                     ObjFoodsListAdapter.FillList(lvMainFoodsList);
-//                    getActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            ObjWaitDialog.HideDialog();
-//                        }
-//                    });
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -98,7 +99,7 @@ public class MainFragment extends Fragment {
 
     private void FillData(String p_sKeyword) {
 
-        //ObjWaitDialog.ShowDialog();
+        ObjWaitDialog.ShowDialog();
 
         final String sKeywordFinal = p_sKeyword;
 
@@ -108,15 +109,16 @@ public class MainFragment extends Fragment {
                 try {
                     List<Foods> ObjFoodsList = new ArrayList<Foods>();
                     ObjFoodsList.addAll(new FoodsDB().GlobalSearchByCustomer(sKeywordFinal, ObjSetting.getCurrentLanguageId()));
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ObjWaitDialog.HideDialog();
+                        }
+                    });
                     HomeFoodsAdapter ObjFoodsListAdapter = new HomeFoodsAdapter(getContext(), ObjFoodsList);
                     LinearLayout lvMainFoodsList = (LinearLayout) getActivity().findViewById(R.id.lvMainFoodsList);
                     ObjFoodsListAdapter.FillList(lvMainFoodsList);
-//                    getActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            ObjWaitDialog.HideDialog();
-//                        }
-//                    });
+
 
 
                 } catch (Exception ex) {

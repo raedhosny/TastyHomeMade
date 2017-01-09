@@ -46,20 +46,21 @@ public class CustomersOrdersFragment extends Fragment {
     private void FillData() {
 
         ObjWaitingDialog= new WaitDialog(getContext());
-       // ObjWaitingDialog.ShowDialog();
+        ObjWaitingDialog.ShowDialog();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 List<Orders> ObjOrdersList = new OrdersDB().SelectByFoodMakerId(ObjSettings.getUserId());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //lvCustomersOrders.setAdapter(ObjCustomerOrdersAdapter);
+                        ObjWaitingDialog.HideDialog();
+                    }
+                });
+
                 CustomersOrdersAdapter ObjCustomerOrdersAdapter = new CustomersOrdersAdapter(ObjOrdersList, getActivity());
                 ObjCustomerOrdersAdapter.FillView(lvCustomersOrders);
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        lvCustomersOrders.setAdapter(ObjCustomerOrdersAdapter);
-//                        ObjWaitingDialog.HideDialog();
-//                    }
-//                });
 
             }
         });
